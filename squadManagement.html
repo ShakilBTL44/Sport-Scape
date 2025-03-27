@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Squad Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: margin-left var(--transition-speed);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - var(--sidebar-width));
+      }
+
+      .search-box {
+        position: relative;
+        margin-right: 20px;
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-color);
+      }
+
+      .search-box input {
+        padding: 8px 15px 8px 35px;
+        border-radius: 20px;
+        border: 1px solid var(--light-gray);
+        outline: none;
+        transition: all 0.3s;
+        width: 200px;
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary-color);
+        width: 250px;
+      }
+
+      /* Content Section Styles */
+      .content-section {
+        flex: 1;
+        padding: 25px;
+      }
+
+      .filters-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-filter {
+        position: relative;
+        margin-bottom: 15px;
+      }
+
+      .search-filter i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-color);
+      }
+
+      .search-filter input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border-radius: 6px;
+        border: 1px solid var(--light-gray);
+        outline: none;
+        transition: all 0.3s;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .search-filter input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .dropdown-filters {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-btn {
+        background-color: white;
+        border: 1px solid var(--light-gray);
+        border-radius: 6px;
+        padding: 10px 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s;
+      }
+
+      .dropdown-btn:hover {
+        border-color: var(--primary-color);
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+        border-radius: 6px;
+        overflow: hidden;
+        top: 100%;
+        left: 0;
+      }
+
+      .dropdown-content a {
+        color: var(--dark-color);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: all 0.2s;
+      }
+
+      .dropdown-content a:hover {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s;
+      }
+
+      .reset-filters {
+        background-color: var(--light-gray);
+        border: none;
+        border-radius: 6px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s;
+        margin-left: auto;
+      }
+
+      .reset-filters:hover {
+        background-color: #dee2e6;
+      }
+
+      /* Table Styles */
+      .table-container {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .squads-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .squads-table th {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px;
+        text-align: left;
+        font-weight: 500;
+      }
+
+      .squads-table td {
+        padding: 15px;
+        border-bottom: 1px solid var(--light-gray);
+      }
+
+      .squads-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .squads-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .squads-table tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+      }
+
+      .squad-name-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .squad-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--gray-color);
+        font-size: 1.1rem;
+        transition: all 0.2s;
+        padding: 5px;
+        border-radius: 4px;
+      }
+
+      .action-btn:hover {
+        color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.1);
+      }
+
+      /* Table Footer */
+      .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        border-top: 1px solid var(--light-gray);
+        background-color: white;
+      }
+
+      .pagination-info {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+      }
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .pagination-btn {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border: 1px solid var(--light-gray);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .pagination-btn:hover:not(:disabled) {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+        border-color: var(--primary-light);
+      }
+
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .page-numbers {
+        display: flex;
+        gap: 5px;
+      }
+
+      .page-number {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .page-number:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+      }
+
+      .page-number.current-page {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      /* Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        background-color: white;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        padding: 25px;
+        position: relative;
+        transform: translateY(-20px);
+        transition: all 0.3s;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-overlay.active .modal-content {
+        transform: translateY(0);
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray-color);
+        transition: all 0.2s;
+      }
+
+      .close-modal:hover {
+        color: var(--danger-color);
+      }
+
+      .squad-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .squad-image-container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .squad-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--light-gray);
+      }
+
+      .squad-info h2 {
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .detail-row {
+        display: flex;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--light-gray);
+      }
+
+      .detail-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .detail-label {
+        font-weight: 600;
+        width: 120px;
+        color: var(--gray-color);
+      }
+
+      .detail-value {
+        flex: 1;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 992px) {
+        .sidebar {
+          width: var(--sidebar-collapsed-width);
+        }
+
+        .sidebar-nav li a span {
+          display: none;
+        }
+
+        .sidebar-nav li a i {
+          margin-right: 0;
+          font-size: 1.2rem;
+        }
+
+        .sidebar-header h2 {
+          display: none;
+        }
+
+        .main-content {
+          margin-left: var(--sidebar-collapsed-width);
+          width: 100vw;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          position: fixed;
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          width: 100vw;
+        }
+
+        .sidebar-toggle {
+          display: block;
+        }
+
+        .dropdown-filters {
+          flex-direction: column;
+        }
+
+        .reset-filters {
+          margin-left: 0;
+        }
+
+        .squads-table {
+          display: block;
+          overflow-x: auto;
+        }
+
+        .squad-details {
+          flex-direction: column;
+        }
+
+        .table-footer {
+          flex-direction: column;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .pagination-controls {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .top-navbar {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 15px;
+        }
+
+        .navbar-right {
+          width: 100%;
+          margin-top: 15px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .search-box {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 15px;
+        }
+
+        .search-box input {
+          width: 100%;
+        }
+
+        .search-box input:focus {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar"></aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar"></nav>
+
+        <!-- Content Section -->
+        <section class="content-section">
+          <!-- Filters and Search -->
+          <div class="filters-container">
+            <div class="search-filter">
+              <input
+                type="text"
+                id="squad-search"
+                placeholder="Search by Squad or Creator name..."
+              />
+              <i class="fas fa-search"></i>
+            </div>
+            <div class="dropdown-filters">
+              <div class="dropdown">
+                <button class="dropdown-btn">
+                  <i class="fas fa-filter"></i>
+                  <span>Filter by Members</span>
+                  <i class="fas fa-chevron-down"></i>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="#" data-filter="members" data-value="0-10"
+                    >0-10 Members</a
+                  >
+                  <a href="#" data-filter="members" data-value="11-50"
+                    >11-50 Members</a
+                  >
+                  <a href="#" data-filter="members" data-value="51-100"
+                    >51-100 Members</a
+                  >
+                  <a href="#" data-filter="members" data-value="100+"
+                    >100+ Members</a
+                  >
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="dropdown-btn">
+                  <span>Filter by Creator</span>
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
+                  <a href="#" data-filter="creator" data-value="john"
+                    >John Doe</a
+                  >
+                  <a href="#" data-filter="creator" data-value="jane"
+                    >Jane Smith</a
+                  >
+                  <a href="#" data-filter="creator" data-value="mike"
+                    >Mike Johnson</a
+                  >
+                  <a href="#" data-filter="creator" data-value="sarah"
+                    >Sarah Williams</a
+                  >
+                </div>
+              </div>
+              <button class="reset-filters">Reset Filters</button>
+            </div>
+          </div>
+
+          <!-- Squads Table -->
+          <div class="table-container">
+            <table class="squads-table">
+              <thead>
+                <tr>
+                  <th>Squad Name</th>
+                  <th>Creator</th>
+                  <th>Total Members</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will be populated by JavaScript -->
+              </tbody>
+            </table>
+            <div class="table-footer">
+              <div class="pagination-info">
+                Showing <span id="showing-from">1</span>-<span id="showing-to"
+                  >10</span
+                >
+                of <span id="total-squads">8</span> squads
+              </div>
+              <div class="pagination-controls">
+                <button class="pagination-btn" id="prev-page" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <span class="page-numbers" id="page-numbers">
+                  <span class="page-number current-page">1</span>
+                </span>
+                <button class="pagination-btn" id="next-page">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Squad Details Modal -->
+          <div class="modal-overlay" id="squad-modal">
+            <div class="modal-content">
+              <button class="close-modal">&times;</button>
+              <div class="squad-details">
+                <div class="squad-image-container">
+                  <img
+                    src=""
+                    alt="Squad Image"
+                    class="squad-image"
+                    id="modal-squad-image"
+                  />
+                </div>
+                <div class="squad-info">
+                  <h2 id="modal-squad-name"></h2>
+                  <div class="detail-row">
+                    <span class="detail-label">Creator:</span>
+                    <span class="detail-value" id="modal-creator-name"></span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Total Members:</span>
+                    <span class="detail-value" id="modal-total-members"></span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Total Expense:</span>
+                    <span class="detail-value" id="modal-total-expense"></span>
+                  </div>
+                  <div class="detail-row">
+                    <span class="detail-label">Created At:</span>
+                    <span class="detail-value" id="modal-created-at"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  <script type="module">
+    import Sidebar from "./sidebar.js";
+    import Navbar from "./navbar.js";
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const navbar = document.querySelector(".navbar");
+
+      sidebar.innerHTML = Sidebar("SquadManagement");
+      navbar.innerHTML = Navbar("Squad Management");
+      // Sample data for squads
+      const squadsData = [
+        {
+          id: 1,
+          name: "Alpha Team",
+          creator: "John Doe",
+          members: 24,
+          expense: "$1,250",
+          createdAt: "2023-01-05T10:30:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 2,
+          name: "Beta Squad",
+          creator: "Jane Smith",
+          members: 56,
+          expense: "$2,800",
+          createdAt: "2023-02-12T14:45:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 3,
+          name: "Gamma Force",
+          creator: "Mike Johnson",
+          members: 32,
+          expense: "$1,600",
+          createdAt: "2023-03-10T09:15:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 4,
+          name: "Delta Group",
+          creator: "Sarah Williams",
+          members: 89,
+          expense: "$4,200",
+          createdAt: "2023-04-08T16:20:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 5,
+          name: "Epsilon Team",
+          creator: "John Doe",
+          members: 40,
+          expense: "$2,300",
+          createdAt: "2023-05-18T11:10:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 6,
+          name: "Zeta Crew",
+          creator: "Jane Smith",
+          members: 45,
+          expense: "$2,300",
+          createdAt: "2023-06-30T13:25:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 7,
+          name: "Theta Squad",
+          creator: "Mike Johnson",
+          members: 67,
+          expense: "$3,100",
+          createdAt: "2023-07-12T08:40:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 8,
+          name: "Iota Force",
+          creator: "Sarah Williams",
+          members: 18,
+          expense: "$950",
+          createdAt: "2023-08-03T15:55:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 9,
+          name: "Kappa Warriors",
+          creator: "John Doe",
+          members: 29,
+          expense: "$1,500",
+          createdAt: "2023-09-10T09:00:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 10,
+          name: "Lambda Troop",
+          creator: "Jane Smith",
+          members: 63,
+          expense: "$3,500",
+          createdAt: "2023-10-22T14:00:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 11,
+          name: "Mu Battalion",
+          creator: "Mike Johnson",
+          members: 80,
+          expense: "$4,800",
+          createdAt: "2023-11-05T17:20:00",
+          image:
+            "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          id: 12,
+          name: "Nu Forces",
+          creator: "Sarah Williams",
+          members: 22,
+          expense: "$1,200",
+          createdAt: "2023-12-15T12:10:00",
+          image:
+            "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+      ];
+
+      // Repeat this structure until you reach 20 records
+
+      // DOM Elements
+      const mainContent = document.querySelector(".main-content");
+      const squadsTableBody = document.querySelector(".squads-table tbody");
+      const squadSearchInput = document.getElementById("squad-search");
+      const memberFilterLinks = document.querySelectorAll(
+        '[data-filter="members"]'
+      );
+      const creatorFilterLinks = document.querySelectorAll(
+        '[data-filter="creator"]'
+      );
+      const resetFiltersBtn = document.querySelector(".reset-filters");
+      const modalOverlay = document.getElementById("squad-modal");
+      const closeModalBtn = document.querySelector(".close-modal");
+      const modalSquadName = document.getElementById("modal-squad-name");
+      const modalCreatorName = document.getElementById("modal-creator-name");
+      const modalTotalMembers = document.getElementById("modal-total-members");
+      const modalTotalExpense = document.getElementById("modal-total-expense");
+      const modalCreatedAt = document.getElementById("modal-created-at");
+      const modalSquadImage = document.getElementById("modal-squad-image");
+      const menuToggle = document.querySelector(".menu-toggle");
+
+      // Pagination elements
+      const prevPageBtn = document.getElementById("prev-page");
+      const nextPageBtn = document.getElementById("next-page");
+      const pageNumbers = document.getElementById("page-numbers");
+      const showingFrom = document.getElementById("showing-from");
+      const showingTo = document.getElementById("showing-to");
+      const totalSquads = document.getElementById("total-squads");
+
+      // Current filters and pagination state
+      let currentFilters = {
+        search: "",
+        members: "",
+        creator: "",
+      };
+
+      let currentPage = 1;
+      const squadsPerPage = 10;
+      let filteredSquads = [...squadsData];
+
+      // Initialize the page
+      function init() {
+        renderSquadsTable();
+        updatePagination();
+        setupEventListeners();
+      }
+
+      // Set up event listeners
+      function setupEventListeners() {
+        menuToggle.addEventListener("click", toggleSidebar);
+
+        // Search input
+        squadSearchInput.addEventListener("input", handleSearch);
+
+        // Filter dropdowns
+        memberFilterLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            handleMemberFilter(e.target.getAttribute("data-value"));
+          });
+        });
+
+        creatorFilterLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            handleCreatorFilter(e.target.getAttribute("data-value"));
+          });
+        });
+
+        // Reset filters
+        resetFiltersBtn.addEventListener("click", resetFilters);
+
+        // Modal close
+        closeModalBtn.addEventListener("click", closeModal);
+        modalOverlay.addEventListener("click", (e) => {
+          if (e.target === modalOverlay) {
+            closeModal();
+          }
+        });
+
+        // Keyboard accessibility
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modalOverlay.classList.contains("active")) {
+            closeModal();
+          }
+        });
+
+        // Pagination controls
+        prevPageBtn.addEventListener("click", goToPrevPage);
+        nextPageBtn.addEventListener("click", goToNextPage);
+      }
+
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        console.log("hello");
+        sidebar.classList.toggle("active");
+      }
+
+      // Render squads table with pagination
+      function renderSquadsTable() {
+        squadsTableBody.innerHTML = "";
+
+        const paginatedSquads = getPaginatedSquads();
+
+        if (paginatedSquads.length === 0) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+                <td colspan="4" style="text-align: center; padding: 30px;">
+                    No squads found matching your criteria.
+                </td>
+            `;
+          squadsTableBody.appendChild(tr);
+          return;
+        }
+
+        paginatedSquads.forEach((squad) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+                <td>
+                    <div class="squad-name-cell">
+                        <img src="${squad.image}" alt="${squad.name}" class="squad-avatar">
+                        ${squad.name}
+                    </div>
+                </td>
+                <td>${squad.creator}</td>
+                <td>${squad.members}</td>
+                <td>
+                    <button class="action-btn view-btn" data-id="${squad.id}" aria-label="View squad details">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </td>
+            `;
+          squadsTableBody.appendChild(tr);
+        });
+
+        // Add event listeners to view buttons
+        document.querySelectorAll(".view-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const squadId = parseInt(e.currentTarget.getAttribute("data-id"));
+            viewSquadDetails(squadId);
+          });
+        });
+      }
+
+      // Get paginated squads for current page
+      function getPaginatedSquads() {
+        const startIndex = (currentPage - 1) * squadsPerPage;
+        const endIndex = startIndex + squadsPerPage;
+        return filteredSquads.slice(startIndex, endIndex);
+      }
+
+      // Update pagination controls
+      function updatePagination() {
+        const totalPages = Math.ceil(filteredSquads.length / squadsPerPage);
+
+        // Update showing X-Y of Z squads
+        const from = (currentPage - 1) * squadsPerPage + 1;
+        const to = Math.min(currentPage * squadsPerPage, filteredSquads.length);
+        showingFrom.textContent = from;
+        showingTo.textContent = to;
+        totalSquads.textContent = filteredSquads.length;
+
+        // Update pagination buttons
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+        // Update page numbers
+        pageNumbers.innerHTML = "";
+
+        if (totalPages <= 5) {
+          // Show all pages
+          for (let i = 1; i <= totalPages; i++) {
+            const page = document.createElement("span");
+            page.className = `page-number ${
+              i === currentPage ? "current-page" : ""
+            }`;
+            page.textContent = i;
+            page.addEventListener("click", () => goToPage(i));
+            pageNumbers.appendChild(page);
+          }
+        } else {
+          // Show limited pages with ellipsis
+          if (currentPage <= 3) {
+            // Show first 3 pages, ellipsis, last page
+            for (let i = 1; i <= 3; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+
+            const ellipsis = document.createElement("span");
+            ellipsis.textContent = "...";
+            pageNumbers.appendChild(ellipsis);
+
+            const lastPage = document.createElement("span");
+            lastPage.className = "page-number";
+            lastPage.textContent = totalPages;
+            lastPage.addEventListener("click", () => goToPage(totalPages));
+            pageNumbers.appendChild(lastPage);
+          } else if (currentPage >= totalPages - 2) {
+            // Show first page, ellipsis, last 3 pages
+            const firstPage = document.createElement("span");
+            firstPage.className = "page-number";
+            firstPage.textContent = 1;
+            firstPage.addEventListener("click", () => goToPage(1));
+            pageNumbers.appendChild(firstPage);
+
+            const ellipsis = document.createElement("span");
+            ellipsis.textContent = "...";
+            pageNumbers.appendChild(ellipsis);
+
+            for (let i = totalPages - 2; i <= totalPages; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+          } else {
+            // Show first page, ellipsis, current-1, current, current+1, ellipsis, last page
+            const firstPage = document.createElement("span");
+            firstPage.className = "page-number";
+            firstPage.textContent = 1;
+            firstPage.addEventListener("click", () => goToPage(1));
+            pageNumbers.appendChild(firstPage);
+
+            const ellipsis1 = document.createElement("span");
+            ellipsis1.textContent = "...";
+            pageNumbers.appendChild(ellipsis1);
+
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+
+            const ellipsis2 = document.createElement("span");
+            ellipsis2.textContent = "...";
+            pageNumbers.appendChild(ellipsis2);
+
+            const lastPage = document.createElement("span");
+            lastPage.className = "page-number";
+            lastPage.textContent = totalPages;
+            lastPage.addEventListener("click", () => goToPage(totalPages));
+            pageNumbers.appendChild(lastPage);
+          }
+        }
+      }
+
+      // Navigate to specific page
+      function goToPage(page) {
+        if (page < 1 || page > Math.ceil(filteredSquads.length / squadsPerPage))
+          return;
+        currentPage = page;
+        renderSquadsTable();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // Go to previous page
+      function goToPrevPage() {
+        goToPage(currentPage - 1);
+      }
+
+      // Go to next page
+      function goToNextPage() {
+        goToPage(currentPage + 1);
+      }
+
+      // Handle search input
+      function handleSearch(e) {
+        currentFilters.search = e.target.value.toLowerCase();
+        filterSquads();
+      }
+
+      // Handle member filter
+      function handleMemberFilter(value) {
+        currentFilters.members = value;
+        filterSquads();
+      }
+
+      // Handle creator filter
+      function handleCreatorFilter(value) {
+        currentFilters.creator = value;
+        filterSquads();
+      }
+
+      // Reset all filters
+      function resetFilters() {
+        currentFilters = {
+          search: "",
+          members: "",
+          creator: "",
+        };
+        squadSearchInput.value = "";
+        filterSquads();
+      }
+
+      // Filter squads based on current filters
+      function filterSquads() {
+        filteredSquads = [...squadsData];
+
+        // Apply search filter
+        if (currentFilters.search) {
+          filteredSquads = filteredSquads.filter(
+            (squad) =>
+              squad.name.toLowerCase().includes(currentFilters.search) ||
+              squad.creator.toLowerCase().includes(currentFilters.search)
+          );
+        }
+
+        // Apply member count filter
+        if (currentFilters.members) {
+          const [min, max] = currentFilters.members.split("-").map(Number);
+
+          if (currentFilters.members === "100+") {
+            filteredSquads = filteredSquads.filter(
+              (squad) => squad.members > 100
+            );
+          } else {
+            filteredSquads = filteredSquads.filter((squad) => {
+              if (max) {
+                return squad.members >= min && squad.members <= max;
+              } else {
+                return squad.members >= min;
+              }
+            });
+          }
+        }
+
+        // Apply creator filter
+        if (currentFilters.creator) {
+          filteredSquads = filteredSquads.filter((squad) =>
+            squad.creator.toLowerCase().includes(currentFilters.creator)
+          );
+        }
+
+        // Reset to first page when filters change
+        currentPage = 1;
+        renderSquadsTable();
+        updatePagination();
+      }
+
+      // View squad details in modal
+      function viewSquadDetails(squadId) {
+        const squad = squadsData.find((s) => s.id === squadId);
+        if (!squad) return;
+
+        // Format the date
+        const createdAt = new Date(squad.createdAt);
+        const formattedDate = createdAt.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        // Populate modal
+        modalSquadName.textContent = squad.name;
+        modalCreatorName.textContent = squad.creator;
+        modalTotalMembers.textContent = squad.members;
+        modalTotalExpense.textContent = squad.expense;
+        modalCreatedAt.textContent = formattedDate;
+        modalSquadImage.src = squad.image;
+        modalSquadImage.alt = squad.name;
+
+        // Show modal
+        modalOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close modal
+      function closeModal() {
+        modalOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      // Initialize the page
+      init();
+    });
+  </script>
+</html>

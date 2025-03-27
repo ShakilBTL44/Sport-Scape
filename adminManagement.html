@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Layout */
+      .app-container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .menu-item {
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        color: var(--gray-color);
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+      }
+
+      .menu-item i {
+        margin-right: 10px;
+        font-size: 18px;
+      }
+
+      .menu-item:hover {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+      }
+
+      .menu-item.active {
+        background-color: rgba(67, 97, 238, 0.1);
+        color: var(--primary-color);
+        border-left: 3px solid var(--primary-color);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: var(--transition);
+        width: calc(100vw - var(--sidebar-width));
+      }
+
+      /* Content Area */
+
+      .page-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--dark-color);
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: var(--border-radius);
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn i {
+        margin-right: 8px;
+      }
+
+      .btn-primary {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+      }
+
+      /* Filters and Search */
+      .filters-container {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: var(--box-shadow);
+      }
+
+      .filters-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .search-box {
+        flex: 1;
+        min-width: 250px;
+        position: relative;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-color);
+      }
+
+      .filter-dropdown {
+        min-width: 200px;
+      }
+
+      .filter-dropdown select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1em;
+        transition: var(--transition);
+      }
+
+      .filter-dropdown select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      /* Admin Table */
+      .admin-table-container {
+        background-color: white;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .admin-table thead {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .admin-table th {
+        padding: 15px;
+        text-align: left;
+        font-weight: 500;
+      }
+
+      .admin-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .admin-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .admin-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .admin-table tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+      }
+
+      .admin-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--border-radius);
+        object-fit: cover;
+        margin-right: 10px;
+      }
+
+      .admin-name {
+        display: flex;
+        align-items: center;
+      }
+
+      .admin-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .status-active {
+        background-color: rgba(76, 201, 240, 0.1);
+        color: var(--success-color);
+      }
+
+      .status-inactive {
+        background-color: rgba(247, 37, 133, 0.1);
+        color: var(--danger-color);
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .action-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+        background-color: transparent;
+      }
+
+      .action-btn.view {
+        color: var(--primary-color);
+      }
+
+      .action-btn.edit {
+        color: var(--accent-color);
+      }
+
+      .action-btn.delete {
+        color: var(--danger-color);
+      }
+
+      .action-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+      }
+
+      /* Table Footer */
+      .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        border-top: 1px solid #eee;
+        background-color: white;
+      }
+
+      .pagination-info {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+      }
+
+      .pagination-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .pagination-btn {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .pagination-btn:hover:not(:disabled) {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+        border-color: var(--primary-light);
+      }
+
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .page-numbers {
+        display: flex;
+        gap: 5px;
+      }
+
+      .page-number {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .page-number:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+      }
+
+      .page-number.current-page {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      /* Admin Details Panel */
+      .admin-details-panel {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 400px;
+        height: 100vh;
+        background-color: white;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 30px;
+      }
+
+      .admin-details-panel.open {
+        right: 0;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+
+      .panel-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .close-panel {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: var(--gray-color);
+        transition: var(--transition);
+      }
+
+      .close-panel:hover {
+        color: var(--danger-color);
+      }
+
+      .admin-details-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: var(--border-radius);
+        object-fit: cover;
+        margin: 0 auto 20px;
+        display: block;
+      }
+
+      .detail-item {
+        margin-bottom: 15px;
+      }
+
+      .detail-label {
+        font-size: 14px;
+        color: var(--gray-color);
+        margin-bottom: 5px;
+      }
+
+      .detail-value {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .permissions-list {
+        margin-top: 20px;
+      }
+
+      .permission-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .permission-item i {
+        margin-right: 10px;
+        color: var(--success-color);
+      }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: var(--border-radius);
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(-20px);
+        transition: var(--transition);
+      }
+
+      .modal-overlay.active .modal {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: var(--gray-color);
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .form-control[readonly] {
+        background-color: #f5f5f5;
+      }
+
+      .status-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: var(--success-color);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(26px);
+      }
+
+      .permissions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .permission-checkbox {
+        display: flex;
+        align-items: center;
+      }
+
+      .permission-checkbox input {
+        margin-right: 8px;
+      }
+
+      .modal-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .btn-secondary {
+        background-color: var(--gray-color);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #5a6268;
+      }
+
+      /* Confirmation Modal */
+      .confirmation-modal .modal-body {
+        text-align: center;
+        padding: 30px 20px;
+      }
+
+      .confirmation-icon {
+        font-size: 50px;
+        color: var(--danger-color);
+        margin-bottom: 20px;
+      }
+
+      .confirmation-text {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main-content {
+          margin-left: 0;
+          width: 100vw;
+        }
+        .admin-details-panel {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .filters-row {
+          flex-direction: column;
+        }
+        .search-box,
+        .filter-dropdown {
+          min-width: 100%;
+        }
+        .permissions-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .table-footer {
+          flex-direction: column;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .pagination-controls {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar"></aside>
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar"></nav>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+          <div class="page-header">
+            <button class="btn btn-primary poppins">
+              <i class="fas fa-plus"></i> Add New Admin
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="filters-container">
+            <div class="filters-row">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search by name or email..."
+                />
+              </div>
+              <div class="filter-dropdown">
+                <!-- <select id="roleFilter">
+                  <option value="">All Roles</option>
+                  <option value="superadmin">Super Admin</option>
+                  <option value="admin">Admin</option>
+                  <option value="moderator">Moderator</option>
+                </select> -->
+              </div>
+              <div class="filter-dropdown">
+                <!-- <select id="statusFilter">
+                  <option value="">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Table -->
+          <div class="admin-table-container">
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <!-- <th>Role</th> -->
+                    <!-- <th>Status</th> -->
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                  <!-- Admin data will be populated here by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              <div class="pagination-info">
+                Showing <span id="showing-from">1</span>-<span id="showing-to"
+                  >5</span
+                >
+                of <span id="total-admins">5</span> admins
+              </div>
+              <div class="pagination-controls">
+                <button class="pagination-btn" id="prev-page" disabled>
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <span class="page-numbers" id="page-numbers">
+                  <span class="page-number current-page">1</span>
+                </span>
+                <button class="pagination-btn" id="next-page">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Details Panel -->
+      <div class="admin-details-panel" id="adminDetailsPanel">
+        <div class="panel-header">
+          <h3 class="panel-title">Admin Details</h3>
+          <button class="close-panel" id="closeDetailsPanel">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <img
+          src="https://randomuser.me/api/portraits/women/44.jpg"
+          alt="Admin"
+          class="admin-details-avatar"
+          id="detailAvatar"
+        />
+        <div class="detail-item">
+          <div class="detail-label">Full Name</div>
+          <div class="detail-value" id="detailName">Sarah Johnson</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Email</div>
+          <div class="detail-value" id="detailEmail">
+            sarah.johnson@example.com
+          </div>
+        </div>
+        <!-- <div class="detail-item">
+          <div class="detail-label">Role</div>
+          <div class="detail-value" id="detailRole">Super Admin</div>
+        </div> -->
+        <!-- <div class="detail-item">
+          <div class="detail-label">Status</div>
+          <div class="detail-value">
+            <span class="admin-status status-active" id="detailStatus"
+              >Active</span
+            >
+          </div>
+        </div> -->
+        <!-- <div class="permissions-list"> -->
+        <!-- <h4>Assigned Permissions</h4>
+          <div id="detailPermissions"> -->
+        <!-- Permissions will be populated here -->
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
+
+      <!-- Edit Admin Modal -->
+      <div class="modal-overlay" id="editModal">
+        <div class="modal">
+          <div class="modal-header">
+            <h3 class="modal-title">Edit Admin</h3>
+            <button class="modal-close" id="closeEditModal">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="editName">Full Name</label>
+              <input
+                type="text"
+                id="editName"
+                class="form-control"
+                placeholder="Enter full name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="editEmail">Email</label>
+              <input
+                type="email"
+                id="editEmail"
+                class="form-control"
+                placeholder="Enter email"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <!-- <label for="editRole">Role</label> -->
+              <!-- <select id="editRole" class="form-control">
+                <option value="superadmin">Super Admin</option>
+                <option value="admin">Admin</option>
+                <option value="moderator">Moderator</option>
+              </select> -->
+            </div>
+            <!-- <div class="form-group">
+              <label>Status</label>
+              <div class="status-toggle">
+                <span>Inactive</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="editStatus" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <span>Active</span>
+              </div>
+            </div> -->
+            <div class="form-group">
+              <!-- <label>Permissions</label>
+              <div class="permissions-grid" id="editPermissions"> -->
+              <!-- Permissions checkboxes will be populated here -->
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelEdit">Cancel</button>
+            <button class="btn btn-primary" id="saveAdmin">Save Changes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Modal -->
+      <div class="modal-overlay" id="deleteModal">
+        <div class="modal confirmation-modal">
+          <div class="modal-header">
+            <h3 class="modal-title">Confirm Deletion</h3>
+            <button class="modal-close" id="closeDeleteModal">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="confirmation-icon">
+              <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="confirmation-text">
+              Are you sure you want to delete this admin? This action cannot be
+              undone.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelDelete">Cancel</button>
+            <button
+              class="btn btn-primary"
+              id="confirmDelete"
+              style="background-color: var(--danger-color)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Add Admin Modal -->
+    <div class="modal-overlay" id="addModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Add New Admin</h3>
+          <button class="modal-close" id="closeAddModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="addName">Full Name</label>
+            <input
+              type="text"
+              id="addName"
+              class="form-control"
+              placeholder="Enter full name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="addEmail">Email</label>
+            <input
+              type="email"
+              id="addEmail"
+              class="form-control"
+              placeholder="Enter email"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelAdd">Cancel</button>
+          <button class="btn btn-primary" id="saveNewAdmin">Save Admin</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import Sidebar from "./sidebar.js";
+    import Navbar from "./navbar.js";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const navbar = document.querySelector(".navbar");
+      sidebar.innerHTML = Sidebar("AdminManagement");
+      navbar.innerHTML = Navbar("Admin Management");
+      // Sample admin data
+      const adminData = [
+        {
+          id: 1,
+          name: "Sarah Johnson",
+          email: "sarah.johnson@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+          // role: "superadmin",
+          status: "active",
+          permissions: [
+            "User Management",
+            "Content Management",
+            "Settings",
+            "Analytics",
+            "Reports",
+          ],
+        },
+        {
+          id: 2,
+          name: "Michael Brown",
+          email: "michael.brown@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Content Management", "Reports"],
+        },
+        {
+          id: 3,
+          name: "Emily Davis",
+          email: "emily.davis@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+          // role: "moderator",
+          status: "inactive",
+          permissions: ["Content Management", "Reports"],
+        },
+        {
+          id: 4,
+          name: "Robert Wilson",
+          email: "robert.wilson@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Settings", "Analytics"],
+        },
+        {
+          id: 5,
+          name: "Jennifer Lee",
+          email: "jennifer.lee@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/90.jpg",
+          // role: "moderator",
+          status: "active",
+          permissions: ["Content Management", "Analytics"],
+        },
+        {
+          id: 6,
+          name: "David Smith",
+          email: "david.smith@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Reports"],
+        },
+        {
+          id: 7,
+          name: "Jessica Taylor",
+          email: "jessica.taylor@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/33.jpg",
+          // role: "moderator",
+          status: "inactive",
+          permissions: ["Content Management"],
+        },
+        {
+          id: 8,
+          name: "William Anderson",
+          email: "william.anderson@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/44.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Settings"],
+        },
+        {
+          id: 9,
+          name: "Sophia Martinez",
+          email: "sophia.martinez@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/55.jpg",
+          // role: "moderator",
+          status: "active",
+          permissions: ["Content Management", "Reports"],
+        },
+        {
+          id: 10,
+          name: "Daniel Thomas",
+          email: "daniel.thomas@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/61.jpg",
+          // role: "admin",
+          status: "inactive",
+          permissions: ["User Management", "Analytics"],
+        },
+        {
+          id: 11,
+          name: "Olivia White",
+          email: "olivia.white@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/74.jpg",
+          // role: "superadmin",
+          status: "active",
+          permissions: [
+            "User Management",
+            "Content Management",
+            "Settings",
+            "Analytics",
+            "Reports",
+          ],
+        },
+        {
+          id: 12,
+          name: "James Harris",
+          email: "james.harris@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/18.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Settings"],
+        },
+        {
+          id: 13,
+          name: "Isabella Clark",
+          email: "isabella.clark@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/99.jpg",
+          // role: "moderator",
+          status: "inactive",
+          permissions: ["Content Management", "Reports"],
+        },
+        {
+          id: 14,
+          name: "Benjamin Hall",
+          email: "benjamin.hall@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/47.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Analytics"],
+        },
+        {
+          id: 15,
+          name: "Charlotte Young",
+          email: "charlotte.young@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/20.jpg",
+          // role: "moderator",
+          status: "active",
+          permissions: ["Content Management"],
+        },
+        {
+          id: 16,
+          name: "Ethan Wright",
+          email: "ethan.wright@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/35.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Reports"],
+        },
+        {
+          id: 17,
+          name: "Mia King",
+          email: "mia.king@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/40.jpg",
+          // role: "superadmin",
+          status: "active",
+          permissions: [
+            "User Management",
+            "Content Management",
+            "Settings",
+            "Analytics",
+            "Reports",
+          ],
+        },
+        {
+          id: 18,
+          name: "Alexander Scott",
+          email: "alexander.scott@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/50.jpg",
+          // role: "admin",
+          status: "inactive",
+          permissions: ["User Management", "Settings"],
+        },
+        {
+          id: 19,
+          name: "Ava Nelson",
+          email: "ava.nelson@example.com",
+          avatar: "https://randomuser.me/api/portraits/women/72.jpg",
+          // role: "moderator",
+          status: "active",
+          permissions: ["Content Management", "Analytics"],
+        },
+        {
+          id: 20,
+          name: "Logan Carter",
+          email: "logan.carter@example.com",
+          avatar: "https://randomuser.me/api/portraits/men/63.jpg",
+          // role: "admin",
+          status: "active",
+          permissions: ["User Management", "Analytics"],
+        },
+      ];
+
+      // All available permissions
+      const allPermissions = [
+        "User Management",
+        "Content Management",
+        "Settings",
+        "Analytics",
+        "Reports",
+        "Billing",
+        "Notifications",
+        "API Access",
+      ];
+
+      // DOM elements
+      const adminTableBody = document.getElementById("adminTableBody");
+      const searchInput = document.getElementById("searchInput");
+      const roleFilter = document.getElementById("roleFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const adminDetailsPanel = document.getElementById("adminDetailsPanel");
+      const closeDetailsPanel = document.getElementById("closeDetailsPanel");
+      const editModal = document.getElementById("editModal");
+      const closeEditModal = document.getElementById("closeEditModal");
+      const cancelEdit = document.getElementById("cancelEdit");
+      const deleteModal = document.getElementById("deleteModal");
+      const closeDeleteModal = document.getElementById("closeDeleteModal");
+      const cancelDelete = document.getElementById("cancelDelete");
+      const confirmDelete = document.getElementById("confirmDelete");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const addNewAdminBtn = document.querySelector(".btn.btn-primary.poppins");
+      const addModal = document.getElementById("addModal");
+      const closeAddModal = document.getElementById("closeAddModal");
+      const cancelAdd = document.getElementById("cancelAdd");
+      const saveNewAdminBtn = document.getElementById("saveNewAdmin");
+
+      // Pagination elements
+      const prevPageBtn = document.getElementById("prev-page");
+      const nextPageBtn = document.getElementById("next-page");
+      const pageNumbers = document.getElementById("page-numbers");
+      const showingFrom = document.getElementById("showing-from");
+      const showingTo = document.getElementById("showing-to");
+      const totalAdmins = document.getElementById("total-admins");
+
+      // Variables to track current admin being viewed/edited/deleted
+      let currentAdminId = null;
+
+      // Pagination state
+      let currentPage = 1;
+      const adminsPerPage = 10;
+      let filteredAdmins = [...adminData];
+
+      // Initialize the admin table
+      function renderAdminTable() {
+        adminTableBody.innerHTML = "";
+
+        const paginatedAdmins = getPaginatedAdmins();
+
+        if (paginatedAdmins.length === 0) {
+          adminTableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center;">No admins found</td>
+                </tr>
+            `;
+          return;
+        }
+
+        paginatedAdmins.forEach((admin) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>
+                    <div class="admin-name">
+                        <img src="${admin.avatar}" alt="${admin.name}" class="admin-avatar">
+                        ${admin.name}
+                    </div>
+                </td>
+                <td>${admin.email}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn view" data-id="${admin.id}" aria-label="View details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn edit" data-id="${admin.id}" aria-label="Edit admin">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" data-id="${admin.id}" aria-label="Delete admin">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+          adminTableBody.appendChild(row);
+        });
+
+        // Add event listeners to action buttons
+        document.querySelectorAll(".action-btn.view").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const adminId = parseInt(this.getAttribute("data-id"));
+            showAdminDetails(adminId);
+          });
+        });
+
+        document.querySelectorAll(".action-btn.edit").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const adminId = parseInt(this.getAttribute("data-id"));
+            openEditModal(adminId);
+          });
+        });
+
+        document.querySelectorAll(".action-btn.delete").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const adminId = parseInt(this.getAttribute("data-id"));
+            openDeleteModal(adminId);
+          });
+        });
+      }
+
+      addNewAdminBtn.addEventListener("click", openAddModal);
+      closeAddModal.addEventListener("click", function () {
+        addModal.classList.remove("active");
+      });
+      cancelAdd.addEventListener("click", function () {
+        addModal.classList.remove("active");
+      });
+      saveNewAdminBtn.addEventListener("click", saveNewAdmin);
+
+      // Also add the addModal to the click outside handler
+      window.addEventListener("click", function (event) {
+        if (event.target === addModal) {
+          addModal.classList.remove("active");
+        }
+      });
+
+      // And add the addModal to the escape key handler
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && addModal.classList.contains("active")) {
+          addModal.classList.remove("active");
+        }
+      });
+
+      // Get paginated admins for current page
+      function getPaginatedAdmins() {
+        const startIndex = (currentPage - 1) * adminsPerPage;
+        const endIndex = startIndex + adminsPerPage;
+        return filteredAdmins.slice(startIndex, endIndex);
+      }
+
+      // Update pagination controls
+      function updatePagination() {
+        const totalPages = Math.ceil(filteredAdmins.length / adminsPerPage);
+
+        // Update showing X-Y of Z admins
+        const from = (currentPage - 1) * adminsPerPage + 1;
+        const to = Math.min(currentPage * adminsPerPage, filteredAdmins.length);
+        showingFrom.textContent = from;
+        showingTo.textContent = to;
+        totalAdmins.textContent = filteredAdmins.length;
+
+        // Update pagination buttons
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+        // Update page numbers
+        pageNumbers.innerHTML = "";
+
+        if (totalPages <= 5) {
+          // Show all pages
+          for (let i = 1; i <= totalPages; i++) {
+            const page = document.createElement("span");
+            page.className = `page-number ${
+              i === currentPage ? "current-page" : ""
+            }`;
+            page.textContent = i;
+            page.addEventListener("click", () => goToPage(i));
+            pageNumbers.appendChild(page);
+          }
+        } else {
+          // Show limited pages with ellipsis
+          if (currentPage <= 3) {
+            // Show first 3 pages, ellipsis, last page
+            for (let i = 1; i <= 3; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+
+            const ellipsis = document.createElement("span");
+            ellipsis.textContent = "...";
+            pageNumbers.appendChild(ellipsis);
+
+            const lastPage = document.createElement("span");
+            lastPage.className = "page-number";
+            lastPage.textContent = totalPages;
+            lastPage.addEventListener("click", () => goToPage(totalPages));
+            pageNumbers.appendChild(lastPage);
+          } else if (currentPage >= totalPages - 2) {
+            // Show first page, ellipsis, last 3 pages
+            const firstPage = document.createElement("span");
+            firstPage.className = "page-number";
+            firstPage.textContent = 1;
+            firstPage.addEventListener("click", () => goToPage(1));
+            pageNumbers.appendChild(firstPage);
+
+            const ellipsis = document.createElement("span");
+            ellipsis.textContent = "...";
+            pageNumbers.appendChild(ellipsis);
+
+            for (let i = totalPages - 2; i <= totalPages; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+          } else {
+            // Show first page, ellipsis, current-1, current, current+1, ellipsis, last page
+            const firstPage = document.createElement("span");
+            firstPage.className = "page-number";
+            firstPage.textContent = 1;
+            firstPage.addEventListener("click", () => goToPage(1));
+            pageNumbers.appendChild(firstPage);
+
+            const ellipsis1 = document.createElement("span");
+            ellipsis1.textContent = "...";
+            pageNumbers.appendChild(ellipsis1);
+
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+              const page = document.createElement("span");
+              page.className = `page-number ${
+                i === currentPage ? "current-page" : ""
+              }`;
+              page.textContent = i;
+              page.addEventListener("click", () => goToPage(i));
+              pageNumbers.appendChild(page);
+            }
+
+            const ellipsis2 = document.createElement("span");
+            ellipsis2.textContent = "...";
+            pageNumbers.appendChild(ellipsis2);
+
+            const lastPage = document.createElement("span");
+            lastPage.className = "page-number";
+            lastPage.textContent = totalPages;
+            lastPage.addEventListener("click", () => goToPage(totalPages));
+            pageNumbers.appendChild(lastPage);
+          }
+        }
+      }
+
+      // Navigate to specific page
+      function goToPage(page) {
+        if (page < 1 || page > Math.ceil(filteredAdmins.length / adminsPerPage))
+          return;
+        currentPage = page;
+        renderAdminTable();
+        updatePagination();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function openAddModal() {
+        // Clear form
+        document.getElementById("addName").value = "";
+        document.getElementById("addEmail").value = "";
+
+        // Open the modal
+        addModal.classList.add("active");
+      }
+
+      // Add this function to handle saving a new admin
+      function saveNewAdmin() {
+        const name = document.getElementById("addName").value.trim();
+        const email = document.getElementById("addEmail").value.trim();
+
+        // Basic validation
+        if (!name || !email) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        // Create new admin ID (simple increment for demo)
+        const newId =
+          adminData.length > 0
+            ? Math.max(...adminData.map((a) => a.id)) + 1
+            : 1;
+
+        // Generate random avatar (for demo purposes)
+        const randomGender = Math.random() > 0.5 ? "men" : "women";
+        const randomId = Math.floor(Math.random() * 100);
+
+        // Add new admin to data
+        adminData.push({
+          id: newId,
+          name,
+          email,
+          avatar: `https://randomuser.me/api/portraits/${randomGender}/${randomId}.jpg`,
+        });
+
+        // Re-render table and close modal
+        filterAdmins();
+        addModal.classList.remove("active");
+      }
+
+      // Go to previous page
+      function goToPrevPage() {
+        goToPage(currentPage - 1);
+      }
+
+      // Go to next page
+      function goToNextPage() {
+        goToPage(currentPage + 1);
+      }
+
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+      }
+
+      // Format role for display
+      function formatRole(role) {
+        return role.charAt(0).toUpperCase() + role.slice(1);
+      }
+
+      // Format status for display
+      function formatStatus(status) {
+        return status.charAt(0).toUpperCase() + status.slice(1);
+      }
+
+      // Show admin details in the side panel
+      function showAdminDetails(adminId) {
+        const admin = adminData.find((a) => a.id === adminId);
+        if (!admin) return;
+
+        currentAdminId = adminId;
+
+        // Populate details
+        document.getElementById("detailAvatar").src = admin.avatar;
+        document.getElementById("detailName").textContent = admin.name;
+        document.getElementById("detailEmail").textContent = admin.email;
+        // document.getElementById("detailRole").textContent = formatRole(
+        //   admin.role
+        // );
+
+        // const statusElement = document.getElementById("detailStatus");
+        // statusElement.textContent = formatStatus(admin.status);
+        // statusElement.className = `admin-status ${
+        //   admin.status === "active" ? "status-active" : "status-inactive"
+        // }`;
+
+        // Populate permissions
+        //   const permissionsContainer =
+        //     document.getElementById("detailPermissions");
+        //   permissionsContainer.innerHTML = "";
+
+        // admin.permissions.forEach((permission) => {
+        //   const permissionItem = document.createElement("div");
+        //   permissionItem.className = "permission-item";
+        //   permissionItem.innerHTML = `
+        //                 <i class="fas fa-check-circle"></i>
+        //                 <span>${permission}</span>
+        //             `;
+        //   // permissionsContainer.appendChild(permissionItem);
+        // });
+
+        // Open the panel
+        adminDetailsPanel.classList.add("open");
+      }
+
+      // Open edit modal with admin data
+      function openEditModal(adminId) {
+        const admin = adminData.find((a) => a.id === adminId);
+        if (!admin) return;
+
+        currentAdminId = adminId;
+
+        // Populate form
+        document.getElementById("editName").value = admin.name;
+        document.getElementById("editEmail").value = admin.email;
+        //   document.getElementById("editRole").value = admin.role;
+        //   document.getElementById("editStatus").checked =
+        //     admin.status === "active";
+
+        // Populate permissions checkboxes
+        //   const permissionsContainer =
+        //     document.getElementById("editPermissions");
+        //   permissionsContainer.innerHTML = "";
+
+        allPermissions.forEach((permission) => {
+          const checkboxDiv = document.createElement("div");
+          checkboxDiv.className = "permission-checkbox";
+
+          const checkboxId = `perm-${permission
+            .toLowerCase()
+            .replace(/\s+/g, "-")}`;
+          const isChecked = admin.permissions.includes(permission);
+
+          checkboxDiv.innerHTML = `
+                        <input type="checkbox" id="${checkboxId}" value="${permission}" ${
+            isChecked ? "checked" : ""
+          }>
+                        <label for="${checkboxId}">${permission}</label>
+                    `;
+          // permissionsContainer.appendChild(checkboxDiv);
+        });
+
+        // Open the modal
+        editModal.classList.add("active");
+      }
+
+      // Open delete confirmation modal
+      function openDeleteModal(adminId) {
+        currentAdminId = adminId;
+        deleteModal.classList.add("active");
+      }
+
+      // Filter admins based on search and filters
+      function filterAdmins() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const roleFilterValue = roleFilter ? roleFilter.value : "";
+        const statusFilterValue = statusFilter ? statusFilter.value : "";
+
+        filteredAdmins = adminData.filter((admin) => {
+          const matchesSearch =
+            admin.name.toLowerCase().includes(searchTerm) ||
+            admin.email.toLowerCase().includes(searchTerm);
+          const matchesRole =
+            !roleFilterValue || admin.role === roleFilterValue;
+          const matchesStatus =
+            !statusFilterValue || admin.status === statusFilterValue;
+
+          return matchesSearch && matchesRole && matchesStatus;
+        });
+
+        // Reset to first page when filters change
+        currentPage = 1;
+        renderAdminTable();
+        updatePagination();
+      }
+
+      // Save edited admin data
+      function saveAdmin() {
+        const adminIndex = adminData.findIndex((a) => a.id === currentAdminId);
+        if (adminIndex === -1) return;
+
+        // Get form values
+        const name = document.getElementById("editName").value;
+        const role = document.getElementById("editRole")
+          ? document.getElementById("editRole").value
+          : "admin";
+        const status = document.getElementById("editStatus")
+          ? document.getElementById("editStatus").checked
+            ? "active"
+            : "inactive"
+          : "active";
+
+        // Get selected permissions
+        const permissionCheckboxes = document.querySelectorAll(
+          '#editPermissions input[type="checkbox"]:checked'
+        );
+        const permissions = Array.from(permissionCheckboxes).map(
+          (cb) => cb.value
+        );
+
+        // Update admin data
+        adminData[adminIndex] = {
+          ...adminData[adminIndex],
+          name,
+          role,
+          status,
+          permissions,
+        };
+
+        // Re-render table and close modal
+        filterAdmins();
+        editModal.classList.remove("active");
+      }
+
+      // Delete admin
+      function deleteAdmin() {
+        const adminIndex = adminData.findIndex((a) => a.id === currentAdminId);
+        if (adminIndex === -1) return;
+
+        // Remove admin from data
+        adminData.splice(adminIndex, 1);
+
+        // Re-render table and close modal
+        filterAdmins();
+        deleteModal.classList.remove("active");
+
+        // Also close details panel if open
+        adminDetailsPanel.classList.remove("open");
+      }
+
+      // Event listeners
+      if (searchInput) searchInput.addEventListener("input", filterAdmins);
+      if (roleFilter) roleFilter.addEventListener("change", filterAdmins);
+      if (statusFilter) statusFilter.addEventListener("change", filterAdmins);
+
+      closeDetailsPanel.addEventListener("click", function () {
+        adminDetailsPanel.classList.remove("open");
+      });
+
+      closeEditModal.addEventListener("click", function () {
+        editModal.classList.remove("active");
+      });
+
+      cancelEdit.addEventListener("click", function () {
+        editModal.classList.remove("active");
+      });
+
+      closeDeleteModal.addEventListener("click", function () {
+        deleteModal.classList.remove("active");
+      });
+
+      cancelDelete.addEventListener("click", function () {
+        deleteModal.classList.remove("active");
+      });
+
+      confirmDelete.addEventListener("click", deleteAdmin);
+
+      document.getElementById("saveAdmin").addEventListener("click", saveAdmin);
+
+      // Pagination controls
+      prevPageBtn.addEventListener("click", goToPrevPage);
+      nextPageBtn.addEventListener("click", goToNextPage);
+
+      menuToggle.addEventListener("click", toggleSidebar);
+
+      // Close modals when clicking outside
+      window.addEventListener("click", function (event) {
+        if (event.target === editModal) {
+          editModal.classList.remove("active");
+        }
+        if (event.target === deleteModal) {
+          deleteModal.classList.remove("active");
+        }
+      });
+
+      // Keyboard accessibility
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          editModal.classList.remove("active");
+          deleteModal.classList.remove("active");
+          adminDetailsPanel.classList.remove("open");
+        }
+      });
+
+      // Initial render
+      filterAdmins();
+    });
+  </script>
+</html>

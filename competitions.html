@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Competition Management</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: var(--transition);
+        width: calc(100vw - var(--sidebar-width));
+      }
+
+      .menu-toggle {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray-color);
+        margin-right: 20px;
+        display: none;
+      }
+
+      .notification-bell {
+        position: relative;
+        font-size: 1.2rem;
+        color: var(--gray-color);
+        cursor: pointer;
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: bold;
+      }
+
+      /* Content Area Styles */
+      .page-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--dark-color);
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background-color: #d90429;
+        transform: translateY(-2px);
+      }
+
+      /* Filters and Search Styles */
+      .filters-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .filters-row {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .filter-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .filter-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--gray-color);
+      }
+
+      .search-input,
+      .select-input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid var(--light-gray);
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+
+      .search-input:focus,
+      .select-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .search-input {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='11' cy='11' r='8'%3e%3c/circle%3e%3cpath d='M21 21l-4.35-4.35'%3e%3c/path%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+        padding-right: 35px;
+      }
+
+      /* Table Styles */
+      .table-container {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+      .competitions-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .competitions-table th {
+        background-color: #f8f9fa;
+        padding: 15px 20px;
+        text-align: left;
+        font-weight: 600;
+        color: var(--gray-color);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      .competitions-table td {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--light-gray);
+        vertical-align: middle;
+      }
+
+      .competitions-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .competitions-table tr:nth-child(even) {
+        background-color: #fbfcfd;
+      }
+
+      .competitions-table tr:hover {
+        background-color: #f1f3f9;
+      }
+
+      .competition-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 0.6rem;
+        object-fit: cover;
+        background-color: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .competition-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .competition-name {
+        font-weight: 500;
+      }
+
+      .sport-name {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #e8f4fd;
+        color: var(--primary-color);
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .action-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        background-color: transparent;
+        border: none;
+        color: var(--gray-color);
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .action-btn.view:hover {
+        color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.1);
+      }
+
+      .action-btn.edit:hover {
+        color: var(--success-color);
+        background-color: rgba(76, 201, 240, 0.1);
+      }
+
+      .action-btn.delete:hover {
+        color: var(--danger-color);
+        background-color: rgba(239, 35, 60, 0.1);
+      }
+
+      /* Pagination Styles */
+      .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-top: 1px solid var(--light-gray);
+        background-color: white;
+      }
+
+      .pagination-info {
+        font-size: 0.9rem;
+        color: var(--gray-color);
+      }
+
+      .pagination-controls {
+        display: flex;
+        gap: 5px;
+      }
+
+      .page-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        background-color: transparent;
+        border: 1px solid var(--light-gray);
+        color: var(--gray-color);
+      }
+
+      .page-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .page-btn:hover:not(.active) {
+        background-color: var(--light-gray);
+      }
+
+      .page-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Modal Styles */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal {
+        background-color: white;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        transform: translateY(20px);
+        transition: var(--transition);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-overlay.active .modal {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--light-gray);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--gray-color);
+        transition: var(--transition);
+      }
+
+      .modal-close:hover {
+        color: var(--danger-color);
+        transform: rotate(90deg);
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid var(--light-gray);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid var(--light-gray);
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .logo-upload {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo-preview {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        background-color: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .logo-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .upload-btn {
+        flex: 1;
+      }
+
+      .upload-btn input[type="file"] {
+        display: none;
+      }
+
+      .upload-btn label {
+        display: block;
+        padding: 10px 15px;
+        background-color: var(--light-gray);
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .upload-btn label:hover {
+        background-color: #e2e6ea;
+      }
+
+      /* Confirmation Modal Styles */
+      .confirmation-modal .modal {
+        max-width: 400px;
+      }
+
+      .confirmation-icon {
+        text-align: center;
+        font-size: 3rem;
+        color: var(--danger-color);
+        margin-bottom: 20px;
+      }
+
+      .confirmation-text {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .confirmation-text h3 {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .confirmation-text p {
+        color: var(--gray-color);
+      }
+
+      /* Responsive Styles */
+
+      @media (max-width: 768px) {
+        .filters-row {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .filter-group {
+          min-width: 100%;
+        }
+
+        .pagination {
+          flex-direction: column;
+          gap: 15px;
+          align-items: center;
+        }
+      }
+
+      /* Animation Styles */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar"></aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar"></nav>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+          <div class="page-header">
+            <!-- <h1 class="page-title">Competition Management</h1> -->
+            <button class="btn btn-primary poppins" id="addCompetitionBtn">
+              <i class="fas fa-plus"></i> Add Competition
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="filters-container">
+            <div class="filters-row">
+              <div class="filter-group">
+                <label for="search">Search</label>
+                <input
+                  type="text"
+                  id="search"
+                  class="search-input"
+                  placeholder="Search competitions..."
+                />
+              </div>
+              <div class="filter-group">
+                <label for="sportFilter">Filter by Sport</label>
+                <select id="sportFilter" class="select-input">
+                  <option value="">All Sports</option>
+                  <option value="Football">Football</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Tennis">Tennis</option>
+                  <option value="Volleyball">Volleyball</option>
+                  <option value="Cricket">Cricket</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Competitions Table -->
+          <div class="table-container">
+            <div class="table-responsive">
+              <table class="competitions-table">
+                <thead>
+                  <tr>
+                    <th>Logo</th>
+                    <th>Competition Name</th>
+                    <th>Sport Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="competition-logo">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Premier League"
+                        />
+                      </div>
+                    </td>
+                    <td class="competition-name">Premier League</td>
+                    <td><span class="sport-name">Football</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button
+                          class="action-btn view"
+                          title="View Details"
+                          data-id="1"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-btn edit"
+                          title="Edit"
+                          data-id="1"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          class="action-btn delete"
+                          title="Delete"
+                          data-id="1"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="competition-logo">
+                        <img src="https://via.placeholder.com/40" alt="NBA" />
+                      </div>
+                    </td>
+                    <td class="competition-name">NBA</td>
+                    <td><span class="sport-name">Basketball</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button
+                          class="action-btn view"
+                          title="View Details"
+                          data-id="2"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-btn edit"
+                          title="Edit"
+                          data-id="2"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          class="action-btn delete"
+                          title="Delete"
+                          data-id="2"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="competition-logo">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="Wimbledon"
+                        />
+                      </div>
+                    </td>
+                    <td class="competition-name">Wimbledon</td>
+                    <td><span class="sport-name">Tennis</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button
+                          class="action-btn view"
+                          title="View Details"
+                          data-id="3"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-btn edit"
+                          title="Edit"
+                          data-id="3"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          class="action-btn delete"
+                          title="Delete"
+                          data-id="3"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="competition-logo">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="FIVB World Championship"
+                        />
+                      </div>
+                    </td>
+                    <td class="competition-name">FIVB World Championship</td>
+                    <td><span class="sport-name">Volleyball</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button
+                          class="action-btn view"
+                          title="View Details"
+                          data-id="4"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-btn edit"
+                          title="Edit"
+                          data-id="4"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          class="action-btn delete"
+                          title="Delete"
+                          data-id="4"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="competition-logo">
+                        <img
+                          src="https://via.placeholder.com/40"
+                          alt="ICC World Cup"
+                        />
+                      </div>
+                    </td>
+                    <td class="competition-name">ICC World Cup</td>
+                    <td><span class="sport-name">Cricket</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button
+                          class="action-btn view"
+                          title="View Details"
+                          data-id="5"
+                        >
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button
+                          class="action-btn edit"
+                          title="Edit"
+                          data-id="5"
+                        >
+                          <i class="fas fa-pen"></i>
+                        </button>
+                        <button
+                          class="action-btn delete"
+                          title="Delete"
+                          data-id="5"
+                        >
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+              <div class="pagination-info">Showing 1 to 5 of 15 entries</div>
+              <div class="pagination-controls">
+                <button class="page-btn disabled">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add/Edit Competition Modal -->
+    <div class="modal-overlay" id="competitionModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalTitle">Add New Competition</h3>
+          <button class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="competitionForm">
+            <input type="hidden" id="competitionId" />
+            <div class="form-group">
+              <label for="competitionName">Competition Name</label>
+              <input
+                type="text"
+                id="competitionName"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="sportSelect">Sport</label>
+              <select id="sportSelect" class="form-control" required>
+                <option value="">Select Sport</option>
+                <option value="Football">Football</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Cricket">Cricket</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Logo</label>
+              <div class="logo-upload">
+                <div class="logo-preview" id="logoPreview">
+                  <i
+                    class="fas fa-trophy"
+                    style="font-size: 2rem; color: #ccc"
+                  ></i>
+                </div>
+                <div class="upload-btn">
+                  <input type="file" id="logoUpload" accept="image/*" />
+                  <label for="logoUpload">Choose Logo</label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelBtn">Cancel</button>
+          <button class="btn btn-primary" id="saveBtn">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Competition Modal -->
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Competition Details</h3>
+          <button class="modal-close" id="viewModalClose">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="competition-details">
+            <div style="text-align: center; margin-bottom: 20px">
+              <div
+                class="competition-logo"
+                style="width: 100px; height: 100px; margin: 0 auto 15px"
+              >
+                <img src="" alt="Competition Logo" id="viewLogo" />
+              </div>
+              <h2 id="viewName"></h2>
+              <span class="sport-name" id="viewSport"></span>
+            </div>
+
+            <div style="margin-top: 30px">
+              <h4 style="margin-bottom: 15px; color: var(--gray-color)">
+                Additional Information
+              </h4>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px"
+              >
+                <div>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      color: var(--gray-color);
+                      margin-bottom: 5px;
+                    "
+                  >
+                    Created At
+                  </p>
+                  <p style="font-weight: 500" id="viewCreatedAt">-</p>
+                </div>
+                <div>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      color: var(--gray-color);
+                      margin-bottom: 5px;
+                    "
+                  >
+                    Updated At
+                  </p>
+                  <p style="font-weight: 500" id="viewUpdatedAt">-</p>
+                </div>
+                <div>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      color: var(--gray-color);
+                      margin-bottom: 5px;
+                    "
+                  >
+                    Status
+                  </p>
+                  <p style="font-weight: 500">
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background-color: #4ade80;
+                        margin-right: 5px;
+                      "
+                    ></span>
+                    Active
+                  </p>
+                </div>
+                <div>
+                  <p
+                    style="
+                      font-size: 0.9rem;
+                      color: var(--gray-color);
+                      margin-bottom: 5px;
+                    "
+                  >
+                    Teams
+                  </p>
+                  <p style="font-weight: 500" id="viewTeams">20</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="closeViewBtn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay confirmation-modal" id="confirmationModal">
+      <div class="modal">
+        <div class="modal-body">
+          <div class="confirmation-icon">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="confirmation-text">
+            <h3>Are you sure?</h3>
+            <p>You won't be able to revert this!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelDeleteBtn">Cancel</button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">
+            Yes, delete it!
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import Sidebar from "./sidebar.js";
+    import Navbar from "./navbar.js";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const navbar = document.querySelector(".navbar");
+      sidebar.innerHTML = Sidebar("Competitions");
+      navbar.innerHTML = Navbar("Competitions");
+
+      // DOM Elements
+      const menuToggle = document.querySelector(".menu-toggle");
+      const addCompetitionBtn = document.getElementById("addCompetitionBtn");
+      const competitionModal = document.getElementById("competitionModal");
+      const modalClose = document.getElementById("modalClose");
+      const cancelBtn = document.getElementById("cancelBtn");
+      const saveBtn = document.getElementById("saveBtn");
+      const competitionForm = document.getElementById("competitionForm");
+      const viewModal = document.getElementById("viewModal");
+      const viewModalClose = document.getElementById("viewModalClose");
+      const closeViewBtn = document.getElementById("closeViewBtn");
+      const confirmationModal = document.getElementById("confirmationModal");
+      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+      const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+      const logoUpload = document.getElementById("logoUpload");
+      const logoPreview = document.getElementById("logoPreview");
+      const searchInput = document.getElementById("search");
+      const sportFilter = document.getElementById("sportFilter");
+      const competitionsTable = document.querySelector(
+        ".competitions-table tbody"
+      );
+      const paginationInfo = document.querySelector(".pagination-info");
+      const paginationControls = document.querySelector(".pagination-controls");
+
+      // State variables
+      const localStorageData =
+        JSON.parse(localStorage.getItem("competitionss")) || false;
+      let competitions = localStorageData || [
+        {
+          id: 1,
+          name: "AFL (Australian Football League)",
+          sport: "Australian Rules Football",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-01-10",
+          updatedAt: "2023-03-15",
+          teams: 18,
+        },
+        {
+          id: 2,
+          name: "NRL (National Rugby League)",
+          sport: "Rugby League",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-02-05",
+          updatedAt: "2023-04-20",
+          teams: 16,
+        },
+        {
+          id: 3,
+          name: "Big Bash League",
+          sport: "Cricket",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2021-12-01",
+          updatedAt: "2023-01-10",
+          teams: 8,
+        },
+        {
+          id: 4,
+          name: "Sheffield Shield",
+          sport: "Cricket",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2021-10-15",
+          updatedAt: "2023-02-28",
+          teams: 6,
+        },
+        {
+          id: 5,
+          name: "A-League Men",
+          sport: "Football",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-03-20",
+          updatedAt: "2023-05-01",
+          teams: 12,
+        },
+        {
+          id: 6,
+          name: "Super Rugby Pacific",
+          sport: "Rugby Union",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-04-12",
+          updatedAt: "2023-06-15",
+          teams: 12,
+        },
+        {
+          id: 7,
+          name: "Australian Open",
+          sport: "Tennis",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2021-11-05",
+          updatedAt: "2023-01-30",
+          teams: 128,
+        },
+        {
+          id: 8,
+          name: "Netball Super League",
+          sport: "Netball",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-05-18",
+          updatedAt: "2023-07-10",
+          teams: 10,
+        },
+        {
+          id: 9,
+          name: "National Basketball League",
+          sport: "Basketball",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-06-22",
+          updatedAt: "2023-08-05",
+          teams: 10,
+        },
+        {
+          id: 10,
+          name: "Supercars Championship",
+          sport: "Motorsport",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-07-30",
+          updatedAt: "2023-09-12",
+          teams: 25,
+        },
+        {
+          id: 11,
+          name: "W-League",
+          sport: "Football (Women)",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-08-14",
+          updatedAt: "2023-10-01",
+          teams: 11,
+        },
+        {
+          id: 12,
+          name: "AFL Women's",
+          sport: "Australian Rules Football (Women)",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-09-05",
+          updatedAt: "2023-11-15",
+          teams: 18,
+        },
+        {
+          id: 13,
+          name: "NBL1",
+          sport: "Basketball",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-10-20",
+          updatedAt: "2023-12-10",
+          teams: 24,
+        },
+        {
+          id: 14,
+          name: "National Premier Leagues",
+          sport: "Football",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-11-15",
+          updatedAt: "2024-01-05",
+          teams: 32,
+        },
+        {
+          id: 15,
+          name: "Australian Surf League",
+          sport: "Surfing",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2022-12-01",
+          updatedAt: "2024-02-20",
+          teams: 8,
+        },
+        {
+          id: 16,
+          name: "Australian Hockey League",
+          sport: "Hockey",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2023-01-10",
+          updatedAt: "2024-03-01",
+          teams: 12,
+        },
+        {
+          id: 17,
+          name: "National Touch League",
+          sport: "Touch Football",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2023-02-15",
+          updatedAt: "2024-04-10",
+          teams: 16,
+        },
+        {
+          id: 18,
+          name: "Australian Volleyball League",
+          sport: "Volleyball",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2023-03-20",
+          updatedAt: "2024-05-15",
+          teams: 10,
+        },
+        {
+          id: 19,
+          name: "National Water Polo League",
+          sport: "Water Polo",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2023-04-25",
+          updatedAt: "2024-06-20",
+          teams: 8,
+        },
+        {
+          id: 20,
+          name: "Australian Athletics Championships",
+          sport: "Athletics",
+          logo: "https://via.placeholder.com/40",
+          createdAt: "2023-05-30",
+          updatedAt: "2024-07-10",
+          teams: 50,
+        },
+      ];
+      let competitionToDelete = null;
+      let currentPage = 1;
+      const itemsPerPage = 10;
+
+      // Initialize the app
+      function init() {
+        saveToLocalStorage();
+        renderCompetitions();
+        setupPagination();
+        attachEventListeners();
+      }
+
+      // Save competitions to localStorage
+      function saveToLocalStorage() {
+        localStorage.setItem("competitions", JSON.stringify(competitions));
+      }
+
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+      }
+
+      // Show add competition modal
+      function showAddModal() {
+        document.getElementById("modalTitle").textContent =
+          "Add New Competition";
+        document.getElementById("competitionId").value = "";
+        competitionForm.reset();
+        logoPreview.innerHTML =
+          '<i class="fas fa-trophy" style="font-size: 2rem; color: #ccc;"></i>';
+        competitionModal.classList.add("active");
+      }
+
+      // Close modals
+      function closeModal(modal) {
+        modal.classList.remove("active");
+      }
+
+      // Handle logo upload preview
+      function handleLogoUpload(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            logoPreview.innerHTML = `<img src="${event.target.result}" alt="Logo Preview">`;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      // View competition details
+      function showViewModal(id) {
+        const competition = competitions.find((c) => c.id === id);
+
+        if (competition) {
+          document.getElementById("viewName").textContent = competition.name;
+          document.getElementById("viewSport").textContent = competition.sport;
+          document.getElementById("viewLogo").src = competition.logo;
+          document.getElementById("viewCreatedAt").textContent =
+            competition.createdAt;
+          document.getElementById("viewUpdatedAt").textContent =
+            competition.updatedAt;
+          document.getElementById("viewTeams").textContent = competition.teams;
+
+          viewModal.classList.add("active");
+        }
+      }
+
+      // Edit competition
+      function showEditModal(id) {
+        const competition = competitions.find((c) => c.id === id);
+
+        if (competition) {
+          document.getElementById("modalTitle").textContent =
+            "Edit Competition";
+          document.getElementById("competitionId").value = competition.id;
+          document.getElementById("competitionName").value = competition.name;
+          document.getElementById("sportSelect").value = competition.sport;
+          logoPreview.innerHTML = `<img src="${competition.logo}" alt="Logo Preview">`;
+
+          competitionModal.classList.add("active");
+        }
+      }
+
+      // Delete competition
+      function showDeleteModal(id) {
+        competitionToDelete = id;
+        confirmationModal.classList.add("active");
+      }
+
+      // Confirm delete
+      function confirmDelete() {
+        if (competitionToDelete) {
+          competitions = competitions.filter(
+            (c) => c.id !== competitionToDelete
+          );
+          saveToLocalStorage();
+          renderCompetitions();
+          setupPagination();
+          closeModal(confirmationModal);
+          competitionToDelete = null;
+        }
+      }
+
+      // Save competition (add/edit)
+      function saveCompetition() {
+        const id = document.getElementById("competitionId").value;
+        const name = document.getElementById("competitionName").value;
+        const sport = document.getElementById("sportSelect").value;
+        const logo = logoPreview.querySelector("img")
+          ? logoPreview.querySelector("img").src
+          : "";
+
+        if (!name || !sport) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        const now = new Date().toISOString().split("T")[0];
+
+        if (id) {
+          // Update existing competition
+          const index = competitions.findIndex((c) => c.id === parseInt(id));
+          if (index !== -1) {
+            competitions[index] = {
+              ...competitions[index],
+              name,
+              sport,
+              logo: logo || competitions[index].logo,
+              updatedAt: now,
+            };
+          }
+        } else {
+          // Add new competition
+          const newId =
+            competitions.length > 0
+              ? Math.max(...competitions.map((c) => c.id)) + 1
+              : 1;
+          competitions.push({
+            id: newId,
+            name,
+            sport,
+            logo: logo || "https://via.placeholder.com/40",
+            createdAt: now,
+            updatedAt: now,
+            teams: Math.floor(Math.random() * 100) + 1,
+          });
+        }
+
+        saveToLocalStorage();
+        renderCompetitions();
+        setupPagination();
+        closeModal(competitionModal);
+      }
+
+      // Filter competitions
+      function filterCompetitions() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const sportValue = sportFilter.value;
+
+        const filtered = competitions.filter((competition) => {
+          const matchesSearch = competition.name
+            .toLowerCase()
+            .includes(searchTerm);
+          const matchesSport =
+            sportValue === "" || competition.sport === sportValue;
+          return matchesSearch && matchesSport;
+        });
+
+        currentPage = 1; // Reset to first page when filtering
+        renderCompetitions(filtered);
+        setupPagination(filtered);
+      }
+
+      // Render competitions table
+      function renderCompetitions(comps = competitions) {
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const paginatedComps =
+          comps?.slice(startIdx, startIdx + itemsPerPage) || [];
+
+        competitionsTable.innerHTML = "";
+
+        if (paginatedComps.length === 0) {
+          competitionsTable.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 30px;">
+                        No competitions found. Try adjusting your search filters.
+                    </td>
+                </tr>
+            `;
+          return;
+        }
+
+        paginatedComps.forEach((competition) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>
+                    <div class="competition-logo">
+                        <img src="${competition.logo}" alt="${competition.name}">
+                    </div>
+                </td>
+                <td class="competition-name">${competition.name}</td>
+                <td><span class="sport-name">${competition.sport}</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn view" title="View Details" data-id="${competition.id}">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn edit" title="Edit" data-id="${competition.id}">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <button class="action-btn delete" title="Delete" data-id="${competition.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+          competitionsTable.appendChild(row);
+        });
+
+        // Update pagination info
+        const totalItems = comps.length;
+        const startItem = totalItems > 0 ? startIdx + 1 : 0;
+        const endItem = Math.min(startIdx + itemsPerPage, totalItems);
+        paginationInfo.textContent = `Showing ${startItem} to ${endItem} of ${totalItems} entries`;
+      }
+
+      // Setup pagination
+      function setupPagination(comps = competitions) {
+        const totalItems = comps.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        paginationControls.innerHTML = "";
+
+        // Previous button
+        const prevBtn = document.createElement("button");
+        prevBtn.className = `page-btn ${currentPage === 1 ? "disabled" : ""}`;
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderCompetitions(comps);
+            setupPagination(comps);
+          }
+        });
+        paginationControls.appendChild(prevBtn);
+
+        // Page buttons
+        for (let i = 1; i <= totalPages; i++) {
+          const pageBtn = document.createElement("button");
+          pageBtn.className = `page-btn ${i === currentPage ? "active" : ""}`;
+          pageBtn.textContent = i;
+          pageBtn.addEventListener("click", () => {
+            currentPage = i;
+            renderCompetitions(comps);
+            setupPagination(comps);
+          });
+          paginationControls.appendChild(pageBtn);
+        }
+
+        // Next button
+        const nextBtn = document.createElement("button");
+        nextBtn.className = `page-btn ${
+          currentPage === totalPages ? "disabled" : ""
+        }`;
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderCompetitions(comps);
+            setupPagination(comps);
+          }
+        });
+        paginationControls.appendChild(nextBtn);
+      }
+
+      // Attach event listeners
+      function attachEventListeners() {
+        // Sidebar toggle
+        menuToggle.addEventListener("click", toggleSidebar);
+
+        // Modal controls
+        addCompetitionBtn.addEventListener("click", showAddModal);
+        modalClose.addEventListener("click", () =>
+          closeModal(competitionModal)
+        );
+        cancelBtn.addEventListener("click", () => closeModal(competitionModal));
+        viewModalClose.addEventListener("click", () => closeModal(viewModal));
+        closeViewBtn.addEventListener("click", () => closeModal(viewModal));
+        cancelDeleteBtn.addEventListener("click", () =>
+          closeModal(confirmationModal)
+        );
+
+        // Close modals when clicking outside
+        window.addEventListener("click", (event) => {
+          if (event.target === competitionModal) closeModal(competitionModal);
+          if (event.target === viewModal) closeModal(viewModal);
+          if (event.target === confirmationModal) closeModal(confirmationModal);
+        });
+
+        // Form controls
+        logoUpload.addEventListener("change", handleLogoUpload);
+        saveBtn.addEventListener("click", saveCompetition);
+        confirmDeleteBtn.addEventListener("click", confirmDelete);
+
+        // Filter controls
+        searchInput.addEventListener("input", filterCompetitions);
+        sportFilter.addEventListener("change", filterCompetitions);
+
+        // Table actions (delegated events)
+        competitionsTable.addEventListener("click", (e) => {
+          const target = e.target.closest(".action-btn");
+          if (!target) return;
+
+          const id = parseInt(target.getAttribute("data-id"));
+
+          if (target.classList.contains("view")) {
+            showViewModal(id);
+          } else if (target.classList.contains("edit")) {
+            showEditModal(id);
+          } else if (target.classList.contains("delete")) {
+            showDeleteModal(id);
+          }
+        });
+      }
+
+      // Initialize the application
+      init();
+    });
+  </script>
+</html>

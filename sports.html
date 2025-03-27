@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sports Management | Admin Panel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: all var(--transition-speed) ease;
+        width: calc(100vw - var(--sidebar-width));
+      }
+
+      /* Content Area */
+
+      .page-title h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--dark-color);
+      }
+
+      .page-title p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      /* Filters and Search */
+      .filters-section {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .search-box {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+      }
+
+      .search-box input {
+        width: 100%;
+        padding: 0.7rem 1rem 0.7rem 2.5rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+      }
+
+      .search-box input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .search-box i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+      }
+
+      .filter-dropdown {
+        min-width: 200px;
+      }
+
+      .filter-dropdown select {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        color: #333;
+        background-color: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .filter-dropdown select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      /* Sports Table */
+      .sports-table-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background-color: #f8f9fa;
+      }
+
+      th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--dark-color);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+      }
+
+      td {
+        padding: 1rem;
+        border-top: 1px solid #eee;
+        color: #555;
+        font-size: 0.9rem;
+      }
+
+      tr:hover td {
+        background-color: #f8f9fa;
+      }
+
+      .image-container {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f7fa;
+      }
+
+      .sport-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .sport-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .action-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+        color: white;
+        font-size: 0.8rem;
+      }
+
+      .action-btn.view {
+        background-color: var(--success-color);
+      }
+
+      .action-btn.edit {
+        background-color: var(--accent-color);
+      }
+
+      .action-btn.delete {
+        background-color: var(--danger-color);
+      }
+
+      .action-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Pagination - Updated to match competition management style */
+      .pagination {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-top: 1px solid var(--light-gray);
+        background-color: white;
+      }
+
+      .pagination-info {
+        font-size: 0.9rem;
+        color: var(--gray-color);
+      }
+
+      .pagination-controls {
+        display: flex;
+        gap: 5px;
+      }
+
+      .page-btn {
+        width: 35px;
+        height: 35px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        background-color: transparent;
+        border: 1px solid var(--light-gray);
+        color: var(--gray-color);
+      }
+
+      .page-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .page-btn:hover:not(.active) {
+        background-color: var(--light-gray);
+      }
+
+      .page-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 600px;
+        max-height: 90vh;
+        overflow-y: auto;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+      }
+
+      .modal.active .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        font-weight: 600;
+        color: var(--dark-color);
+      }
+
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        transition: all 0.2s ease;
+      }
+
+      .modal-close:hover {
+        color: var(--danger-color);
+        transform: rotate(90deg);
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      .modal-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.8rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark-color);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      }
+
+      .file-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        border: 2px dashed #ddd;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .file-upload:hover {
+        border-color: var(--primary-color);
+        background-color: rgba(67, 97, 238, 0.05);
+      }
+
+      .file-upload i {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .file-upload p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .file-upload span {
+        color: var(--primary-color);
+        font-size: 0.8rem;
+      }
+
+      /* Confirmation Modal */
+      .confirmation-modal .modal-content {
+        max-width: 400px;
+      }
+
+      .confirmation-icon {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .confirmation-icon i {
+        font-size: 3rem;
+        color: var(--danger-color);
+      }
+
+      .confirmation-text {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .confirmation-text h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+        color: var(--dark-color);
+      }
+
+      .confirmation-text p {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      /* View Modal */
+      .sport-details {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .sport-details-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .sport-details-logo-container {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f7fa;
+      }
+
+      .sport-details-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .sport-details-title h3 {
+        font-size: 1.5rem;
+        color: var(--dark-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .sport-details-image-container {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f7fa;
+      }
+
+      .sport-details-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .sport-details-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .detail-item h5 {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-bottom: 0.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .detail-item p {
+        font-size: 0.95rem;
+        color: var(--dark-color);
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          width: 100vw;
+        }
+
+        .navbar-toggle {
+          display: block;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .filters-section {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-box {
+          min-width: 100%;
+        }
+
+        .sport-details-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .sport-details-info {
+          grid-template-columns: 1fr;
+        }
+
+        .pagination {
+          flex-direction: column;
+          gap: 15px;
+          align-items: center;
+        }
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.8rem;
+      }
+
+      .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <aside class="sidebar"></aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar"></nav>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+          <!-- Page Header -->
+          <div class="page-header">
+            <button class="btn btn-primary poppins" id="addSportBtn">
+              <i class="fas fa-plus"></i> Add Sport
+            </button>
+          </div>
+
+          <!-- Filters Section -->
+          <div class="filters-section">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search sports..."
+              />
+            </div>
+            <div class="filter-dropdown hide">
+              <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="team">Team Sports</option>
+                <option value="individual">Individual Sports</option>
+                <option value="water">Water Sports</option>
+                <option value="winter">Winter Sports</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sports Table -->
+          <div class="sports-table-container">
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Logo</th>
+                    <th>Image</th>
+                    <th>Sport Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sportsTableBody">
+                  <!-- Sports data will be inserted here by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination - Updated to match competition management style -->
+            <div class="pagination">
+              <div class="pagination-info">Showing 1 to 5 of 8 entries</div>
+              <div class="pagination-controls">
+                <button class="page-btn disabled">
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add Sport Modal -->
+    <div class="modal" id="addSportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add New Sport</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="addSportForm">
+            <div class="form-group">
+              <label for="sportName">Sport Name</label>
+              <input
+                type="text"
+                id="sportName"
+                class="form-control"
+                placeholder="Enter sport name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Sport Logo</label>
+              <div class="file-upload" id="logoUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload logo</p>
+                <span>PNG, JPG up to 2MB</span>
+                <input
+                  type="file"
+                  id="sportLogo"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div
+                class="image-container"
+                id="logoPreviewContainer"
+                style="display: none; margin-top: 10px"
+              >
+                <img
+                  id="logoPreview"
+                  class="sport-logo"
+                  src="#"
+                  alt="Logo Preview"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sport Image</label>
+              <div class="file-upload" id="imageUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload image</p>
+                <span>PNG, JPG up to 5MB</span>
+                <input
+                  type="file"
+                  id="sportImage"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div
+                class="image-container"
+                id="imagePreviewContainer"
+                style="display: none; margin-top: 10px"
+              >
+                <img
+                  id="imagePreview"
+                  class="sport-image"
+                  src="#"
+                  alt="Image Preview"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelAddSport">Cancel</button>
+          <button class="btn btn-primary" id="submitAddSport">Add Sport</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Sport Modal -->
+    <div class="modal" id="editSportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Sport</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="editSportForm">
+            <div class="form-group">
+              <label for="editSportName">Sport Name</label>
+              <input
+                type="text"
+                id="editSportName"
+                class="form-control"
+                placeholder="Enter sport name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Sport Logo</label>
+              <div class="file-upload" id="editLogoUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload new logo</p>
+                <span>PNG, JPG up to 2MB</span>
+                <input
+                  type="file"
+                  id="editSportLogo"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div
+                class="image-container"
+                id="editLogoPreviewContainer"
+                style="margin-top: 10px"
+              >
+                <img
+                  id="editLogoPreview"
+                  class="sport-logo"
+                  src="#"
+                  alt="Logo Preview"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sport Image</label>
+              <div class="file-upload" id="editImageUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload new image</p>
+                <span>PNG, JPG up to 5MB</span>
+                <input
+                  type="file"
+                  id="editSportImage"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+              <div
+                class="image-container"
+                id="editImagePreviewContainer"
+                style="margin-top: 10px"
+              >
+                <img
+                  id="editImagePreview"
+                  class="sport-image"
+                  src="#"
+                  alt="Image Preview"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelEditSport">Cancel</button>
+          <button class="btn btn-primary" id="submitEditSport">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Sport Modal -->
+    <div class="modal" id="viewSportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Sport Details</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="sport-details">
+            <div class="sport-details-header">
+              <div class="sport-details-logo-container">
+                <img
+                  src="https://via.placeholder.com/100"
+                  alt="Sport Logo"
+                  class="sport-details-logo"
+                  id="viewSportLogo"
+                />
+              </div>
+              <div class="sport-details-title">
+                <h3 id="viewSportName">Football</h3>
+                <p class="hide" id="viewSportType">Team Sport</p>
+              </div>
+            </div>
+            <div class="sport-details-image-container">
+              <img
+                src="https://via.placeholder.com/600x200"
+                alt="Sport Image"
+                class="sport-details-image"
+                id="viewSportImage"
+              />
+            </div>
+            <div class="sport-details-info">
+              <div class="detail-item hide">
+                <h5>Total Events</h5>
+                <p id="viewTotalEvents">24</p>
+              </div>
+              <div class="detail-item hide">
+                <h5>Active Competitions</h5>
+                <p id="viewActiveCompetitions">5</p>
+              </div>
+              <div class="detail-item hide">
+                <h5>Registered Players</h5>
+                <p id="viewRegisteredPlayers">1,250</p>
+              </div>
+              <div class="detail-item hide">
+                <h5>Last Updated</h5>
+                <p id="viewLastUpdated">2 days ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="closeViewSport">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal confirmation-modal" id="deleteConfirmationModal">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="confirmation-icon">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="confirmation-text">
+            <h4>Delete Sport?</h4>
+            <p>
+              Are you sure you want to delete this sport? This action cannot be
+              undone.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelDelete">Cancel</button>
+          <button
+            class="btn btn-primary"
+            id="confirmDelete"
+            style="background-color: var(--danger-color)"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="module">
+    import Sidebar from "./sidebar.js";
+    import Navbar from "./navbar.js";
+
+    document?.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const navbar = document.querySelector(".navbar");
+      sidebar.innerHTML = Sidebar("Sports");
+      navbar.innerHTML = Navbar("Sports");
+      // Sample sports data
+      const sportsData = [
+        {
+          id: 1,
+          name: "Football",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 24,
+          competitions: 5,
+          players: 1250,
+          updated: "2 days ago",
+        },
+        {
+          id: 2,
+          name: "Basketball",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 18,
+          competitions: 3,
+          players: 850,
+          updated: "1 week ago",
+        },
+        {
+          id: 3,
+          name: "Tennis",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 12,
+          competitions: 4,
+          players: 420,
+          updated: "3 days ago",
+        },
+        {
+          id: 4,
+          name: "Swimming",
+          category: "water",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 8,
+          competitions: 2,
+          players: 310,
+          updated: "5 days ago",
+        },
+        {
+          id: 5,
+          name: "Skiing",
+          category: "winter",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 6,
+          competitions: 1,
+          players: 180,
+          updated: "2 weeks ago",
+        },
+        {
+          id: 6,
+          name: "Volleyball",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 15,
+          competitions: 3,
+          players: 670,
+          updated: "4 days ago",
+        },
+        {
+          id: 7,
+          name: "Golf",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 10,
+          competitions: 2,
+          players: 290,
+          updated: "1 week ago",
+        },
+        {
+          id: 8,
+          name: "Surfing",
+          category: "water",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 5,
+          competitions: 1,
+          players: 150,
+          updated: "3 weeks ago",
+        },
+        {
+          id: 9,
+          name: "Rugby League",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 22,
+          competitions: 4,
+          players: 900,
+          updated: "2 days ago",
+        },
+        {
+          id: 10,
+          name: "Rugby Union",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 20,
+          competitions: 3,
+          players: 850,
+          updated: "4 days ago",
+        },
+        {
+          id: 11,
+          name: "Australian Rules Football",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 30,
+          competitions: 6,
+          players: 1100,
+          updated: "1 week ago",
+        },
+        {
+          id: 12,
+          name: "Cricket",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 28,
+          competitions: 5,
+          players: 1300,
+          updated: "3 days ago",
+        },
+        {
+          id: 13,
+          name: "Hockey",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 12,
+          competitions: 2,
+          players: 400,
+          updated: "5 days ago",
+        },
+        {
+          id: 14,
+          name: "Cycling",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 9,
+          competitions: 2,
+          players: 250,
+          updated: "2 weeks ago",
+        },
+        {
+          id: 15,
+          name: "Rowing",
+          category: "water",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 6,
+          competitions: 1,
+          players: 190,
+          updated: "6 days ago",
+        },
+        {
+          id: 16,
+          name: "Netball",
+          category: "team",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 14,
+          competitions: 3,
+          players: 700,
+          updated: "1 week ago",
+        },
+        {
+          id: 17,
+          name: "Badminton",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 8,
+          competitions: 2,
+          players: 340,
+          updated: "1 month ago",
+        },
+        {
+          id: 18,
+          name: "Table Tennis",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 10,
+          competitions: 2,
+          players: 280,
+          updated: "2 weeks ago",
+        },
+        {
+          id: 19,
+          name: "Martial Arts",
+          category: "combat",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 5,
+          competitions: 1,
+          players: 220,
+          updated: "2 months ago",
+        },
+        {
+          id: 20,
+          name: "Athletics",
+          category: "individual",
+          logo: "https://via.placeholder.com/100",
+          image: "https://via.placeholder.com/100",
+          events: 20,
+          competitions: 4,
+          players: 500,
+          updated: "3 weeks ago",
+        },
+      ];
+
+      // DOM Elements
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      const sportsTableBody = document.getElementById("sportsTableBody");
+      const searchInput = document.getElementById("searchInput");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const addSportBtn = document.getElementById("addSportBtn");
+      const addSportModal = document.getElementById("addSportModal");
+      const editSportModal = document.getElementById("editSportModal");
+      const viewSportModal = document.getElementById("viewSportModal");
+      const deleteConfirmationModal = document.getElementById(
+        "deleteConfirmationModal"
+      );
+      const modalCloses = document.querySelectorAll(
+        ".modal-close, .btn:not(#confirmDelete)"
+      );
+      const cancelButtons = document.querySelectorAll(
+        "#cancelAddSport, #cancelEditSport, #closeViewSport, #cancelDelete"
+      );
+      const submitAddSport = document.getElementById("submitAddSport");
+      const submitEditSport = document.getElementById("submitEditSport");
+      const confirmDelete = document.getElementById("confirmDelete");
+      const logoPreviewContainer = document.getElementById(
+        "logoPreviewContainer"
+      );
+      const logoPreview = document.getElementById("logoPreview");
+      const imagePreviewContainer = document.getElementById(
+        "imagePreviewContainer"
+      );
+      const imagePreview = document.getElementById("imagePreview");
+      const editLogoPreview = document.getElementById("editLogoPreview");
+      const editImagePreview = document.getElementById("editImagePreview");
+      const menuToggle = document.querySelector(".menu-toggle");
+      const paginationInfo = document.querySelector(".pagination-info");
+      const paginationControls = document.querySelector(".pagination-controls");
+
+      // Pagination variables
+      let currentPage = 1;
+      const itemsPerPage = 10;
+      let filteredSports = [...sportsData];
+      let currentSportId = null;
+
+      // Initialize the page
+      function init() {
+        filterSports();
+        setupEventListeners();
+      }
+
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+      }
+
+      // Render sports table with pagination
+      function renderSportsTable(sports) {
+        sportsTableBody.innerHTML = "";
+
+        if (sports.length === 0) {
+          sportsTableBody.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 2rem;">
+                        No sports found. Try adjusting your search or filters.
+                    </td>
+                </tr>
+            `;
+          return;
+        }
+
+        sports.forEach((sport) => {
+          const row = document.createElement("tr");
+          row.className = "fade-in";
+          row.innerHTML = `
+                <td>
+                    <div class="image-container">
+                        <img src="${sport.logo}" alt="${sport.name} Logo" class="sport-logo">
+                    </div>
+                </td>
+                <td>
+                    <div class="image-container">
+                        <img src="${sport.image}" alt="${sport.name} Image" class="sport-image">
+                    </div>
+                </td>
+                <td>${sport.name}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn view tooltip" data-id="${sport.id}">
+                            <i class="fas fa-eye"></i>
+                            <span class="tooltiptext">View Details</span>
+                        </button>
+                        <button class="action-btn edit tooltip" data-id="${sport.id}">
+                            <i class="fas fa-pen"></i>
+                            <span class="tooltiptext">Edit Sport</span>
+                        </button>
+                        <button class="action-btn delete tooltip" data-id="${sport.id}">
+                            <i class="fas fa-trash"></i>
+                            <span class="tooltiptext">Delete Sport</span>
+                        </button>
+                    </div>
+                </td>
+            `;
+          sportsTableBody.appendChild(row);
+        });
+
+        // Add event listeners to action buttons
+        document.querySelectorAll(".action-btn.view").forEach((btn) => {
+          btn?.addEventListener("click", () => viewSport(btn.dataset.id));
+        });
+
+        document.querySelectorAll(".action-btn.edit").forEach((btn) => {
+          btn?.addEventListener("click", () => editSport(btn.dataset.id));
+        });
+
+        document.querySelectorAll(".action-btn.delete").forEach((btn) => {
+          btn?.addEventListener("click", () =>
+            confirmDeleteSport(btn.dataset.id)
+          );
+        });
+      }
+
+      // Filter sports based on search and category with pagination
+      function filterSports() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const category = categoryFilter.value;
+
+        filteredSports = sportsData.filter((sport) => {
+          const matchesSearch = sport.name.toLowerCase().includes(searchTerm);
+          const matchesCategory =
+            category === "" || sport.category === category;
+          return matchesSearch && matchesCategory;
+        });
+
+        // Update pagination
+        setupPagination();
+
+        // Get paginated data
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        const paginatedSports = filteredSports.slice(
+          startIdx,
+          startIdx + itemsPerPage
+        );
+
+        renderSportsTable(paginatedSports);
+      }
+
+      // Setup pagination controls
+      function setupPagination() {
+        const totalItems = filteredSports.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        // Update pagination info
+        const startItem =
+          totalItems > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+        const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+        paginationInfo.textContent = `Showing ${startItem} to ${endItem} of ${totalItems} entries`;
+
+        // Clear existing controls
+        paginationControls.innerHTML = "";
+
+        // Previous button
+        const prevBtn = document.createElement("button");
+        prevBtn.className = `page-btn ${currentPage === 1 ? "disabled" : ""}`;
+        prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        prevBtn.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            filterSports();
+          }
+        });
+        paginationControls.appendChild(prevBtn);
+
+        // Page buttons
+        for (let i = 1; i <= totalPages; i++) {
+          const pageBtn = document.createElement("button");
+          pageBtn.className = `page-btn ${i === currentPage ? "active" : ""}`;
+          pageBtn.textContent = i;
+          pageBtn.addEventListener("click", () => {
+            currentPage = i;
+            filterSports();
+          });
+          paginationControls.appendChild(pageBtn);
+        }
+
+        // Next button
+        const nextBtn = document.createElement("button");
+        nextBtn.className = `page-btn ${
+          currentPage === totalPages ? "disabled" : ""
+        }`;
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            filterSports();
+          }
+        });
+        paginationControls.appendChild(nextBtn);
+      }
+
+      // View sport details
+      function viewSport(id) {
+        const sport = sportsData.find((s) => s.id === parseInt(id));
+        if (sport) {
+          document.getElementById("viewSportName").textContent = sport.name;
+          // document.getElementById("viewSportType").textContent =
+          //   sport.category.charAt(0).toUpperCase() + sport.category.slice(1);
+          document.getElementById("viewSportLogo").src = sport.logo;
+          document.getElementById("viewSportImage").src = sport.image;
+          document.getElementById("viewTotalEvents").textContent = sport.events;
+          document.getElementById("viewActiveCompetitions").textContent =
+            sport.competitions;
+          document.getElementById("viewRegisteredPlayers").textContent =
+            sport.players.toLocaleString();
+          document.getElementById("viewLastUpdated").textContent =
+            sport.updated;
+          openModal(viewSportModal);
+        }
+      }
+
+      // Edit sport
+      function editSport(id) {
+        const sport = sportsData.find((s) => s.id === parseInt(id));
+        if (sport) {
+          currentSportId = sport.id;
+          document.getElementById("editSportName").value = sport.name;
+          editLogoPreview.src = sport.logo;
+          editImagePreview.src = sport.image;
+          openModal(editSportModal);
+        }
+      }
+
+      // Confirm delete sport
+      function confirmDeleteSport(id) {
+        currentSportId = id;
+        openModal(deleteConfirmationModal);
+      }
+
+      // Open modal
+      function openModal(modal) {
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close modal
+      function closeModal(modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+      }
+
+      // Preview uploaded image
+      function previewImage(input, previewElement, previewContainer) {
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            previewElement.src = e.target.result;
+            previewContainer.style.display = "flex";
+          };
+
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        menuToggle?.addEventListener("click", toggleSidebar);
+        // Sidebar toggle
+        sidebarToggle?.addEventListener("click", () => {
+          sidebar.classList.toggle("active");
+          document.querySelector(".main-content").classList.toggle("active");
+        });
+
+        // Search and filter
+        searchInput?.addEventListener("input", filterSports);
+        categoryFilter?.addEventListener("change", filterSports);
+
+        // Add sport button
+        addSportBtn?.addEventListener("click", () => {
+          document.getElementById("addSportForm").reset();
+          logoPreviewContainer.style.display = "none";
+          imagePreviewContainer.style.display = "none";
+          openModal(addSportModal);
+        });
+
+        // Modal close buttons
+        modalCloses.forEach((btn) => {
+          btn?.addEventListener("click", () => {
+            const modal = btn.closest(".modal");
+            closeModal(modal);
+          });
+        });
+
+        // Cancel buttons
+        cancelButtons.forEach((btn) => {
+          btn?.addEventListener("click", () => {
+            const modal = btn.closest(".modal");
+            closeModal(modal);
+          });
+        });
+
+        // File upload preview handlers
+        document
+          .getElementById("sportLogo")
+          ?.addEventListener("change", function () {
+            previewImage(this, logoPreview, logoPreviewContainer);
+          });
+
+        document
+          .getElementById("sportImage")
+          ?.addEventListener("change", function () {
+            previewImage(this, imagePreview, imagePreviewContainer);
+          });
+
+        document
+          .getElementById("editSportLogo")
+          ?.addEventListener("change", function () {
+            previewImage(
+              this,
+              editLogoPreview,
+              document.getElementById("editLogoPreviewContainer")
+            );
+          });
+
+        document
+          .getElementById("editSportImage")
+          ?.addEventListener("change", function () {
+            previewImage(
+              this,
+              editImagePreview,
+              document.getElementById("editImagePreviewContainer")
+            );
+          });
+
+        // File upload click handlers
+        document
+          .getElementById("logoUpload")
+          ?.addEventListener("click", function () {
+            document.getElementById("sportLogo").click();
+          });
+
+        document
+          .getElementById("imageUpload")
+          ?.addEventListener("click", function () {
+            document.getElementById("sportImage").click();
+          });
+
+        document
+          .getElementById("editLogoUpload")
+          ?.addEventListener("click", function () {
+            document.getElementById("editSportLogo").click();
+          });
+
+        document
+          .getElementById("editImageUpload")
+          ?.addEventListener("click", function () {
+            document.getElementById("editSportImage").click();
+          });
+
+        // Submit add sport form
+        submitAddSport?.addEventListener("click", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("sportName").value.trim();
+
+          if (name) {
+            // Get the uploaded files or use placeholders
+            const logoFile = document.getElementById("sportLogo").files[0];
+            const imageFile = document.getElementById("sportImage").files[0];
+
+            const logoUrl = logoFile
+              ? URL.createObjectURL(logoFile)
+              : "https://via.placeholder.com/100";
+            const imageUrl = imageFile
+              ? URL.createObjectURL(imageFile)
+              : "https://via.placeholder.com/100";
+
+            const newSport = {
+              id: sportsData.length + 1,
+              name: name,
+              category: "team", // Default category
+              logo: logoUrl,
+              image: imageUrl,
+              events: 0,
+              competitions: 0,
+              players: 0,
+              updated: "Just now",
+            };
+
+            sportsData.unshift(newSport);
+            currentPage = 1; // Reset to first page when adding new sport
+            filterSports();
+            closeModal(addSportModal);
+          }
+        });
+
+        // Submit edit sport form
+        submitEditSport?.addEventListener("click", (e) => {
+          e.preventDefault();
+          const name = document.getElementById("editSportName").value.trim();
+
+          if (name && currentSportId) {
+            const sportIndex = sportsData.findIndex(
+              (s) => s.id === currentSportId
+            );
+            if (sportIndex !== -1) {
+              // Get the uploaded files or keep existing ones
+              const logoFile =
+                document.getElementById("editSportLogo").files[0];
+              const imageFile =
+                document.getElementById("editSportImage").files[0];
+
+              if (logoFile) {
+                sportsData[sportIndex].logo = URL.createObjectURL(logoFile);
+              }
+
+              if (imageFile) {
+                sportsData[sportIndex].image = URL.createObjectURL(imageFile);
+              }
+
+              sportsData[sportIndex].name = name;
+              sportsData[sportIndex].updated = "Just now";
+              filterSports();
+              closeModal(editSportModal);
+            }
+          }
+        });
+
+        // Confirm delete
+        confirmDelete?.addEventListener("click", () => {
+          if (currentSportId) {
+            const sportIndex = sportsData.findIndex(
+              (s) => parseInt(s.id) === parseInt(currentSportId)
+            );
+
+            if (sportIndex !== -1) {
+              sportsData.splice(sportIndex, 1);
+              // Reset to first page if we deleted the last item on current page
+              const startIdx = (currentPage - 1) * itemsPerPage;
+              if (startIdx >= sportsData.length) {
+                currentPage = Math.max(1, currentPage - 1);
+              }
+              filterSports();
+              closeModal(deleteConfirmationModal);
+            }
+          }
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll(".modal").forEach((modal) => {
+          modal?.addEventListener("click", (e) => {
+            if (e.target === modal) {
+              closeModal(modal);
+            }
+          });
+        });
+      }
+
+      // Initialize the application
+      init();
+    });
+  </script>
+</html>

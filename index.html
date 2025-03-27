@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vibrant Admin Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="global.css" />
+    <style>
+      /* Glassmorphism Effect */
+      .glass {
+        background: rgba(255, 255, 255, var(--glass-opacity));
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        border-radius: var(--card-border-radius);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+      }
+
+      .dark-mode .glass {
+        background: rgba(26, 32, 44, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Submenu Styles */
+      .submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--transition-speed) ease;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .submenu.active {
+        max-height: 500px;
+      }
+
+      .submenu a {
+        padding-left: 60px !important;
+        font-size: 0.9rem;
+      }
+
+      .has-submenu > a::after {
+        content: "\f078";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-left: auto;
+        font-size: 0.8rem;
+        transition: transform var(--transition-speed) ease;
+      }
+
+      .has-submenu.active > a::after {
+        transform: rotate(180deg);
+      }
+
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        margin-left: var(--sidebar-width);
+        transition: all var(--transition-speed) ease;
+        width: calc(100vw - var(--sidebar-width));
+      }
+
+      .dark-mode .navbar {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .menu-toggle {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        margin-right: 20px;
+        display: none;
+        transition: all 0.3s ease;
+      }
+
+      .menu-toggle:hover {
+        color: var(--primary-color);
+        transform: scale(1.1);
+      }
+
+      .page-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.5s ease;
+      }
+
+      .search-bar {
+        position: relative;
+      }
+
+      .search-bar input {
+        padding: 10px 15px 10px 40px;
+        border-radius: 30px;
+        border: none;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        width: 250px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .search-bar input:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--accent-color);
+        width: 300px;
+      }
+
+      .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        color: var(--warning-color);
+        transform: rotate(30deg) scale(1.1);
+      }
+
+      .notification {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .notification i {
+        font-size: 1.3rem;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      .notification:hover i {
+        color: var(--primary-color);
+        transform: scale(1.1);
+      }
+
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        font-weight: bold;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .user-profile img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+        border: 2px solid var(--accent-color);
+        transition: all 0.3s ease;
+      }
+
+      .user-profile:hover img {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.3);
+      }
+
+      .user-profile span {
+        font-weight: 500;
+        margin-right: 5px;
+      }
+
+      .user-profile i {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      .user-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        background-color: var(--bg-secondary);
+        border-radius: var(--card-border-radius);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 15px 0;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .user-profile:hover .user-dropdown {
+        opacity: 1;
+        visibility: visible;
+        top: 50px;
+      }
+
+      .user-dropdown a {
+        display: block;
+        padding: 10px 20px;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .user-dropdown a:hover {
+        background-color: rgba(72, 149, 239, 0.1);
+        padding-left: 25px;
+        color: var(--accent-color);
+      }
+
+      .user-dropdown a i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Dashboard Content Styles */
+      .dashboard-content {
+        padding: 30px;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background-color: var(--bg-secondary);
+        border-radius: var(--card-border-radius);
+        padding: 20px 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all var(--transition-speed) ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      .dark-mode .card {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      .card-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        color: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .card:hover .card-icon {
+        transform: rotate(10deg) scale(1.1);
+      }
+
+      .card.users .card-icon {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      .card.squads .card-icon {
+        background: linear-gradient(135deg, var(--success-color), #3a86ff);
+      }
+
+      .card.sports .card-icon {
+        background: linear-gradient(135deg, var(--warning-color), #ff6d00);
+      }
+
+      .card.competitions .card-icon {
+        background: linear-gradient(135deg, var(--danger-color), #b5179e);
+      }
+
+      .card.events .card-icon {
+        background: linear-gradient(135deg, var(--info-color), #7209b7);
+      }
+
+      .card-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      .card:hover .card-value {
+        color: var(--primary-color);
+      }
+
+      .card-title {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      .card-progress {
+        height: 6px;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+
+      .card-progress-bar {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 1.5s ease;
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        width: 100%;
+        max-width: 1400px;
+      }
+
+      /* .card {
+        background: white;
+        border-radius: var(--card-border-radius);
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all var(--transition-speed) ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        z-index: 1;
+      } */
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0.1)
+        );
+        z-index: -1;
+        opacity: 0;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .card:hover::before {
+        opacity: 1;
+      }
+
+      .card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      /* Card Specific Gradients */
+      .card.users::after {
+        background: linear-gradient(90deg, #4361ee, #4895ef);
+      }
+
+      .card.squads::after {
+        background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+      }
+
+      .card.sports::after {
+        background: linear-gradient(90deg, #f8961e, #ff6d00);
+      }
+
+      .card.competitions::after {
+        background: linear-gradient(90deg, #f72585, #b5179e);
+      }
+
+      .card.events::after {
+        background: linear-gradient(90deg, #560bad, #7209b7);
+      }
+
+      /* .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+      } */
+
+      .card:hover .card-icon {
+        transform: rotate(10deg) scale(1.1);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .card.users .card-icon {
+        background: linear-gradient(135deg, #4361ee, #4895ef);
+      }
+
+      .card.squads .card-icon {
+        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+      }
+
+      .card.sports .card-icon {
+        background: linear-gradient(135deg, #f8961e, #ff6d00);
+      }
+
+      .card.competitions .card-icon {
+        background: linear-gradient(135deg, #f72585, #b5179e);
+      }
+
+      .card.events .card-icon {
+        background: linear-gradient(135deg, #560bad, #7209b7);
+      }
+
+      .card-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #2d3748;
+        transition: all 0.3s ease;
+      }
+
+      .card:hover .card-value {
+        background: linear-gradient(90deg, #4361ee, #4895ef);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .card.users:hover .card-value {
+        background: linear-gradient(90deg, #4361ee, #4895ef);
+        -webkit-background-clip: text;
+      }
+
+      .card.squads:hover .card-value {
+        background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+        -webkit-background-clip: text;
+      }
+
+      .card.sports:hover .card-value {
+        background: linear-gradient(90deg, #f8961e, #ff6d00);
+        -webkit-background-clip: text;
+      }
+
+      .card.competitions:hover .card-value {
+        background: linear-gradient(90deg, #f72585, #b5179e);
+        -webkit-background-clip: text;
+      }
+
+      .card.events:hover .card-value {
+        background: linear-gradient(90deg, #560bad, #7209b7);
+        -webkit-background-clip: text;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        color: #6c757d;
+        font-weight: 500;
+        margin-bottom: 15px;
+      }
+
+      .card-progress {
+        height: 6px;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+
+      .card-progress-bar {
+        height: 100%;
+        border-radius: 3px;
+        transition: width 1.5s ease;
+      }
+
+      .card.users .card-progress-bar {
+        background: linear-gradient(90deg, #4361ee, #4895ef);
+      }
+
+      .card.squads .card-progress-bar {
+        background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+      }
+
+      .card.sports .card-progress-bar {
+        background: linear-gradient(90deg, #f8961e, #ff6d00);
+      }
+
+      .card.competitions .card-progress-bar {
+        background: linear-gradient(90deg, #f72585, #b5179e);
+      }
+
+      .card.events .card-progress-bar {
+        background: linear-gradient(90deg, #560bad, #7209b7);
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #6c757d;
+      }
+
+      .text-success {
+        color: #28a745;
+      }
+
+      .text-danger {
+        color: #dc3545;
+      }
+
+      @media (max-width: 768px) {
+        .cards-container {
+          grid-template-columns: 1fr;
+        }
+
+        body {
+          padding: 20px;
+        }
+      }
+
+      .users .card-progress-bar {
+        background: linear-gradient(
+          90deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+      }
+
+      .squads .card-progress-bar {
+        background: linear-gradient(90deg, var(--success-color), #3a86ff);
+      }
+
+      .sports .card-progress-bar {
+        background: linear-gradient(90deg, var(--warning-color), #ff6d00);
+      }
+
+      .competitions .card-progress-bar {
+        background: linear-gradient(90deg, var(--danger-color), #b5179e);
+      }
+
+      .events .card-progress-bar {
+        background: linear-gradient(90deg, var(--info-color), #7209b7);
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      /* Chart Container */
+      .chart-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      @media (max-width: 1200px) {
+        .chart-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .chart-card {
+        background-color: var(--bg-secondary);
+        border-radius: var(--card-border-radius);
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all var(--transition-speed) ease;
+      }
+
+      .dark-mode .chart-card {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .chart-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .chart-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .chart-actions button {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .chart-actions button:hover {
+        color: var(--primary-color);
+        transform: scale(1.1);
+      }
+
+      .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+      }
+
+      /* Recent Activity */
+      .activity-container {
+        background-color: var(--bg-secondary);
+        border-radius: var(--card-border-radius);
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all var(--transition-speed) ease;
+      }
+
+      .dark-mode .activity-container {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .activity-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .activity-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .activity-list {
+        list-style: none;
+      }
+
+      .activity-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .activity-item:last-child {
+        border-bottom: none;
+      }
+
+      .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 1rem;
+        color: white;
+        flex-shrink: 0;
+      }
+
+      .activity-content {
+        flex: 1;
+      }
+
+      .activity-message {
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+      }
+
+      .activity-time {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      /* Section Styles */
+      .section {
+        display: none;
+        background-color: var(--bg-secondary);
+        border-radius: var(--card-border-radius);
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .dark-mode .section {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .section.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1200px) {
+        .sidebar {
+          transform: translateX(-100%);
+          z-index: 1000;
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+          width: 100vw
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .cards-container {
+          grid-template-columns: 1fr;
+        }
+
+        .navbar {
+          padding: 0 20px;
+        }
+
+        .search-bar input {
+          width: 180px;
+        }
+
+        .search-bar input:focus {
+          width: 220px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .navbar-right {
+          gap: 10px;
+        }
+
+        .search-bar {
+          display: none;
+        }
+
+        .page-title {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Accessibility Focus Styles */
+      a:focus,
+      button:focus,
+      .card:focus,
+      input:focus {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar"></aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Navbar -->
+        <nav class="navbar"></nav>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+          <!-- Dashboard Cards -->
+          <div class="cards-container">
+            <div class="card users" tabindex="0">
+              <div class="card-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="card-value">1,248</div>
+              <div class="card-title">Total Users</div>
+              <div class="card-progress">
+                <div class="card-progress-bar" style="width: 75%"></div>
+              </div>
+              <div class="card-footer">
+                <span
+                  ><i class="fas fa-arrow-up text-success"></i> 12% from last
+                  week</span
+                >
+                <span>View all</span>
+              </div>
+            </div>
+            <div class="card squads" tabindex="0">
+              <div class="card-icon">
+                <i class="fas fa-people-group"></i>
+              </div>
+              <div class="card-value">356</div>
+              <div class="card-title">Total Squads</div>
+              <div class="card-progress">
+                <div class="card-progress-bar" style="width: 60%"></div>
+              </div>
+              <div class="card-footer">
+                <span
+                  ><i class="fas fa-arrow-up text-success"></i> 8% from last
+                  week</span
+                >
+                <span>View all</span>
+              </div>
+            </div>
+            <div class="card sports" tabindex="0">
+              <div class="card-icon">
+                <i class="fas fa-baseball-bat-ball"></i>
+              </div>
+              <div class="card-value">24</div>
+              <div class="card-title">Total Sports</div>
+              <div class="card-progress">
+                <div class="card-progress-bar" style="width: 45%"></div>
+              </div>
+              <div class="card-footer">
+                <span
+                  ><i class="fas fa-arrow-down text-danger"></i> 2% from last
+                  week</span
+                >
+                <span>View all</span>
+              </div>
+            </div>
+            <div class="card competitions" tabindex="0">
+              <div class="card-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <div class="card-value">78</div>
+              <div class="card-title">Total Competitions</div>
+              <div class="card-progress">
+                <div class="card-progress-bar" style="width: 85%"></div>
+              </div>
+              <div class="card-footer">
+                <span
+                  ><i class="fas fa-arrow-up text-success"></i> 15% from last
+                  week</span
+                >
+                <span>View all</span>
+              </div>
+            </div>
+            <div class="card events" tabindex="0">
+              <div class="card-icon">
+                <i class="fas fa-calendar-alt"></i>
+              </div>
+              <div class="card-value">512</div>
+              <div class="card-title">Total Events</div>
+              <div class="card-progress">
+                <div class="card-progress-bar" style="width: 90%"></div>
+              </div>
+              <div class="card-footer">
+                <span
+                  ><i class="fas fa-arrow-up text-success"></i> 22% from last
+                  week</span
+                >
+                <span>View all</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sections (hidden by default) -->
+
+          <div id="users-section" class="section">
+            <h2 class="section-title">User Management</h2>
+            <p>Manage all registered users in the system.</p>
+          </div>
+
+          <div id="squads-section" class="section">
+            <h2 class="section-title">Squad Management</h2>
+            <p>Manage all squads and team configurations.</p>
+          </div>
+
+          <div id="admins-section" class="section">
+            <h2 class="section-title">Admin Management</h2>
+            <p>Manage administrator accounts and permissions.</p>
+          </div>
+
+          <div id="competitions-section" class="section">
+            <h2 class="section-title">Competitions</h2>
+            <p>Manage all competitions and tournaments.</p>
+          </div>
+
+          <div id="sports-section" class="section">
+            <h2 class="section-title">Sports</h2>
+            <p>Manage available sports and their configurations.</p>
+          </div>
+
+          <div id="events-section" class="section">
+            <h2 class="section-title">Events</h2>
+            <p>Manage all scheduled events and matches.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script type="module">
+    import Sidebar from "./sidebar.js";
+    import Navbar from "./navbar.js";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebar = document.querySelector(".sidebar");
+      const navbar = document.querySelector(".navbar");
+      sidebar.innerHTML = Sidebar("Dashboard");
+      navbar.innerHTML = Navbar("Dashboard");
+      // Toggle sidebar on mobile
+      const menuToggle = document.querySelector(".menu-toggle");
+      menuToggle.addEventListener("click", toggleSidebar);
+
+      menuToggle.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+      });
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById("theme-toggle");
+      const sidebarThemeToggle = document.getElementById(
+        "sidebar-theme-toggle"
+      );
+
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+
+        // Update icon
+        const isDark = document.body.classList.contains("dark-mode");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>';
+        sidebarThemeToggle.innerHTML = isDark
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>';
+
+        // Reinitialize charts with new theme
+        initCharts();
+      }
+
+      themeToggle.addEventListener("click", toggleTheme);
+      sidebarThemeToggle.addEventListener("click", toggleTheme);
+
+      // Submenu functionality
+      const hasSubmenu = document.querySelectorAll(".has-submenu");
+
+      hasSubmenu.forEach((item) => {
+        item.querySelector("a").addEventListener("click", function (e) {
+          e.preventDefault();
+          const submenu = this.parentElement.querySelector(".submenu");
+          this.parentElement.classList.toggle("active");
+          submenu.classList.toggle("active");
+        });
+      });
+
+      // Navigation functionality
+      const navLinks = document.querySelectorAll(
+        ".sidebar-menu a:not(.has-submenu > a)"
+      );
+
+      const sections = document.querySelectorAll(".section");
+      const pageTitle = document.querySelector(".page-title");
+
+      // Function to navigate to a section
+      function navigateToSection(sectionId) {
+        // Update active nav link
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("data-section") === sectionId) {
+            link.classList.add("active");
+          }
+        });
+
+        // Update active section
+        sections.forEach((section) => {
+          section.classList.remove("active");
+          if (section.id === `${sectionId}-section`) {
+            section.classList.add("active");
+          }
+        });
+
+        // Update page title
+        const activeLink = document.querySelector(
+          `.sidebar-menu a[data-section="${sectionId}"]`
+        );
+        if (activeLink) {
+          const title = activeLink.querySelector("span").textContent;
+          pageTitle.textContent = title;
+        }
+
+        // Close sidebar on mobile after navigation
+        if (window.innerWidth <= 1200) {
+          sidebar.classList.remove("active");
+        }
+      }
+
+      // Add click event to sidebar links
+      navLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const sectionId = this.getAttribute("data-section");
+          navigateToSection(sectionId);
+        });
+      });
+
+      // Add click event to cards
+      cards.forEach((card) => {
+        card.addEventListener("click", function () {
+          const sectionId = this.getAttribute("data-section");
+          navigateToSection(sectionId);
+        });
+      });
+
+      // Keyboard navigation for cards
+      cards.forEach((card) => {
+        card.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            const sectionId = this.getAttribute("data-section");
+            navigateToSection(sectionId);
+          }
+        });
+      });
+
+      // Simulate dynamic data loading for cards
+      function updateCardValues() {
+        // Animate numbers
+        animateValue(document.getElementById("total-users"), 0, 1248, 1500);
+        animateValue(document.getElementById("total-squads"), 0, 356, 1500);
+        animateValue(document.getElementById("total-sports"), 0, 24, 1500);
+        animateValue(
+          document.getElementById("total-competitions"),
+          0,
+          78,
+          1500
+        );
+        animateValue(document.getElementById("total-events"), 0, 512, 1500);
+
+        // Animate progress bars
+        document.querySelector(".users .card-progress-bar").style.width = "75%";
+        document.querySelector(".squads .card-progress-bar").style.width =
+          "60%";
+        document.querySelector(".sports .card-progress-bar").style.width =
+          "45%";
+        document.querySelector(".competitions .card-progress-bar").style.width =
+          "85%";
+        document.querySelector(".events .card-progress-bar").style.width =
+          "90%";
+      }
+
+      // Number animation function
+      function animateValue(element, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          element.innerHTML = Math.floor(
+            progress * (end - start) + start
+          ).toLocaleString();
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+
+      // Initialize card values
+      updateCardValues();
+
+      // Simulate periodic updates (like from a live API)
+      setInterval(updateCardValues, 10000);
+
+      // Charts
+      let userGrowthChart, activityChart;
+
+      function initCharts() {
+        // User Growth Chart
+        const userGrowthCtx = document
+          .getElementById("userGrowthChart")
+          .getContext("2d");
+
+        if (userGrowthChart) {
+          userGrowthChart.destroy();
+        }
+
+        userGrowthChart = new Chart(userGrowthCtx, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+            datasets: [
+              {
+                label: "New Users",
+                data: [120, 190, 170, 220, 300, 280, 400],
+                backgroundColor: "rgba(67, 97, 238, 0.2)",
+                borderColor: "rgba(67, 97, 238, 1)",
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: "white",
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+              tooltip: {
+                backgroundColor: document.body.classList.contains("dark-mode")
+                  ? "#2d3748"
+                  : "white",
+                titleColor: document.body.classList.contains("dark-mode")
+                  ? "white"
+                  : "#2d3748",
+                bodyColor: document.body.classList.contains("dark-mode")
+                  ? "white"
+                  : "#2d3748",
+                borderColor: "rgba(0, 0, 0, 0.1)",
+                borderWidth: 1,
+                padding: 15,
+                displayColors: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: document.body.classList.contains("dark-mode")
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "rgba(0, 0, 0, 0.05)",
+                },
+                ticks: {
+                  color: document.body.classList.contains("dark-mode")
+                    ? "rgba(255, 255, 255, 0.7)"
+                    : "rgba(0, 0, 0, 0.6)",
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+                ticks: {
+                  color: document.body.classList.contains("dark-mode")
+                    ? "rgba(255, 255, 255, 0.7)"
+                    : "rgba(0, 0, 0, 0.6)",
+                },
+              },
+            },
+          },
+        });
+
+        // Activity Distribution Chart
+        const activityCtx = document
+          .getElementById("activityChart")
+          .getContext("2d");
+
+        if (activityChart) {
+          activityChart.destroy();
+        }
+
+        activityChart = new Chart(activityCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["Users", "Squads", "Events", "Competitions"],
+            datasets: [
+              {
+                data: [35, 25, 20, 20],
+                backgroundColor: [
+                  "rgba(67, 97, 238, 0.8)",
+                  "rgba(76, 201, 240, 0.8)",
+                  "rgba(248, 150, 30, 0.8)",
+                  "rgba(247, 37, 133, 0.8)",
+                ],
+                borderColor: document.body.classList.contains("dark-mode")
+                  ? "rgba(26, 32, 44, 1)"
+                  : "rgba(255, 255, 255, 1)",
+                borderWidth: 2,
+                hoverOffset: 10,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "70%",
+            plugins: {
+              legend: {
+                position: "right",
+                labels: {
+                  color: document.body.classList.contains("dark-mode")
+                    ? "white"
+                    : "#2d3748",
+                  padding: 20,
+                  font: {
+                    size: 12,
+                  },
+                  usePointStyle: true,
+                  pointStyle: "circle",
+                },
+              },
+              tooltip: {
+                backgroundColor: document.body.classList.contains("dark-mode")
+                  ? "#2d3748"
+                  : "white",
+                titleColor: document.body.classList.contains("dark-mode")
+                  ? "white"
+                  : "#2d3748",
+                bodyColor: document.body.classList.contains("dark-mode")
+                  ? "white"
+                  : "#2d3748",
+                borderColor: "rgba(0, 0, 0, 0.1)",
+                borderWidth: 1,
+                padding: 15,
+              },
+            },
+          },
+        });
+      }
+      // Toggle sidebar on mobile
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+      }
+
+      // Initialize charts
+      initCharts();
+
+      // Window resize event to handle charts
+      window.addEventListener("resize", function () {
+        initCharts();
+      });
+
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach((card) => {
+        card.addEventListener("mouseenter", function () {
+          this.style.transform = "translateY(-10px)";
+          this.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.15)";
+          this.querySelector(".card-icon").style.transform =
+            "rotate(10deg) scale(1.1)";
+        });
+
+        card.addEventListener("mouseleave", function () {
+          this.style.transform = "translateY(0)";
+          this.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.08)";
+          this.querySelector(".card-icon").style.transform =
+            "rotate(0) scale(1)";
+        });
+      });
+    });
+  </script>
+</html>
