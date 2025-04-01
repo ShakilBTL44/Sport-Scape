@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sporting Events App</title>
+    <style>
+      :root {
+        --primary-blue: #1a4699;
+        --orange-accent: #ff6b2c;
+        --light-gray: #f5f5f5;
+        --text-dark: #263238;
+        --text-light: #59637a;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+
+      body {
+        background-color: var(--light-gray);
+        color: var(--text-dark);
+        display: flex;
+        justify-content: center;
+      }
+
+      .app-container {
+        width: 100%;
+        max-width: 440px;
+        margin: 0 auto;
+        position: relative;
+        background-color: var(--white);
+        min-height: 100vh;
+        padding-bottom: 70px; /* Space for footer */
+      }
+
+      /* Header Styles */
+      .header {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        padding: 15px 20px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .greeting {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .icon:hover {
+        transform: scale(1.1);
+      }
+
+      /* Search and Filter Bar */
+      .search-filter-container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 15px;
+      }
+
+      .search-bar {
+        flex: 1;
+        padding: 10px 15px;
+        border-radius: 25px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: center;
+      }
+
+      .search-bar input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 0 10px;
+        font-size: 1rem;
+        outline: none;
+      }
+
+      .search-icon,
+      .filter-icon {
+        width: 18px;
+        height: 18px;
+        opacity: 0.7;
+      }
+
+      .filter-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+      }
+
+      /* Top Navigation */
+      .top-nav {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.8rem;
+        padding: 0 5px;
+        position: relative;
+      }
+
+      .nav-item.active {
+        color: var(--primary-blue);
+      }
+
+      .nav-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: -11px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--primary-blue);
+      }
+
+      .nav-icon {
+        width: 20px;
+        height: 20px;
+        margin-bottom: 4px;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 20px;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      /* Event Cards */
+      .preview-events-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .preview-event-card {
+        width: 100%;
+        height: 335px;
+        border-radius: 16px;
+        position: relative;
+        background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: visible;
+      }
+
+      .preview-event-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background-color: var(--orange-accent);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .preview-event-content {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        background-color: white;
+        padding: 16px;
+        border-radius: 16px;
+        width: calc(100% - 32px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .preview-event-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+      }
+
+      .preview-event-subtitle {
+        font-size: 13px;
+        color: var(--text-light);
+        margin-bottom: 2px;
+      }
+
+      .preview-event-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+
+      .preview-event-date {
+        font-size: 13px;
+        color: var(--text-light);
+      }
+
+      .preview-event-distance {
+        font-size: 13px;
+        color: var(--text-light);
+      }
+
+      /* Footer Navigation */
+      .footer-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        display: flex;
+        justify-content: space-around;
+        padding: 12px 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        max-width: 440px;
+        margin: 0 auto;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+      }
+
+      .footer-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 0.75rem;
+      }
+
+      .footer-item.active {
+        color: var(--primary-blue);
+      }
+
+      .footer-icon {
+        width: 22px;
+        height: 22px;
+        margin-bottom: 4px;
+      }
+
+      .footer-item.active .footer-icon {
+        filter: brightness(0) saturate(100%) invert(22%) sepia(60%)
+          saturate(1692%) hue-rotate(204deg) brightness(93%) contrast(91%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="header-content">
+          <div class="greeting">Hello John!</div>
+          <div class="header-icons">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/565/565422.png"
+              alt="Notifications"
+              class="icon"
+            />
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/126/126472.png"
+              alt="Settings"
+              class="icon"
+            />
+          </div>
+        </div>
+
+        <div class="search-filter-container">
+          <div class="search-bar">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149852.png"
+              alt="Search"
+              class="search-icon"
+            />
+            <input type="text" placeholder="Search for events" />
+          </div>
+          <button class="filter-btn">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/566/566299.png"
+              alt="Filter"
+              class="filter-icon"
+            />
+          </button>
+        </div>
+
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+          <a href="#" class="nav-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"
+              alt="Events"
+              class="nav-icon"
+            />
+            <span>Events</span>
+          </a>
+          <a href="#" class="nav-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+              alt="Venues"
+              class="nav-icon"
+            />
+            <span>Venues</span>
+          </a>
+          <a href="#" class="nav-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/857/857455.png"
+              alt="Sports"
+              class="nav-icon"
+            />
+            <span>Sports</span>
+          </a>
+          <a href="#" class="nav-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/805/805401.png"
+              alt="Teams"
+              class="nav-icon"
+            />
+            <span>Teams</span>
+          </a>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <h2 class="section-title">Upcoming Events</h2>
+
+        <div class="preview-events-container">
+          <!-- Event Card 1 - Basketball -->
+          <div
+            class="preview-event-card"
+            style="
+              background-image: linear-gradient(
+                  rgba(0, 0, 0, 0.1),
+                  rgba(0, 0, 0, 0.7)
+                ),
+                url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+            "
+          >
+            <div class="preview-event-badge">NBA</div>
+            <div class="preview-event-content">
+              <h3 class="preview-event-title">Lakers vs. Warriors</h3>
+              <p class="preview-event-subtitle">Staples Center, Los Angeles</p>
+              <div class="preview-event-info">
+                <p class="preview-event-date">Today, 7:30 PM</p>
+                <p class="preview-event-distance">3.2 KM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Event Card 2 - Soccer -->
+          <div
+            class="preview-event-card"
+            style="
+              background-image: linear-gradient(
+                  rgba(0, 0, 0, 0.1),
+                  rgba(0, 0, 0, 0.7)
+                ),
+                url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80');
+            "
+          >
+            <div class="preview-event-badge">PREMIER LEAGUE</div>
+            <div class="preview-event-content">
+              <h3 class="preview-event-title">Chelsea vs. Arsenal</h3>
+              <p class="preview-event-subtitle">Stamford Bridge, London</p>
+              <div class="preview-event-info">
+                <p class="preview-event-date">Tomorrow, 3:00 PM</p>
+                <p class="preview-event-distance">6.5 KM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer Navigation -->
+      <nav class="footer-nav">
+        <a href="#" class="footer-item active">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+            alt="Discover"
+            class="footer-icon"
+          />
+          <span>Discover</span>
+        </a>
+        <a href="#" class="footer-item">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/891/891401.png"
+            alt="Tickets"
+            class="footer-icon"
+          />
+          <span>Tickets</span>
+        </a>
+        <a href="#" class="footer-item">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1534/1534935.png"
+            alt="Squads"
+            class="footer-icon"
+          />
+          <span>Squads</span>
+        </a>
+        <a href="#" class="footer-item">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+            alt="Account"
+            class="footer-icon"
+          />
+          <span>Account</span>
+        </a>
+      </nav>
+    </div>
+  </body>
+</html>

@@ -99,6 +99,7 @@
         margin-bottom: 5px;
         font-size: 14px;
         color: #555;
+        /* margin-left: 10px; */
       }
 
       .form-control {
@@ -208,7 +209,7 @@
         gap: 8px;
       }
 
-      .action-btn {
+      /* .action-btn {
         width: 30px;
         height: 30px;
         border-radius: 4px;
@@ -226,6 +227,9 @@
         background-color: #f8f9fa;
         color: var(--primary-color);
         border-color: var(--primary-color);
+      } */
+      #fixturesMappingTitle {
+        margin-left: 20px;
       }
 
       /* Modal Styles */
@@ -367,6 +371,9 @@
         grid-template-columns: 1fr auto 1fr;
         gap: 20px;
         align-items: start;
+        /* width: 95%; */
+        margin: auto;
+        align-items: center;
       }
 
       .mapping-list {
@@ -381,8 +388,10 @@
         padding: 10px;
         background-color: #f8f9fa;
         border-bottom: 1px solid #ddd;
-        font-weight: 500;
+        font-weight: 700;
         font-size: 14px;
+        text-align: center;
+        background: rgb(202, 222, 145);
       }
 
       .mapping-list-content {
@@ -822,7 +831,7 @@
 
         .tab-header {
           display: flex;
-          border-bottom: 1px solid #eee;
+          /* border-bottom: 1px solid #eee; */
         }
 
         .tab-btn {
@@ -1152,7 +1161,7 @@
         max-width: 440px; */
         /* margin: 0 auto; */
         position: relative;
-        background-color: rgb(255, 255, 255);
+        background: rgb(255, 255, 255);
         /* min-height: 100vh; */
         padding-bottom: 70px; /* Space for footer */
         z-index: 25;
@@ -1163,7 +1172,7 @@
       .header {
         background-color: var(--primary-blue);
         color: var(--white);
-        padding: 15px 20px;
+        padding: 15px 20px 0px 20px;
         position: sticky;
         top: 0;
         z-index: 100;
@@ -1211,9 +1220,9 @@
       .search-bar {
         flex: 1;
         padding: 10px 15px;
-        border-radius: 25px;
+        border-radius: 14px;
         border: none;
-        background-color: rgba(255, 255, 255, 0.9);
+        background: #ffffff1a;
         display: flex;
         align-items: center;
       }
@@ -1226,6 +1235,9 @@
         font-size: 1rem;
         outline: none;
       }
+      .search-bar input::placeholder {
+        color: #fafafa;
+      }
 
       .search-icon,
       .filter-icon {
@@ -1235,18 +1247,26 @@
       }
 
       .filter-btn {
-        background: none;
+        background: #ffffff1a;
         border: none;
         cursor: pointer;
         padding: 8px;
+        height: 40px;
+        width: 40px;
+        border-radius: 100%;
+      }
+      .filter-btn > img {
+        margin-top: 3px;
       }
 
       /* Top Navigation */
       .top-nav {
         display: flex;
         justify-content: space-around;
-        padding: 10px 0;
-        border-bottom: 1px solid #e0e0e0;
+        align-items: flex-end;
+      }
+      .top-nav > a:nth-child(1) {
+        border-bottom: 2px solid white;
       }
 
       .nav-item {
@@ -1486,7 +1506,7 @@
       .sporting-event__details-card {
         /* background-color: var(--white); */
         border-radius: var(--border-radius);
-        margin: 0px 15px;
+        margin: 10px 15px;
         padding: 0px;
       }
 
@@ -1507,7 +1527,6 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
-
       .sporting-event__read-more {
         color: var(--accent-orange);
         font-weight: 600;
@@ -1609,12 +1628,6 @@
         font-size: 32px;
       }
 
-      .sporting-event__details-card {
-        margin: 25px auto 30px auto;
-        max-width: 700px;
-        /* padding: 25px; */
-      }
-
       .sporting-event__cards-container {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
@@ -1673,7 +1686,7 @@
                   type="date"
                   class="form-control"
                   id="startDateFilter"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="DD/MM/YYYY"
                 />
               </div>
               <div class="form-group">
@@ -1682,7 +1695,7 @@
                   type="date"
                   class="form-control"
                   id="endDateFilter"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="DD/MM/YYYY"
                 />
               </div>
 
@@ -1780,13 +1793,8 @@
               <div class="greeting">Hello John!</div>
               <div class="header-icons">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/565/565422.png"
+                  src="./../assets/icons/notification.svg"
                   alt="Notifications"
-                  class="icon"
-                />
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/126/126472.png"
-                  alt="Settings"
                   class="icon"
                 />
               </div>
@@ -1795,7 +1803,7 @@
             <div class="search-filter-container">
               <div class="search-bar">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/149/149852.png"
+                  src="./../assets/icons/search.svg"
                   alt="Search"
                   class="search-icon"
                 />
@@ -1803,7 +1811,7 @@
               </div>
               <button class="filter-btn">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/566/566299.png"
+                  src="./../assets/icons/tune.svg"
                   alt="Filter"
                   class="filter-icon"
                 />
@@ -1814,7 +1822,7 @@
             <nav class="top-nav">
               <a href="#" class="nav-item">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"
+                  src="./../assets/icons/events_active.svg"
                   alt="Events"
                   class="nav-icon"
                 />
@@ -1822,7 +1830,7 @@
               </a>
               <a href="#" class="nav-item">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+                  src="./../assets/icons/venue_inactive.svg"
                   alt="Venues"
                   class="nav-icon"
                 />
@@ -1830,26 +1838,26 @@
               </a>
               <a href="#" class="nav-item">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/857/857455.png"
+                  src="./../assets/icons/sports_inactive.svg"
                   alt="Sports"
                   class="nav-icon"
                 />
                 <span>Sports</span>
               </a>
-              <a href="#" class="nav-item">
+              <!-- <a href="#" class="nav-item">
                 <img
-                  src="https://cdn-icons-png.flaticon.com/512/805/805401.png"
+                 src="./../assets/icons/teams_inactive.svg"
                   alt="Teams"
                   class="nav-icon"
                 />
                 <span>Teams</span>
-              </a>
+              </a> -->
             </nav>
           </header>
 
           <!-- Main Content -->
           <main class="preview-main-content">
-            <h2 class="section-title">Upcoming Events</h2>
+            <h2 class="section-title">Recommended Events</h2>
 
             <div class="preview-events-container"></div>
           </main>
@@ -1858,7 +1866,7 @@
           <nav class="footer-nav">
             <a href="#" class="footer-item active">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+                src="./../assets/icons/discover_active.svg"
                 alt="Discover"
                 class="footer-icon"
               />
@@ -1866,7 +1874,7 @@
             </a>
             <a href="#" class="footer-item">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/891/891401.png"
+                src="./../assets/icons/community_inactive.svg"
                 alt="Tickets"
                 class="footer-icon"
               />
@@ -1874,7 +1882,7 @@
             </a>
             <a href="#" class="footer-item">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/1534/1534935.png"
+                src="./../assets/icons/ticket_inactive.svg"
                 alt="Squads"
                 class="footer-icon"
               />
@@ -1882,7 +1890,7 @@
             </a>
             <a href="#" class="footer-item">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+                src="./../assets/icons/profile_inactive.svg"
                 alt="Account"
                 class="footer-icon"
               />
@@ -1892,7 +1900,7 @@
         </div>
       </div>
       <div id="showPreviewEventDetails">
-        <div class="app-container mobile-view">
+        <div class="mobile-view app-container">
           <!-- Hero Section -->
           <section class="sporting-event__hero">
             <img
@@ -1914,8 +1922,13 @@
 
           <!-- Event Info Card -->
           <section class="sporting-event__details-card">
-            <h2 class="sporting-event__details-title">About AFL</h2>
-            <p class="sporting-event__details-description">
+            <h2 class="sporting-event__details-title" id="eventDetailsTitle">
+              About AFL
+            </h2>
+            <p
+              class="sporting-event__details-description"
+              id="eventDetailsDescription"
+            >
               The Australian Football League is the pre-eminent and only fully
               professional competition of Australian rules football. It was
               originally named the Victorian Football League and was founded in
@@ -1946,6 +1959,110 @@
         </div>
         <div class="modal-body">
           <form id="eventForm">
+            <div class="form-row form-full-row">
+              <div class="form-group">
+                <label class="form-label">Search Sport</label>
+                <select class="form-control" id="fixtureSportFilter">
+                  <option value="">All Sports</option>
+                  <option value="football">Football</option>
+                  <option value="basketball">Basketball</option>
+                  <option value="tennis">Tennis</option>
+                  <option value="cricket">Cricket</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Start Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="fixtureStartDateFilter"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">End Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="fixtureEndDateFilter"
+                  placeholder="DD/MM/YYYY"
+                />
+              </div>
+              <div class="form-group">
+                <button
+                  class="btn btn-primary"
+                  id="applyFixtureFiltersBtn"
+                  type="button"
+                >
+                  <i class="fas fa-filter"></i> Apply
+                </button>
+              </div>
+            </div>
+            <div class="form-row form-full-row">
+              <div class="form-group">
+                <label class="form-label" id="fixturesMappingTitle"
+                  >Fixtures Mapping</label
+                >
+                <div class="mapping-container">
+                  <div class="mapping-list">
+                    <div class="mapping-list-header">Searched Fixtures</div>
+                    <div
+                      class="mapping-list-content"
+                      id="unmappedFixturesList"
+                      style="height: 300px; overflow-y: auto"
+                    >
+                      <!-- Unmapped fixtures will be added here by JavaScript -->
+                    </div>
+                  </div>
+                  <div class="mapping-controls">
+                    <button
+                      type="button"
+                      class="mapping-btn"
+                      id="moveAllFixturesRightBtn"
+                      title="Move All"
+                    >
+                      <i class="fas fa-angle-double-right"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="mapping-btn"
+                      id="moveFixtureRightBtn"
+                      title="Move Selected"
+                    >
+                      <i class="fas fa-angle-right"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="mapping-btn"
+                      id="moveFixtureLeftBtn"
+                      title="Revert Selected"
+                    >
+                      <i class="fas fa-angle-left"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="mapping-btn"
+                      id="moveAllFixturesLeftBtn"
+                      title="Revert All"
+                    >
+                      <i class="fas fa-angle-double-left"></i>
+                    </button>
+                  </div>
+                  <div class="mapping-list">
+                    <div class="mapping-list-header">
+                      Selected Fixtures For Event
+                    </div>
+                    <div
+                      class="mapping-list-content"
+                      id="mappedFixturesList"
+                      style="height: 300px; overflow-y: auto"
+                    >
+                      <!-- Mapped fixtures will be added here by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Event Name</label>
@@ -1976,7 +2093,7 @@
                 <textarea
                   class="form-control"
                   id="aboutEvent"
-                  rows="3"
+                  rows="10"
                 ></textarea>
               </div>
             </div>
@@ -2017,111 +2134,12 @@
                 />
               </div>
             </div>
-            <div class="form-row form-full-row">
-              <div class="form-group">
-                <label class="form-label">Search Sport</label>
-                <select class="form-control" id="fixtureSportFilter">
-                  <option value="">All Sports</option>
-                  <option value="football">Football</option>
-                  <option value="basketball">Basketball</option>
-                  <option value="tennis">Tennis</option>
-                  <option value="cricket">Cricket</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Start Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="fixtureStartDateFilter"
-                  placeholder="YYYY-MM-DD"
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">End Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="fixtureEndDateFilter"
-                  placeholder="YYYY-MM-DD"
-                />
-              </div>
-              <div class="form-group">
-                <button
-                  class="btn btn-primary"
-                  id="applyFixtureFiltersBtn"
-                  type="button"
-                >
-                  <i class="fas fa-filter"></i> Apply
-                </button>
-              </div>
-            </div>
           </form>
         </div>
         <!-- Add this inside the modal-body div, after the existing form rows but before the fixtures mapping section -->
 
         <!-- Update the existing fixtures mapping section by adding the style attributes to the mapping-list-content divs -->
-        <div class="form-row form-full-row">
-          <div class="form-group">
-            <label class="form-label">Fixtures Mapping</label>
-            <div class="mapping-container">
-              <div class="mapping-list">
-                <div class="mapping-list-header">Unmapped Fixtures</div>
-                <div
-                  class="mapping-list-content"
-                  id="unmappedFixturesList"
-                  style="height: 300px; overflow-y: auto"
-                >
-                  <!-- Unmapped fixtures will be added here by JavaScript -->
-                </div>
-              </div>
-              <div class="mapping-controls">
-                <button
-                  type="button"
-                  class="mapping-btn"
-                  id="moveAllFixturesRightBtn"
-                  title="Move All"
-                >
-                  <i class="fas fa-angle-double-right"></i>
-                </button>
-                <button
-                  type="button"
-                  class="mapping-btn"
-                  id="moveFixtureRightBtn"
-                  title="Move Selected"
-                >
-                  <i class="fas fa-angle-right"></i>
-                </button>
-                <button
-                  type="button"
-                  class="mapping-btn"
-                  id="moveFixtureLeftBtn"
-                  title="Revert Selected"
-                >
-                  <i class="fas fa-angle-left"></i>
-                </button>
-                <button
-                  type="button"
-                  class="mapping-btn"
-                  id="moveAllFixturesLeftBtn"
-                  title="Revert All"
-                >
-                  <i class="fas fa-angle-double-left"></i>
-                </button>
-              </div>
-              <div class="mapping-list">
-                <div class="mapping-list-header">Mapped Fixtures</div>
-                <div
-                  class="mapping-list-content"
-                  id="mappedFixturesList"
-                  style="height: 300px; overflow-y: auto"
-                >
-                  <!-- Mapped fixtures will be added here by JavaScript -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <div class="modal-footer">
           <button class="btn btn-outline" id="cancelModalBtn">Cancel</button>
           <button class="btn btn-primary" id="saveEventBtn">Save</button>
@@ -2491,6 +2509,75 @@
         },
       ];
 
+      const fixtures = [
+        {
+          id: 1,
+          imageUrl:
+            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+          altText: "Richmond Tigers team",
+          badgeText: "TEAM",
+          title: "Richmond Tigers",
+          subtitle: "2024 Season Preview",
+          date: "Season starts March 10",
+          distance: "6.1 KM",
+        },
+        {
+          id: 2,
+          imageUrl:
+            "https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "Melbourne Cricket Ground",
+          badgeText: "VENUE",
+          title: "MCG Stadium",
+          subtitle: "Home of Grand Final",
+          date: "Capacity: 100,024",
+          distance: "2.5 KM",
+        },
+        {
+          id: 3,
+          imageUrl:
+            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL players celebrating",
+          badgeText: "SCHEDULE",
+          title: "Season Schedule",
+          subtitle: "March - September 2024",
+          date: "23 rounds",
+          distance: "View all",
+        },
+        {
+          id: 4,
+          imageUrl:
+            "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL match action",
+          badgeText: "HIGHLIGHTS",
+          title: "Match Highlights",
+          subtitle: "Round 1 Recap",
+          date: "New season",
+          distance: "Watch now",
+        },
+        {
+          id: 5,
+          imageUrl:
+            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL players training",
+          badgeText: "STATS",
+          title: "Player Stats",
+          subtitle: "Top Performers",
+          date: "Updated weekly",
+          distance: "View leaders",
+        },
+        {
+          id: 6,
+          imageUrl:
+            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL fans cheering",
+          badgeText: "FANS",
+          title: "Fan Zone",
+          subtitle: "Join the Community",
+          date: "50K+ members",
+          distance: "Join now",
+        },
+      ];
+
       // Variables for infinite scrolling
       let currentPage = 1;
       const fixturesPerPage = 5;
@@ -2590,13 +2677,7 @@
                             }</span> |
                             <span>${new Date(
                               fixture.date
-                            ).toLocaleDateString()}</span> |
-                            <span class="badge ${
-                              fixture.status === "completed"
-                                ? "badge-success"
-                                : "badge-warning"
-                            }">
-                                ${fixture.status}
+                            ).toLocaleDateString()}</span> 
                             </span>
                         </div>
                     </div>
@@ -2690,6 +2771,8 @@
             moveMappedFixtureDown(fixtureId);
           });
         });
+        // Update button states
+        updateFixtureButtonsState();
       }
 
       // Setup event listeners for fixture filters
@@ -2821,11 +2904,13 @@
                     <td>${formattedDate}</td>
                     <td>
                         <div class="action-buttons">
-                            <button class="action-btn view-event-btn" data-id="${event.id}" title="View">
+                            <button class="action-btn view-event-btn  view tooltip" data-id="${event.id}">
                                 <i class="fas fa-eye"></i>
+                                   <span class="tooltiptext">View</span>
                             </button>
-                            <button class="action-btn edit-event-btn" data-id="${event.id}" title="Edit">
-                                <i class="fas fa-edit"></i>
+                            <button class="action-btn edit-event-btn  edit tooltip" data-id="${event.id}">
+                                <i class="fas fa-pen"></i>
+                            <span class="tooltiptext">Edit</span>
                             </button>
                         </div>
                     </td>
@@ -2875,7 +2960,8 @@
         const formattedDate = eventDate.toISOString().slice(0, 16);
         document.getElementById("startDate").value = formattedDate;
 
-        document.getElementById("about").value = event.about;
+        // document.getElementById("about").value = event.about;
+        document.getElementById("aboutEvent").value = event.about;
 
         // Set multiple venues radio
         if (event.multipleVenues) {
@@ -2898,7 +2984,10 @@
 
         // Reset form
         eventForm.reset();
-        document.getElementById("multipleVenuesNo").checked = true;
+        document.getElementById("multipleVenuesYes").checked = true;
+
+        // Disable save button initially
+        saveEventBtn.disabled = true;
 
         // Render fixtures lists
         renderFixturesLists();
@@ -2924,6 +3013,13 @@
       function stopPropagationPreviewEventModal(e) {
         e.stopPropagation();
         console.log("hello2");
+      }
+      function checkFormValidity() {
+        const eventName = document.getElementById("eventName").value;
+        const startDate = document.getElementById("startDate").value;
+        const aboutEvent = document.getElementById("aboutEvent").value;
+
+        saveEventBtn.disabled = !(eventName && startDate && aboutEvent);
       }
       function renderPreviewEvents() {
         const container = document.querySelector(".preview-events-container");
@@ -2993,7 +3089,8 @@
 
           // Add click handlers
           eventCard.addEventListener("click", function () {
-            renderCards();
+            loadEventDetails(event.id);
+            // renderCards();
             showPreview.style.display = "none";
             showPreviewEventDetails.style.display = "block";
 
@@ -3161,6 +3258,7 @@
         if (item) {
           item.classList.toggle("selected");
         }
+        updateFixtureButtonsState();
       }
 
       // Toggle mapped fixture selection
@@ -3179,6 +3277,7 @@
         if (item) {
           item.classList.toggle("selected");
         }
+        updateFixtureButtonsState();
       }
 
       // Move selected pending events to mapped
@@ -3248,6 +3347,7 @@
 
         selectedUnmappedFixtures = [];
         renderFixturesLists();
+        updateFixtureButtonsState();
       }
 
       // Move all unmapped fixtures to mapped
@@ -3260,6 +3360,7 @@
 
         selectedUnmappedFixtures = [];
         renderFixturesLists();
+        updateFixtureButtonsState();
       }
 
       // Revert selected mapped fixtures to unmapped
@@ -3275,6 +3376,7 @@
 
         selectedMappedFixtures = [];
         renderFixturesLists();
+        updateFixtureButtonsState();
       }
 
       // Revert all mapped fixtures to unmapped
@@ -3282,6 +3384,7 @@
         currentEventMappedFixtures = [];
         selectedMappedFixtures = [];
         renderFixturesLists();
+        updateFixtureButtonsState();
       }
 
       // Move mapped fixture up in order
@@ -3360,13 +3463,13 @@
       // Save event (add or update)
       async function saveEvent() {
         // Validate form
-        if (!eventForm.checkValidity()) {
-          eventForm.reportValidity();
-          return false;
-        }
+        // if (!eventForm.checkValidity()) {
+        //   eventForm.reportValidity();
+        //   console.log("hey1")
+        //   return false;
+        // }
 
         const eventImage = document.getElementById("eventImage");
-        console.log("eventImage::>>", eventImage);
         const eventName = document.getElementById("eventName").value;
         const badgeName = document.getElementById("badgeName").value;
         const startDate = document.getElementById("startDate").value;
@@ -3396,14 +3499,15 @@
           // Update existing event
           const eventIndex = events.findIndex((e) => e.id === currentEventId);
           if (eventIndex !== -1) {
+            const event = events[eventIndex];
             events[eventIndex] = {
               ...events[eventIndex],
-              image: imageData,
-              name: eventName,
-              badge: badgeName,
-              startDate: startDate,
-              about: about,
-              multipleVenues: multipleVenues,
+              image: imageData || event.image,
+              name: eventName || event.name,
+              badge: badgeName || event.badge,
+              startDate: startDate || event.startDate,
+              about: about || event.about,
+              multipleVenues: multipleVenues || event.multipleVenues,
               mappedFixtures: [...currentEventMappedFixtures],
             };
           }
@@ -3423,8 +3527,104 @@
             mappedFixtures: [...currentEventMappedFixtures],
           });
         }
+        renderEventsTable(events);
+        eventModal.style.display = "none";
+        console.log("events::>>", events);
 
         return true;
+      }
+
+      // Function to load event details and fixtures
+      function loadEventDetails(eventId) {
+        // Find the event in your events array
+        const event = events.find((e) => e.id === eventId);
+        if (!event) return;
+
+        // Update the hero section
+        const heroImage = document.querySelector(".sporting-event__hero-image");
+        const heroBadge = document.querySelector(".sporting-event__badge");
+        const heroTitle = document.querySelector(".sporting-event__hero-title");
+        const heroDate = document.querySelector(".sporting-event__hero-date");
+        const heroVenue = document.querySelector(".sporting-event__hero-venue");
+
+        // Set hero image (use event.image if available, otherwise fallback)
+        heroImage.src =
+          event.image ||
+          "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
+        heroImage.alt = event.name;
+
+        // Set hero content
+        heroBadge.textContent = event.badge;
+        heroTitle.textContent = event.name;
+
+        // Format date
+        const eventDate = new Date(event.startDate);
+        const formattedDate = eventDate.toLocaleDateString("en-US", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        heroDate.textContent = formattedDate;
+
+        // Set venue info
+        heroVenue.textContent =
+          event.multipleVenues === "Yes" ? "Multiple Venues" : "Single Venue";
+
+        // Update the event details section
+        document.getElementById(
+          "eventDetailsTitle"
+        ).textContent = `About ${event.badge}`;
+        document.getElementById("eventDetailsDescription").textContent =
+          event.about || "No description available";
+
+        // Clear existing cards
+        const cardsContainer = document.getElementById("cardsContainer");
+        cardsContainer.innerHTML = "";
+
+        // Get the mapped fixtures for this event
+        const mappedFixtures = event.mappedFixtures
+          .map((fixtureId) => fixtures.find((f) => f.id === fixtureId))
+          .filter((f) => f);
+
+        // Create cards for each mapped fixture
+        mappedFixtures.forEach((fixture) => {
+          const card = document.createElement("div");
+          card.className = "sporting-event__card";
+
+          // Format fixture date
+          const fixtureDate = new Date(fixture.date);
+          const formattedFixtureDate = fixtureDate.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          });
+
+          card.innerHTML = `
+      <div class="sporting-event__card" id="${fixture.id}">
+                    <img src="${fixture.imageUrl}"
+                         alt="${fixture.altText}"
+                         class="sporting-event__card-image">
+                    <div class="sporting-event__card-badge">${fixture.badgeText}</div>
+                    <div class="sporting-event__card-content">
+                        <h3 class="sporting-event__card-name">${fixture.title}</h3>
+                        <p class="sporting-event__card-subtitle">${fixture.subtitle}</p>
+                        <div class="sporting-event__card-info">
+                            <p class="sporting-event__card-date">${fixture.date}</p>
+                            <p class="sporting-event__card-distance">${fixture.distance}</p>
+                        </div>
+                    </div>
+                </div>
+    `;
+
+          cardsContainer.appendChild(card);
+        });
+
+        // If no fixtures, show a message
+        if (mappedFixtures.length === 0) {
+          cardsContainer.innerHTML =
+            "<p>No fixtures available for this event.</p>";
+        }
       }
 
       // Show event details
@@ -3530,7 +3730,7 @@
                 <div class="meta-item">
                     <i class="fas fa-map-marker-alt meta-icon"></i>
                     <span>Multiple Venues: <span class="yes-no-badge" id="multipleVenues">${
-                      event.multipleVenues === "Yes" ? "Yes" : "No"
+                      event.multipleVenues ? "Yes" : "No"
                     }</span></span>
                 </div>
                 <div class="meta-item">
@@ -3614,11 +3814,7 @@
         saveEventBtn?.addEventListener("click", function (e) {
           e.preventDefault();
 
-          if (saveEvent()) {
-            // Re-render table and close modal
-            renderEventsTable(events);
-            eventModal.style.display = "none";
-          }
+          saveEvent();
         });
 
         // Move fixtures between lists
@@ -3638,6 +3834,18 @@
           "click",
           revertAllFixturesToUnmapped
         );
+        // Add event listeners to form fields
+        document
+          .getElementById("eventName")
+          .addEventListener("input", checkFormValidity);
+        document
+          .getElementById("startDate")
+          .addEventListener("input", checkFormValidity);
+        document
+          .getElementById("aboutEvent")
+          .addEventListener("input", checkFormValidity);
+        // Initialize the save button as disabled
+        saveEventBtn.disabled = true;
       }
 
       // Read more functionality
@@ -3659,75 +3867,6 @@
       //     }
       //   });
       // }
-
-      const fixtures = [
-        {
-          id: "team-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
-          altText: "Richmond Tigers team",
-          badgeText: "TEAM",
-          title: "Richmond Tigers",
-          subtitle: "2024 Season Preview",
-          date: "Season starts March 10",
-          distance: "6.1 KM",
-        },
-        {
-          id: "venue-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-          altText: "Melbourne Cricket Ground",
-          badgeText: "VENUE",
-          title: "MCG Stadium",
-          subtitle: "Home of Grand Final",
-          date: "Capacity: 100,024",
-          distance: "2.5 KM",
-        },
-        {
-          id: "schedule-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-          altText: "AFL players celebrating",
-          badgeText: "SCHEDULE",
-          title: "Season Schedule",
-          subtitle: "March - September 2024",
-          date: "23 rounds",
-          distance: "View all",
-        },
-        {
-          id: "highlights-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-          altText: "AFL match action",
-          badgeText: "HIGHLIGHTS",
-          title: "Match Highlights",
-          subtitle: "Round 1 Recap",
-          date: "New season",
-          distance: "Watch now",
-        },
-        {
-          id: "stats-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-          altText: "AFL players training",
-          badgeText: "STATS",
-          title: "Player Stats",
-          subtitle: "Top Performers",
-          date: "Updated weekly",
-          distance: "View leaders",
-        },
-        {
-          id: "fans-card",
-          imageUrl:
-            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-          altText: "AFL fans cheering",
-          badgeText: "FANS",
-          title: "Fan Zone",
-          subtitle: "Join the Community",
-          date: "50K+ members",
-          distance: "Join now",
-        },
-      ];
 
       // Function to create card HTML
       function createCard(card) {
@@ -3751,6 +3890,18 @@
       function renderCards() {
         const container = document.getElementById("cardsContainer");
         container.innerHTML = fixtures.map((card) => createCard(card)).join("");
+      }
+      function updateFixtureButtonsState() {
+        // Disable right buttons if no unmapped fixtures are selected or available
+        moveFixtureRightBtn.disabled = selectedUnmappedFixtures.length === 0;
+        moveAllFixturesRightBtn.disabled =
+          document.querySelectorAll("#unmappedFixturesList .mapping-item")
+            .length === 0;
+
+        // Disable left buttons if no mapped fixtures are selected or available
+        moveFixtureLeftBtn.disabled = selectedMappedFixtures.length === 0;
+        moveAllFixturesLeftBtn.disabled =
+          currentEventMappedFixtures.length === 0;
       }
 
       // Initialize the page

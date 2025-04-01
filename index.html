@@ -176,7 +176,7 @@
         font-weight: bold;
       }
 
-      .user-profile {
+      /* .user-profile {
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -191,12 +191,12 @@
         margin-right: 10px;
         border: 2px solid var(--accent-color);
         transition: all 0.3s ease;
-      }
+      } */
 
-      .user-profile:hover img {
+      /* .user-profile:hover img {
         transform: scale(1.1);
         box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.3);
-      }
+      } */
 
       .user-profile span {
         font-weight: 500;
@@ -262,9 +262,9 @@
       }
 
       .card {
-        background-color: var(--bg-secondary);
+        background: linear-gradient(135deg, #b7c3fa, #6c8fcb);
         border-radius: var(--card-border-radius);
-        padding: 20px 25px;
+        padding: 20px 25px 5px 25px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         transition: all var(--transition-speed) ease;
         cursor: pointer;
@@ -349,27 +349,6 @@
 
       .card:hover .card-value {
         color: var(--primary-color);
-      }
-
-      .card-title {
-        font-size: 1rem;
-        color: var(--text-secondary);
-        font-weight: 500;
-        margin-bottom: 15px;
-      }
-
-      .card-progress {
-        height: 6px;
-        background-color: rgba(0, 0, 0, 0.1);
-        border-radius: 3px;
-        overflow: hidden;
-        margin-bottom: 5px;
-      }
-
-      .card-progress-bar {
-        height: 100%;
-        border-radius: 3px;
-        transition: width 1.5s ease;
       }
 
       .cards-container {
@@ -501,39 +480,44 @@
         transition: all 0.3s ease;
       }
 
-      .card:hover .card-value {
+      .card:hover .card-value .card-title {
         background: linear-gradient(90deg, #4361ee, #4895ef);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
 
-      .card.users:hover .card-value {
+      /* Individual Gradient Styles */
+      .card.users:hover :is(.card-value, .card-title) {
         background: linear-gradient(90deg, #4361ee, #4895ef);
+        color: #4361ee;
         -webkit-background-clip: text;
       }
 
-      .card.squads:hover .card-value {
+      .card.squads:hover :is(.card-value, .card-title) {
         background: linear-gradient(90deg, #4cc9f0, #3a86ff);
+        color: #4cc9f0;
         -webkit-background-clip: text;
       }
 
-      .card.sports:hover .card-value {
+      .card.sports:hover :is(.card-value, .card-title) {
         background: linear-gradient(90deg, #f8961e, #ff6d00);
+        color: #f8961e;
         -webkit-background-clip: text;
       }
 
-      .card.competitions:hover .card-value {
+      .card.competitions:hover :is(.card-value, .card-title) {
         background: linear-gradient(90deg, #f72585, #b5179e);
+        color: #f72585;
         -webkit-background-clip: text;
       }
 
-      .card.events:hover .card-value {
+      .card.events:hover :is(.card-value, .card-title) {
         background: linear-gradient(90deg, #560bad, #7209b7);
+        color: #560bad;
         -webkit-background-clip: text;
       }
-
       .card-title {
-        font-size: 1rem;
+        font-size: 1.3rem;
         color: #6c757d;
         font-weight: 500;
         margin-bottom: 15px;
@@ -545,6 +529,7 @@
         border-radius: 3px;
         overflow: hidden;
         margin-bottom: 5px;
+        display: none;
       }
 
       .card-progress-bar {
@@ -578,6 +563,7 @@
         justify-content: space-between;
         font-size: 0.8rem;
         color: #6c757d;
+        display: none;
       }
 
       .text-success {
@@ -627,6 +613,7 @@
         justify-content: space-between;
         font-size: 0.8rem;
         color: var(--text-secondary);
+        display: none;
       }
 
       /* Chart Container */
@@ -781,6 +768,25 @@
         display: block;
       }
 
+      .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+
+      /* If your cards container uses flexbox, you might need this too */
+      /* .cards-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; 
+      } */
+
+      .cards-container .card-link {
+        flex: 1 1 250px; /* adjust min width as needed */
+        max-width: 350px; /* optional max width */
+      }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -815,7 +821,7 @@
 
         .main-content {
           margin-left: 0;
-          width: 100vw
+          width: 100vw;
         }
 
         .menu-toggle {
@@ -878,7 +884,7 @@
         <!-- Dashboard Content -->
         <div class="dashboard-content">
           <!-- Dashboard Cards -->
-          <div class="cards-container">
+          <!-- <div class="cards-container">
             <div class="card users" tabindex="0">
               <div class="card-icon">
                 <i class="fas fa-users"></i>
@@ -964,8 +970,109 @@
                 <span>View all</span>
               </div>
             </div>
-          </div>
+          </div> -->
 
+          <div class="cards-container">
+            <a href="userManagement.html" class="card-link">
+              <div class="card users" tabindex="0">
+                <div class="card-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <div class="card-value">1,248</div>
+                <div class="card-title">Registered Users</div>
+                <div class="card-progress">
+                  <div class="card-progress-bar" style="width: 75%"></div>
+                </div>
+                <div class="card-footer">
+                  <span
+                    ><i class="fas fa-arrow-up text-success"></i> 12% from last
+                    week</span
+                  >
+                  <span>View all</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- <a href="squadManagement.html" class="card-link">
+              <div class="card squads" tabindex="0">
+                <div class="card-icon">
+                  <i class="fas fa-people-group"></i>
+                </div>
+                <div class="card-value">356</div>
+                <div class="card-title">Total Squads</div>
+                <div class="card-progress">
+                  <div class="card-progress-bar" style="width: 60%"></div>
+                </div>
+                <div class="card-footer">
+                  <span
+                    ><i class="fas fa-arrow-up text-success"></i> 8% from last
+                    week</span
+                  >
+                  <span>View all</span>
+                </div>
+              </div>
+            </a> -->
+
+            <a href="sports.html" class="card-link">
+              <div class="card sports" tabindex="0">
+                <div class="card-icon">
+                  <i class="fas fa-baseball-bat-ball"></i>
+                </div>
+                <div class="card-value">24</div>
+                <div class="card-title">Total Sports</div>
+                <div class="card-progress">
+                  <div class="card-progress-bar" style="width: 45%"></div>
+                </div>
+                <div class="card-footer">
+                  <span
+                    ><i class="fas fa-arrow-down text-danger"></i> 2% from last
+                    week</span
+                  >
+                  <span>View all</span>
+                </div>
+              </div>
+            </a>
+
+            <a href="competitions.html" class="card-link">
+              <div class="card competitions" tabindex="0">
+                <div class="card-icon">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="card-value">78</div>
+                <div class="card-title">Total Competitions</div>
+                <div class="card-progress">
+                  <div class="card-progress-bar" style="width: 85%"></div>
+                </div>
+                <div class="card-footer">
+                  <span
+                    ><i class="fas fa-arrow-up text-success"></i> 15% from last
+                    week</span
+                  >
+                  <span>View all</span>
+                </div>
+              </div>
+            </a>
+
+            <a href="events.html" class="card-link">
+              <div class="card events" tabindex="0">
+                <div class="card-icon">
+                  <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="card-value">512</div>
+                <div class="card-title">Total Events</div>
+                <div class="card-progress">
+                  <div class="card-progress-bar" style="width: 90%"></div>
+                </div>
+                <div class="card-footer">
+                  <span
+                    ><i class="fas fa-arrow-up text-success"></i> 22% from last
+                    week</span
+                  >
+                  <span>View all</span>
+                </div>
+              </div>
+            </a>
+          </div>
           <!-- Sections (hidden by default) -->
 
           <div id="users-section" class="section">

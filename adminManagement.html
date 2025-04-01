@@ -181,7 +181,7 @@
 
       .admin-table th {
         padding: 15px;
-        text-align: left;
+        text-align: center;
         font-weight: 500;
       }
 
@@ -213,6 +213,20 @@
       .admin-name {
         display: flex;
         align-items: center;
+        justify-content: center;
+        width: 35%;
+      }
+      .admin-email {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 35%;
+      }
+      .admin-action {
+         display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
       }
 
       .admin-status {
@@ -236,36 +250,6 @@
       .action-buttons {
         display: flex;
         gap: 10px;
-      }
-
-      .action-btn {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: var(--transition);
-        border: none;
-        background-color: transparent;
-      }
-
-      .action-btn.view {
-        color: var(--primary-color);
-      }
-
-      .action-btn.edit {
-        color: var(--accent-color);
-      }
-
-      .action-btn.delete {
-        color: var(--danger-color);
-      }
-
-      .action-btn:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-        transform: translateY(-2px);
       }
 
       /* Table Footer */
@@ -1213,13 +1197,16 @@
                         <img src="${admin.avatar}" alt="${admin.name}" class="admin-avatar">
                         ${admin.name}
                     </div>
-                </td>
-                <td>${admin.email}</td>
+                    </td>
+                    <td>
+                      <div class="admin-email">
+                          ${admin.email}
+                      </div>
+                  
+                  </td>
                 <td>
-                    <div class="action-buttons">
-                        <button class="action-btn view" data-id="${admin.id}" aria-label="View details">
-                            <i class="fas fa-eye"></i>
-                        </button>
+                    <div class="action-buttons admin-action">
+                        
                         <button class="action-btn edit" data-id="${admin.id}" aria-label="Edit admin">
                             <i class="fas fa-edit"></i>
                         </button>
@@ -1232,13 +1219,17 @@
           adminTableBody.appendChild(row);
         });
 
+        // <button class="action-btn view" data-id="${admin.id}" aria-label="View details">
+                        //     <i class="fas fa-eye"></i>
+                        // </button>
+
         // Add event listeners to action buttons
-        document.querySelectorAll(".action-btn.view").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            const adminId = parseInt(this.getAttribute("data-id"));
-            showAdminDetails(adminId);
-          });
-        });
+        // document.querySelectorAll(".action-btn.view").forEach((btn) => {
+        //   btn.addEventListener("click", function () {
+        //     const adminId = parseInt(this.getAttribute("data-id"));
+        //     showAdminDetails(adminId);
+        //   });
+        // });
 
         document.querySelectorAll(".action-btn.edit").forEach((btn) => {
           btn.addEventListener("click", function () {

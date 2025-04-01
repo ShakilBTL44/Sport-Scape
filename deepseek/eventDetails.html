@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toyota AFL Premiership 2024</title>
+    <style>
+      /* Base Styles */
+      :root {
+        --primary-blue: #1a4699;
+        --accent-orange: #ff6b2c;
+        --white: #ffffff;
+        --light-gray: #f5f5f5;
+        --dark-gray: #333333;
+        --text-gray: #59637a;
+        --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        --border-radius: 16px;
+        --font-heading: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-body);
+      }
+
+      body {
+        background-color: var(--light-gray);
+        color: var(--dark-gray);
+        line-height: 1.6;
+        padding-bottom: 20px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+
+      /* Hero Section */
+      .sporting-event__hero {
+        position: relative;
+        width: 100%;
+        height: 326px;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.4) 0%,
+          rgba(0, 0, 0, 0.7) 100%
+        );
+      }
+
+      .sporting-event__hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .sporting-event__hero-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        color: var(--white);
+      }
+
+      .sporting-event__badge {
+        background-color: #ef3340;
+        color: var(--white);
+        padding: 5px 10px;
+        border-radius: 40px;
+        font-weight: bold;
+        font-size: 13px;
+        text-transform: uppercase;
+        width: fit-content;
+        margin-bottom: 10px;
+      }
+
+      .sporting-event__hero-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .sporting-event__hero-date {
+        font-size: 15px;
+        opacity: 0.9;
+        margin-bottom: 5px;
+        color: #fafafa;
+      }
+
+      .sporting-event__hero-venue {
+        font-size: 14px;
+        opacity: 0.8;
+        color: #fafafa;
+      }
+
+      /* Event Info Card */
+      .sporting-event__details-card {
+        /* background-color: var(--white); */
+        border-radius: var(--border-radius);
+        margin: 0px 15px;
+        padding: 0px;
+      }
+
+      .sporting-event__details-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #1a243d;
+        margin-bottom: 12px;
+      }
+
+      .sporting-event__details-description {
+        font-size: 17px;
+        line-height: 22px;
+        color: var(--text-gray);
+        margin-bottom: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .sporting-event__read-more {
+        color: var(--accent-orange);
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-block;
+        padding: 5px 0;
+      }
+
+      .sporting-event__read-more:hover {
+        text-decoration: underline;
+      }
+
+      /* Info Cards */
+      .sporting-event__cards-container {
+        padding: 0 15px 20px;
+      }
+
+      .sporting-event__card {
+        position: relative;
+        width: 100%;
+        height: 335px;
+        border-radius: var(--border-radius);
+        overflow: visible;
+        margin-bottom: 20px;
+        background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+        box-shadow: var(--shadow);
+      }
+
+      .sporting-event__card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+      }
+
+      .sporting-event__card-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background-color: var(--accent-orange);
+        color: var(--white);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .sporting-event__card-content {
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        background-color: var(--white);
+        padding: 16px;
+        border-radius: var(--border-radius);
+        width: calc(100% - 32px);
+        box-shadow: var(--shadow);
+      }
+
+      .sporting-event__card-name {
+        font-size: 17px;
+        font-weight: 700;
+        color: #263238;
+        margin-bottom: 4px;
+      }
+
+      .sporting-event__card-subtitle {
+        font-size: 13px;
+        color: var(--text-gray);
+        margin-bottom: 2px;
+      }
+
+      .sporting-event__card-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+
+      .sporting-event__card-date {
+        font-size: 13px;
+        color: var(--text-gray);
+      }
+
+      .sporting-event__card-distance {
+        font-size: 13px;
+        color: var(--text-gray);
+      }
+
+      /* Responsive Adjustments */
+      @media (min-width: 768px) {
+      }
+
+      .sporting-event__hero {
+        height: 400px;
+      }
+
+      .sporting-event__hero-title {
+        font-size: 32px;
+      }
+
+      .sporting-event__details-card {
+        margin: 25px auto 30px auto;
+        max-width: 700px;
+        /* padding: 25px; */
+      }
+
+      .sporting-event__cards-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px 30px;
+      }
+
+      .sporting-event__card {
+        width: calc((480px - 20px - 20px));
+        height: calc((480px - 20px - 20px - 30px));
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <section class="sporting-event__hero">
+      <img
+        src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+        alt="AFL Premiership 2024"
+        class="sporting-event__hero-image"
+      />
+      <div class="sporting-event__hero-overlay">
+        <div class="sporting-event__badge">AFL</div>
+        <h1 class="sporting-event__hero-title">Toyota AFL Premiership 2024</h1>
+        <p class="sporting-event__hero-date">Wednesday, 2 April onwards</p>
+        <p class="sporting-event__hero-venue">Multiple Venues</p>
+      </div>
+    </section>
+
+    <!-- Event Info Card -->
+    <section class="sporting-event__details-card">
+      <h2 class="sporting-event__details-title">About AFL</h2>
+      <p class="sporting-event__details-description">
+        The Australian Football League is the pre-eminent and only fully
+        professional competition of Australian rules football. It was originally
+        named the Victorian Football League and was founded in 1896 as a
+        breakaway competition from the Victorian Football Association, with its
+        inaugural season in 1897. The Toyota AFL Premiership Season consists of
+        23 rounds followed by a finals series featuring the top eight teams. The
+        2024 season promises to be the most exciting yet, with new teams,
+        stadiums, and rule changes designed to enhance the speed and skill of
+        the game.
+      </p>
+      <a href="#" class="sporting-event__read-more">Read more</a>
+    </section>
+
+    <!-- Additional Cards Section -->
+    <section class="sporting-event__cards-container" id="cardsContainer">
+      <!-- Cards will be dynamically inserted here -->
+    </section>
+
+    <script>
+      // Card data array
+      const fixtures = [
+        {
+          id: "team-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+          altText: "Richmond Tigers team",
+          badgeText: "TEAM",
+          title: "Richmond Tigers",
+          subtitle: "2024 Season Preview",
+          date: "Season starts March 10",
+          distance: "6.1 KM",
+        },
+        {
+          id: "venue-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "Melbourne Cricket Ground",
+          badgeText: "VENUE",
+          title: "MCG Stadium",
+          subtitle: "Home of Grand Final",
+          date: "Capacity: 100,024",
+          distance: "2.5 KM",
+        },
+        {
+          id: "schedule-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL players celebrating",
+          badgeText: "SCHEDULE",
+          title: "Season Schedule",
+          subtitle: "March - September 2024",
+          date: "23 rounds",
+          distance: "View all",
+        },
+        {
+          id: "highlights-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL match action",
+          badgeText: "HIGHLIGHTS",
+          title: "Match Highlights",
+          subtitle: "Round 1 Recap",
+          date: "New season",
+          distance: "Watch now",
+        },
+        {
+          id: "stats-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1517649763962-0c623066013b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL players training",
+          badgeText: "STATS",
+          title: "Player Stats",
+          subtitle: "Top Performers",
+          date: "Updated weekly",
+          distance: "View leaders",
+        },
+        {
+          id: "fans-card",
+          imageUrl:
+            "https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+          altText: "AFL fans cheering",
+          badgeText: "FANS",
+          title: "Fan Zone",
+          subtitle: "Join the Community",
+          date: "50K+ members",
+          distance: "Join now",
+        },
+      ];
+
+      // Function to create card HTML
+      function createCard(card) {
+        return `
+                <div class="sporting-event__card" id="${card.id}">
+                    <img src="${card.imageUrl}" 
+                         alt="${card.altText}" 
+                         class="sporting-event__card-image">
+                    <div class="sporting-event__card-badge">${card.badgeText}</div>
+                    <div class="sporting-event__card-content">
+                        <h3 class="sporting-event__card-name">${card.title}</h3>
+                        <p class="sporting-event__card-subtitle">${card.subtitle}</p>
+                        <div class="sporting-event__card-info">
+                            <p class="sporting-event__card-date">${card.date}</p>
+                            <p class="sporting-event__card-distance">${card.distance}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+      }
+
+      // Function to render all cards
+      function renderCards() {
+        const container = document.getElementById("cardsContainer");
+        container.innerHTML = fixtures.map((card) => createCard(card)).join("");
+      }
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Render cards
+        renderCards();
+
+        // Read more functionality
+        const readMoreBtn = document.querySelector(
+          ".sporting-event__read-more"
+        );
+        const description = document.querySelector(
+          ".sporting-event__details-description"
+        );
+
+        if (readMoreBtn && description) {
+          readMoreBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            if (description.style.webkitLineClamp) {
+              description.style.webkitLineClamp = "unset";
+              readMoreBtn.textContent = "Read less";
+            } else {
+              description.style.webkitLineClamp = "3";
+              readMoreBtn.textContent = "Read more";
+            }
+          });
+        }
+
+        // Card click functionality
+        document.querySelectorAll(".sporting-event__card").forEach((card) => {
+          card.addEventListener("click", function () {
+            console.log("Card clicked:", this.id);
+            // Add navigation or additional functionality here
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

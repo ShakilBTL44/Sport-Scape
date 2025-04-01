@@ -12,21 +12,22 @@ const Sidebar = (activeTab) => {
             </li>
             <li>
             <a class=${
+              activeTab === "Sports" ? "active" : "normal"
+            } href="sports.html"><i class="fas fa-baseball-ball"></i> Sports</a>
+              </li>
+               <li>
+                  <a href="competitions.html" class=${
+                    activeTab === "Competitions" ? "active" : "normal"
+                  }
+                    ><i class="fas fa-trophy"></i> Competitions</a
+                  >
+                </li>
+            <li>
+            <a class=${
               activeTab === "Events" ? "active" : "normal"
             } href="events.html"><i class="fas fa-calendar-alt"></i> Events</a>
             </li>
-            <li>
-               <a href="competitions.html" class=${
-                 activeTab === "Competitions" ? "active" : "normal"
-               }
-                 ><i class="fas fa-trophy"></i> Competitions</a
-               >
-             </li>
-             <li>
-               <a class=${
-                 activeTab === "Sports" ? "active" : "normal"
-               } href="sports.html"><i class="fas fa-baseball-ball"></i> Sports</a>
-             </li>
+            
           <li>
             <a class=${
               activeTab === "UserManagement" ? "active" : "normal"
@@ -40,7 +41,7 @@ const Sidebar = (activeTab) => {
           <li>
             <a class=${
               activeTab === "AdminManagement" ? "active" : "normal"
-            } href="adminManagement.html"><i class="fas fa-user-shield"></i> Admin Management</a>
+            } href="adminManagement.html"><i class="fas fa-user-shield"></i> Admin Staff</a>
           </li>
         </ul>
      `;

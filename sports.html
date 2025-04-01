@@ -167,39 +167,11 @@
 
       .action-buttons {
         display: flex;
+        align-items: flex-start;
         gap: 0.5rem;
       }
 
-      .action-btn {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
-        color: white;
-        font-size: 0.8rem;
-      }
-
-      .action-btn.view {
-        background-color: var(--success-color);
-      }
-
-      .action-btn.edit {
-        background-color: var(--accent-color);
-      }
-
-      .action-btn.delete {
-        background-color: var(--danger-color);
-      }
-
-      .action-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
+     
 
       /* Pagination - Updated to match competition management style */
       .pagination {
@@ -493,45 +465,6 @@
         animation: fadeIn 0.3s ease-in-out;
       }
 
-      /* Tooltip */
-      .tooltip {
-        position: relative;
-        display: inline-block;
-      }
-
-      .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 120px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s;
-        font-size: 0.8rem;
-      }
-
-      .tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #333 transparent transparent transparent;
-      }
-
-      .tooltip:hover .tooltiptext {
-        visibility: visible;
-        opacity: 1;
-      }
       /* preview */
       #previewEventBtn {
         margin-left: 10px;
@@ -601,22 +534,60 @@
         }
 
         .selector-header h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 17px;
+            margin: 15px;
+            font-family: "Inter";
+            font-weight: 600;
+            font-size: 17px;
+            line-height: 22px;
+            letter-spacing: -0.4px;
+            text-align: center;
+            color: #FAFAFA;
         }
 
         .subtitle {
-            font-size: 16px;
-            color: var(--light-gray);
-            margin-bottom: 16px;
+          color: #FAFAFA;
+          font-family: Inter;
+          font-weight: 400;
+          font-size: 17px;
+          line-height: 22px;
+          letter-spacing: -0.4px;
+          text-align: center;
+          vertical-align: middle;
+          width: 60%;
+          margin: auto;
+          margin-bottom: 16px;
         }
-
-        .sports-grid {
+        .sports-selector-container{
+          background: var(--primary-blue);
+          overflow: hidden;
+        }
+        .action-buttons-icons{
+          display: flex;
+          justify-content: space-between;
+          background: var(--primary-blue);
+          padding-bottom: 30px;
+          gap: 10px;
+          padding: 0px 5%;
+          margin: auto;
+          padding-bottom: 50px;
+        }
+            .sports-grid {
+               display: flex;
+               flex-direction: column;
+               gap: 15px;
+               margin: auto;
+               margin-bottom: 30px;
+               background: var(--primary-blue);
+               width: 110%;
+               margin-left: -5%
+              }
+        .sports-grid .row-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            justify-content: space-between;
+            width: 90%;
+            margin:auto
         }
 
         /* Special row with 4 items */
@@ -624,61 +595,62 @@
             grid-column: 1 / -1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        @media (max-width: 600px) {
-            .sports-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .sports-grid .row-4 {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            gap: 32px;
+             margin:auto;
+             /* margin-left:-1.4rem; */
+        
         }
 
         .sport-item {
             position: relative;
             width: 100%;
-            aspect-ratio: 1/1;
+            /* aspect-ratio: 1/1; */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--selection-blue), var(--primary-blue));
+            /* background: linear-gradient(135deg, var(--selection-blue), var(--primary-blue)); */
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
             border: none;
             color: var(--white);
-            padding: 10px;
-        }
-
-        .sport-item:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow);
+            background-color: transparent;
+            /* padding: 10px; */
         }
 
         .sport-item.selected {
-            background: linear-gradient(135deg, var(--active-green), #3E8E41));
+            background: linear-gradient(135deg, var(--active-green), #3E8E41);
             transform: scale(1.05);
             box-shadow: var(--shadow);
         }
 
         .sport-icon {
-            font-size: 32px;
             margin-bottom: 8px;
+            position: relative;
+        }
+        .sport-middle-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--light-gray);
+            /* opacity: 0; */
+            background-color: transparent;
+            transition: opacity 0.3s ease;
+            max-width: 40px;
+            max-height: 40px;            ;
         }
 
         .sport-label {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 400;
             text-align: center;
         }
 
         .action-buttons {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 15px;
             margin-top: 30px;
         }
@@ -709,9 +681,82 @@
             border: 1px solid var(--light-gray);
         }
 
+        #clear-btn{
+          background-color: transparent;
+          border: 0.5px solid #FFFFFF66;
+          border-radius: 14px;
+          font-family: Inter;
+          font-weight: 600;
+          font-size: 17px;
+          line-height: 22px;
+          letter-spacing: -0.4px;
+          color: #FAFAFA;
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        #continue-btn{
+          background: #FDFDFD;
+          border: 0.5px solid #FFFFFF66;
+          border-radius: 14px;
+          font-family: Inter;
+          font-weight: 600;
+          font-size: 17px;
+          line-height: 22px;
+          letter-spacing: -0.4px;
+          color: #1A243D;
+          flex: 3;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .preview-main-content{
+          background: white
+        }
+
         .icons-btn-secondary:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+
+        /* Icons preview */
+            .sports-selector-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      /* padding: 20px; */
+    }
+
+    .top-nav>.nav-item:nth-child(3){
+      border-bottom: 2px solid white;
+    }
+
+
+
+    .sport-item:hover {
+      /* transform: scale(1.05);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    }
+
+    .sport-item.selected {
+      /* background: linear-gradient(135deg, #4CAF50, #3E8E41); */
+      transform: scale(1.05);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .sport-label {
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: left;
+      gap: 15px;
+      margin-top: 30px;
+    }
 
 /* Responsive adjustments */
 @media (max-width: 500px) {
@@ -797,7 +842,7 @@
             </button>
 
             <button class="btn btn-primary" id="previewEventBtn">
-              <i class="fa fa-eye" aria-hidden="true"></i> List Preview
+              <i class="fa fa-eye" aria-hidden="true"></i> Images List Preview
             </button>
 
             <button class="btn btn-primary" id="iconPreviewEventBtn">
@@ -833,8 +878,8 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Logo</th>
-                    <th>Image</th>
+                    <th>Sport Icon</th>
+                    <th>Sport Image</th>
                     <th>Sport Name</th>
                     <th>Actions</th>
                   </tr>
@@ -867,81 +912,77 @@
   <div class="previewModal" id="listPreviewContainer">
       <div class="showPreview"  id="listPreview">
         <div class="mobile-view">
-            <header class="header">
-          <div class="header-content">
-            <div class="greeting">Hello John!</div>
-            <div class="header-icons">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/565/565422.png"
-                alt="Notifications"
-                class="icon"
-              />
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/126/126472.png"
-                alt="Settings"
-                class="icon"
-              />
+            <!-- Header Section -->
+          <header class="header">
+            <div class="header-content">
+              <div class="greeting">Hello John!</div>
+              <div class="header-icons">
+                <img
+                  src="./../assets/icons/notification.svg"
+                  alt="Notifications"
+                  class="icon"
+                />
+              </div>
             </div>
-          </div>
 
-          <div class="search-filter-container">
-            <div class="search-bar">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/149/149852.png"
-                alt="Search"
-                class="search-icon"
-              />
-              <input type="text" placeholder="Search for events" />
+            <div class="search-filter-container">
+              <div class="search-bar">
+                <img
+                   src="./../assets/icons/search.svg"
+                  alt="Search"
+                  class="search-icon"
+                />
+                <input type="text" placeholder="Search for events" />
+              </div>
+              <button class="filter-btn">
+                <img
+                  src="./../assets/icons/tune.svg"
+                  alt="Filter"
+                  class="filter-icon"
+                />
+              </button>
             </div>
-            <button class="filter-btn">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/566/566299.png"
-                alt="Filter"
-                class="filter-icon"
-              />
-            </button>
-          </div>
 
-          <!-- Top Navigation -->
-          <nav class="top-nav">
-            <a href="#" class="nav-item">
+            <!-- Top Navigation -->
+            <nav class="top-nav">
+              <a href="#" class="nav-item">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"
+                src="./../assets/icons/events_inactive.svg"
                 alt="Events"
                 class="nav-icon"
               />
-              <span>Events</span>
-            </a>
-            <a href="#" class="nav-item">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
-                alt="Venues"
-                class="nav-icon"
-              />
-              <span>Venues</span>
-            </a>
-            <a href="#" class="nav-item">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/857/857455.png"
-                alt="Sports"
-                class="nav-icon"
-              />
-              <span>Sports</span>
-            </a>
-            <a href="#" class="nav-item">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/805/805401.png"
-                alt="Teams"
-                class="nav-icon"
-              />
-              <span>Teams</span>
-            </a>
-          </nav>
-        </header>
+                <span>Events</span>
+              </a>
+              <a href="#" class="nav-item">
+                <img
+                 src="./../assets/icons/venue_inactive.svg"
+                  alt="Venues"
+                  class="nav-icon"
+                />
+                <span>Venues</span>
+              </a>
+              <a href="#" class="nav-item">
+                <img
+                  src="./../assets/icons/sports_active.svg"
+                  alt="Sports"
+                  class="nav-icon"
+                />
+                <span>Sports</span>
+              </a>
+              <!-- <a href="#" class="nav-item">
+                <img
+                 src="./../assets/icons/teams_inactive.svg"
+                  alt="Teams"
+                  class="nav-icon"
+                />
+                <span>Teams</span>
+              </a> -->
+            </nav>
+          </header>
 
         <!-- Main Content -->
         <main class="preview-main-content">
-          <h2 class="section-title">Upcoming Events</h2>
+          <h2 class="section-title">Recommended Sports</h2>
 
           <!-- <div class="preview-events-container"></div> -->
             <div class="cards-container" id="cardsContainer">
@@ -949,101 +990,67 @@
 </div>
         </main>
 
-        <!-- Footer Navigation -->
-        <nav class="footer-nav">
-          <a href="#" class="footer-item active">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
-              alt="Discover"
-              class="footer-icon"
-            />
-            <span>Discover</span>
-          </a>
-          <a href="#" class="footer-item">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/891/891401.png"
-              alt="Tickets"
-              class="footer-icon"
-            />
-            <span>Tickets</span>
-          </a>
-          <a href="#" class="footer-item">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1534/1534935.png"
-              alt="Squads"
-              class="footer-icon"
-            />
-            <span>Squads</span>
-          </a>
-          <a href="#" class="footer-item">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
-              alt="Account"
-              class="footer-icon"
-            />
-            <span>Account</span>
-          </a>
-        </nav>
+          <!-- Footer Navigation -->
+          <nav class="footer-nav">
+            <a href="#" class="footer-item active">
+              <img
+                src="./../assets/icons/discover_active.svg"
+                alt="Discover"
+                class="footer-icon"
+              />
+              <span>Discover</span>
+            </a>
+            <a href="#" class="footer-item">
+              <img
+                src="./../assets/icons/community_inactive.svg"
+                alt="Tickets"
+                class="footer-icon"
+              />
+              <span>Tickets</span>
+            </a>
+            <a href="#" class="footer-item">
+              <img
+                src="./../assets/icons/ticket_inactive.svg"
+                alt="Squads"
+                class="footer-icon"
+              />
+              <span>Squads</span>
+            </a>
+            <a href="#" class="footer-item">
+              <img
+                src="./../assets/icons/profile_inactive.svg"
+                alt="Account"
+                class="footer-icon"
+              />
+              <span>Account</span>
+            </a>
+          </nav>
       </div>
       </div>
     </div>
-  <div class="previewModal" id="iconsPreviewContainer">
-      <div class="showPreview" id="iconsPreview">
-        <div class="mobile-view">
-         <div class="sports-selector-container">
-        <header class="selector-header">
+    <div class="previewModal" id="iconsPreviewContainer">
+    <div class="showPreview" id="iconsPreview">
+      <div class="mobile-view">
+        <div class="sports-selector-container">
+          <header class="selector-header">
             <h1>Pick your favourite sports</h1>
             <p class="subtitle">What sport gets your heart racing? Choose your favourite from all the exciting options!</p>
-        </header>
-        
-        <div class="sports-grid">
+          </header>
+          
+          <div class="sports-grid">
             <!-- First row with 3 items -->
-            <button class="sport-item" data-sport="golf">
-                <div class="sport-icon">⛳</div>
-                <div class="sport-label">Golf</div>
-            </button>
-            <button class="sport-item" data-sport="swimming">
-                <div class="sport-icon">🏊</div>
-                <div class="sport-label">Swimming</div>
-            </button>
-            <button class="sport-item" data-sport="cricket">
-                <div class="sport-icon">🏏</div>
-                <div class="sport-label">Cricket</div>
-            </button>
-            
-            <!-- Second row with 4 items -->
-            <div class="row-4">
-                <button class="sport-item" data-sport="baseball">
-                    <div class="sport-icon">⚾</div>
-                    <div class="sport-label">Baseball</div>
-                </button>
-                <button class="sport-item" data-sport="basketball">
-                    <div class="sport-icon">🏀</div>
-                    <div class="sport-label">Basketball</div>
-                </button>
-                <button class="sport-item" data-sport="football">
-                    <div class="sport-icon">⚽</div>
-                    <div class="sport-label">Football</div>
-                </button>
-                <button class="sport-item" data-sport="boxing">
-                    <div class="sport-icon">🥊</div>
-                    <div class="sport-label">Boxing</div>
-                </button>
             </div>
-            
-            <!-- Additional sports can be added here following the same pattern -->
+          </div>
+          
+          <div class="action-buttons-icons">
+            <button class="btn btn-secondary" id="clear-btn">Skip</button>
+            <button class="btn btn-primary" id="continue-btn">Next</button>
+          </div>
         </div>
-        
-        <div class="action-buttons">
-            <button class="icon-btn icon-btn-secondary" id="clear-btn">Clear All</button>
-            <button class="icon-btn icon-btn-primary" id="continue-btn">Continue</button>
-        </div>
+      </div>
     </div>
+  </div>
 
-      
-      </div>
-      </div>
-    </div>
   </div>
 
     <!-- Add Sport Modal -->
@@ -1221,7 +1228,7 @@
             <div class="sport-details-header">
               <div class="sport-details-logo-container">
                 <img
-                  src="https://via.placeholder.com/100"
+                  src=""
                   alt="Sport Logo"
                   class="sport-details-logo"
                   id="viewSportLogo"
@@ -1310,8 +1317,8 @@
           id: 1,
           name: "Football",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 24,
           competitions: 5,
           players: 1250,
@@ -1321,8 +1328,8 @@
           id: 2,
           name: "Basketball",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 18,
           competitions: 3,
           players: 850,
@@ -1332,8 +1339,8 @@
           id: 3,
           name: "Tennis",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 12,
           competitions: 4,
           players: 420,
@@ -1343,8 +1350,8 @@
           id: 4,
           name: "Swimming",
           category: "water",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 8,
           competitions: 2,
           players: 310,
@@ -1354,8 +1361,8 @@
           id: 5,
           name: "Skiing",
           category: "winter",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 6,
           competitions: 1,
           players: 180,
@@ -1365,8 +1372,8 @@
           id: 6,
           name: "Volleyball",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 15,
           competitions: 3,
           players: 670,
@@ -1376,8 +1383,8 @@
           id: 7,
           name: "Golf",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 10,
           competitions: 2,
           players: 290,
@@ -1387,8 +1394,8 @@
           id: 8,
           name: "Surfing",
           category: "water",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 5,
           competitions: 1,
           players: 150,
@@ -1398,8 +1405,8 @@
           id: 9,
           name: "Rugby League",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 22,
           competitions: 4,
           players: 900,
@@ -1409,8 +1416,8 @@
           id: 10,
           name: "Rugby Union",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 20,
           competitions: 3,
           players: 850,
@@ -1420,8 +1427,8 @@
           id: 11,
           name: "Australian Rules Football",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 30,
           competitions: 6,
           players: 1100,
@@ -1431,8 +1438,8 @@
           id: 12,
           name: "Cricket",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 28,
           competitions: 5,
           players: 1300,
@@ -1442,8 +1449,8 @@
           id: 13,
           name: "Hockey",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 12,
           competitions: 2,
           players: 400,
@@ -1453,8 +1460,8 @@
           id: 14,
           name: "Cycling",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 9,
           competitions: 2,
           players: 250,
@@ -1464,8 +1471,8 @@
           id: 15,
           name: "Rowing",
           category: "water",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 6,
           competitions: 1,
           players: 190,
@@ -1475,8 +1482,8 @@
           id: 16,
           name: "Netball",
           category: "team",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 14,
           competitions: 3,
           players: 700,
@@ -1486,8 +1493,8 @@
           id: 17,
           name: "Badminton",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 8,
           competitions: 2,
           players: 340,
@@ -1497,8 +1504,8 @@
           id: 18,
           name: "Table Tennis",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 10,
           competitions: 2,
           players: 280,
@@ -1508,8 +1515,8 @@
           id: 19,
           name: "Martial Arts",
           category: "combat",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 5,
           competitions: 1,
           players: 220,
@@ -1519,14 +1526,49 @@
           id: 20,
           name: "Athletics",
           category: "individual",
-          logo: "https://via.placeholder.com/100",
-          image: "https://via.placeholder.com/100",
+          logo: "",
+          image: "",
           events: 20,
           competitions: 4,
           players: 500,
           updated: "3 weeks ago",
         },
       ];
+
+      
+const sportsDataWithIcons = [
+  { id: 1, name: "Golf", icon: "⛳", category: "individual", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/golf.svg" },
+  { id: 2, name: "Swimming", icon: "🏊", category: "water", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/pool.svg" },
+  { id: 3, name: "Cricket", icon: "🏏", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/cricket.svg" },
+  { id: 4, name: "Baseball", icon: "⚾", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/baseball.svg" },
+  { id: 5, name: "Basketball", icon: "🏀", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/basketball.svg" },
+  { id: 6, name: "Football", icon: "🏈", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/football.svg" },
+  { id: 7, name: "Boxing", icon: "🥊", category: "combat", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/mma.svg" },
+  { id: 8, name: "Rugby", icon: "🏉", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/rugby.svg" },
+  { id: 9, name: "Motor Sport", icon: "🏎️", category: "racing", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/motorsports.svg" },
+  { id: 10, name: "Soccer", icon: "⚽", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/soccer.svg" },
+  { id: 11, name: "Tennis", icon: "🎾", category: "individual", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/tennis.svg" },
+  { id: 12, name: "Volleyball", icon: "🏐", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/volleyball.svg" },
+  { id: 13, name: "Surfing", icon: "🏄", category: "water", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/surfing.svg" },
+  { id: 14, name: "Hockey", icon: "🏒", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/hockey.svg" },
+  { id: 15, name: "Kabaddi", icon: "🤼", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/kabaddi.svg" },
+  { id: 16, name: "Martial Arts", icon: "🥋", category: "combat", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/martial_arts.svg" },
+  { id: 17, name: "Handball", icon: "🤾", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/handball.svg" }
+];
+
+   const sports_Data = [
+    { title: "Football", events: 12, image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Basketball", events: 8, image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Tennis", events: 5, image: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Swimming", events: 7, image: "https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Volleyball", events: 4, image: "https://images.unsplash.com/photo-1606979123989-8cc801d2c6ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Cricket", events: 9, image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Baseball", events: 6, image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Golf", events: 3, image: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Rugby", events: 5, image: "https://images.unsplash.com/photo-1589483216011-69c8ab68164f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Hockey", events: 4, image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" }
+  ];
+
 
       // DOM Elements
       const sidebarToggle = document.getElementById("sidebarToggle");
@@ -1566,6 +1608,7 @@
       const iconPreviewEventBtn = document.getElementById("iconPreviewEventBtn");
       const listPreview = document.getElementById("listPreview");
       const iconsPreview = document.getElementById("iconsPreview");
+      const mobileView = document.querySelector(".mobile-view");
       const listPreviewContainer = document.getElementById("listPreviewContainer");
       const iconsPreviewContainer = document.getElementById("iconsPreviewContainer");
       const previewModal = document.querySelector(".previewModal");
@@ -1585,6 +1628,7 @@
       // Initialize the page
       function init() {
         filterSports();
+        showListPreview();
         setupEventListeners();
       }
 
@@ -1611,15 +1655,17 @@
         sports.forEach((sport) => {
           const row = document.createElement("tr");
           row.className = "fade-in";
+          const logoUrlIcon = sport.logo ||  "https://www.shutterstock.com/shutterstock/photos/1037719192/display_1500/stock-vector-default-ui-image-placeholder-for-wireframes-for-apps-and-websites-1037719192.jpg"
+          const logoUrl = sport.image ||  "https://www.shutterstock.com/shutterstock/photos/1037719192/display_1500/stock-vector-default-ui-image-placeholder-for-wireframes-for-apps-and-websites-1037719192.jpg"
           row.innerHTML = `
                 <td>
                     <div class="image-container">
-                        <img src="${sport.logo}" alt="${sport.name} Logo" class="sport-logo">
+                        <img src="${logoUrl}" alt="${sport.name} Logo" class="sport-logo">
                     </div>
                 </td>
                 <td>
                     <div class="image-container">
-                        <img src="${sport.image}" alt="${sport.name} Image" class="sport-image">
+                        <img src="${logoUrlIcon}" alt="${sport.name} Image" class="sport-image">
                     </div>
                 </td>
                 <td>${sport.name}</td>
@@ -1627,15 +1673,15 @@
                     <div class="action-buttons">
                         <button class="action-btn view tooltip" data-id="${sport.id}">
                             <i class="fas fa-eye"></i>
-                            <span class="tooltiptext">View Details</span>
+                            <span class="tooltiptext">View</span>
                         </button>
                         <button class="action-btn edit tooltip" data-id="${sport.id}">
                             <i class="fas fa-pen"></i>
-                            <span class="tooltiptext">Edit Sport</span>
+                            <span class="tooltiptext">Edit</span>
                         </button>
                         <button class="action-btn delete tooltip" data-id="${sport.id}">
                             <i class="fas fa-trash"></i>
-                            <span class="tooltiptext">Delete Sport</span>
+                            <span class="tooltiptext">Delete</span>
                         </button>
                     </div>
                 </td>
@@ -1673,6 +1719,7 @@
         document.querySelector(".content-wrapper").style.display = "none";
         iconsPreviewContainer.style.display = "block";
         iconsPreview.style.display = "block";
+        mobileView.style.background = "#1a4699";
       }
       function closePreviewEventListModal() {
        document.querySelector(".content-wrapper").style.display = "block";
@@ -1683,6 +1730,7 @@
           document.querySelector(".content-wrapper").style.display = "block";
         iconsPreviewContainer.style.display = "none";
         iconsPreview.style.display = "none";
+        mobileView.style.background = "#FFFFFF";
       }
       // Filter sports based on search and category with pagination
       function filterSports() {
@@ -1933,10 +1981,10 @@
 
             const logoUrl = logoFile
               ? URL.createObjectURL(logoFile)
-              : "https://via.placeholder.com/100";
+              : "";
             const imageUrl = imageFile
               ? URL.createObjectURL(imageFile)
-              : "https://via.placeholder.com/100";
+              : "";
 
             const newSport = {
               id: sportsData.length + 1,
@@ -1950,7 +1998,17 @@
               updated: "Just now",
             };
 
-            sportsData.unshift(newSport);
+              // { id: 17, name: "Handball", icon: "🤾", category: "team", coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: "./../assets/sports/handball.svg" }
+
+              // sportsDataWithIcons
+
+              sportsDataWithIcons.push(  { id: sportsData.length + 1, name: name, icon: logoUrl, category: "team",coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: logoUrl });
+              generateSportsGrid();
+
+              sports_Data.push(  { title: name, events: 4, image: imageUrl });
+              showListPreview();
+
+            sportsData.push(newSport);
             currentPage = 1; // Reset to first page when adding new sport
             filterSports();
             closeModal(addSportModal);
@@ -2018,22 +2076,12 @@
           });
         });
       }
-       const sports_Data = [
-    { title: "Football", events: 12, image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Basketball", events: 8, image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Tennis", events: 5, image: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Swimming", events: 7, image: "https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Volleyball", events: 4, image: "https://images.unsplash.com/photo-1606979123989-8cc801d2c6ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Cricket", events: 9, image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Baseball", events: 6, image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Golf", events: 3, image: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Rugby", events: 5, image: "https://images.unsplash.com/photo-1589483216011-69c8ab68164f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
-    { title: "Hockey", events: 4, image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" }
-  ];
+
 
   const container = document.getElementById('cardsContainer');
 
-  sports_Data.forEach(sport => {
+    function showListPreview(){
+        sports_Data.forEach(sport => {
     const card = document.createElement('div');
     card.className = 'sport-card';
     card.style.setProperty('--bg-image', `url("${sport.image}")`);
@@ -2053,8 +2101,10 @@
     
     container.appendChild(card);
   });
+    }
     // Toggle sport selection
             function toggleSelection(sportItem) {
+              console.log("selected::>>", sportItem)
                 const sport = sportItem.dataset.sport;
                 const index = selectedSports.indexOf(sport);
                 
@@ -2102,6 +2152,120 @@
 
             // Initial state
             updateContinueButton();
+
+function generateSportsGrid() {
+  const sportsGrid = document.querySelector('.sports-grid');
+  if (!sportsGrid) return;
+
+  // Clear existing content
+  sportsGrid.innerHTML = '';
+
+  // Group sports into rows of 3 and 4 items alternately
+  const sportsPerRow = [3, 4]; // Pattern: first row 3, second row 4, etc.
+  let currentRow = 0;
+  let itemsInCurrentRow = 0;
+  let currentRowDiv = null;
+
+  sportsDataWithIcons.forEach((sport, index) => {
+    // Determine if we need to start a new row
+    if (itemsInCurrentRow === 0) {
+      currentRowDiv = document.createElement('div');
+      const rowType = sportsPerRow[currentRow % sportsPerRow.length];
+      
+      if (rowType === 4) {
+        currentRowDiv.className = 'row-4';
+      }
+      else{
+        currentRowDiv.className = 'row-3';
+      }
+      
+      sportsGrid.appendChild(currentRowDiv);
+      itemsInCurrentRow = rowType;
+      currentRow++;
+    }
+
+    // Create sport item
+    const sportItem = document.createElement('button');
+    sportItem.className = 'sport-item';
+    sportItem.style.flex = "1";
+    sportItem.dataset.sport = sport.name.toLowerCase();
+    const sportIcon = document.createElement('div');
+    sportIcon.className ='sport-icon';
+    const coverImage = document.createElement('img');
+    coverImage.onclick = function () {
+  toggleColor(coverImage.src.includes("green"), sport.coverImage, sport.coverImageSelected, `coverImage${sport.id}`);
+};
+    coverImage.src = sport.coverImage;
+    coverImage.id = `coverImage${sport.id}`
+    const icon = document.createElement('img');
+    icon.src = sport.sportIcon;
+    icon.className = "sport-middle-icon";
+    icon.onclick = function () {
+  toggleColor(coverImage.src.includes("green"), sport.coverImage, sport.coverImageSelected, `coverImage${sport.id}`);
+};
+    sportIcon.append(coverImage, icon);
+    const sportLabel = document.createElement('div');
+    sportLabel.className ='sport-label';
+    sportLabel.innerHTML = sport.name
+    
+    sportItem.append(sportIcon, sportLabel);
+    
+    currentRowDiv.appendChild(sportItem);
+    itemsInCurrentRow--;
+  });
+
+  function toggleColor(coverImage, coverImageDefault, selectedImage, id){
+     document.getElementById(`${id}`).src = !coverImage ? selectedImage : coverImageDefault;
+  }
+
+  // Reinitialize event listeners after generating the grid
+  initSportsSelection();
+}
+
+function initSportsSelection() {
+  // Get fresh references to the elements
+  const sportItems = document.querySelectorAll('.sport-item');
+  const clearButton = document.getElementById('clear-btn');
+  const continueButton = document.getElementById('continue-btn');
+  
+  // Reset selections
+  selectedSports = [];
+  
+  if (sportItems.length > 0) {
+    sportItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // toggleSelection(item);
+      });
+      
+      // Remove any existing selected class
+      item.classList.remove('selected');
+    });
+  }
+  
+  if (clearButton) {
+    clearButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearSelections();
+    });
+  }
+  
+  if (continueButton) {
+    continueButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      handleContinue();
+    });
+  }
+  
+  updateContinueButton();
+}
+
+
+  if (document.querySelector('#iconsPreview .sports-grid')) {
+    generateSportsGrid();
+  }
+
+
 
       // Initialize the application
       init();
