@@ -172,8 +172,15 @@
         object-fit: cover;
       }
       #eventListImg {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
+      #eventListImg>img{
         overflow: hidden;
         box-shadow: var(--image-shadow);
+        height: 50px;
+        width: 50px;
       }
 
       .badge {
@@ -207,6 +214,7 @@
       .action-buttons {
         display: flex;
         gap: 8px;
+        justify-content: center;
       }
 
       /* .action-btn {
@@ -1616,6 +1624,74 @@
         color: var(--text-gray);
       }
 
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      thead {
+        background-color: #f8f9fa;
+        position: sticky;
+        top: 0;
+      }
+
+      th {
+        padding: 1rem;
+        text-align: center;
+        font-weight: 600;
+        color: var(--dark-color);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #e9ecef;
+        vertical-align: middle;
+      }
+
+      td {
+        padding: 1rem;
+        border-top: 1px solid #eee;
+        color: #555;
+        font-size: 0.9rem;
+        text-align: center;
+        vertical-align: middle;
+        word-wrap: break-word;
+      }
+
+      /* Add these styles to your existing CSS */
+      .table th,
+      .table td {
+        text-align: center;
+        vertical-align: middle;
+        width: 20%; /* Equal width for all columns */
+      }
+
+      .table th:first-child,
+      .table td:first-child {
+        width: 10%; /* Smaller width for image column */
+      }
+
+      .table th:last-child,
+      .table td:last-child {
+        width: 15%; /* Slightly smaller for actions column */
+      }
+
+      /* Style for delete button */
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+        border: none;
+      }
+
+      .btn-danger:hover {
+        background-color: #d63031;
+      }
+
+      /* Disabled delete button style */
+      #confirmDeleteBtn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
       /* Responsive Adjustments */
       @media (min-width: 768px) {
       }
