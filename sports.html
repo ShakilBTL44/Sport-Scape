@@ -758,6 +758,192 @@
       margin-top: 30px;
     }
 
+
+
+
+
+    /* Sports Table */
+.sports-table-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+thead {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+}
+
+th {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  color: var(--dark-color);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e9ecef;
+  vertical-align: middle;
+}
+
+td {
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  color: #555;
+  font-size: 0.9rem;
+  text-align: center;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+/* Fixed column widths */
+th:nth-child(1), td:nth-child(1) {
+  width: 120px; /* Sport Icon column */
+}
+
+th:nth-child(2), td:nth-child(2) {
+  width: 150px; /* Sport Image column */
+}
+
+th:nth-child(3), td:nth-child(3) {
+  width: 200px; /* Sport Name column */
+}
+
+th:nth-child(4), td:nth-child(4) {
+  width: 180px; /* Actions column */
+}
+
+tr:hover td {
+  background-color: #f8f9fa;
+}
+
+.image-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f7fa;
+  margin: 0 auto;
+}
+
+.sport-logo, .sport-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+/* Striped rows for better readability */
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  th, td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .action-buttons {
+    gap: 0.5rem;
+  }
+  
+  th:nth-child(1), td:nth-child(1),
+  th:nth-child(2), td:nth-child(2) {
+    width: 80px;
+  }
+  
+  th:nth-child(3), td:nth-child(3) {
+    width: 150px;
+  }
+  
+  th:nth-child(4), td:nth-child(4) {
+    width: 120px;
+  }
+}
+
+
+.confirmation-modal .modal-content {
+  max-width: 500px;
+}
+
+.confirmation-icon {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-icon i {
+  font-size: 3rem;
+  color: var(--warning-color);
+}
+
+.confirmation-text {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-text h4 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: var(--dark-color);
+}
+
+.confirmation-text p {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.warning-text {
+  color: var(--danger-color) !important;
+  font-weight: 500;
+  background-color: rgba(220, 53, 69, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-danger:disabled {
+  background-color: #dc3545;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
+
 /* Responsive adjustments */
 @media (max-width: 500px) {
   .cards-container {
@@ -1274,7 +1460,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal confirmation-modal" id="deleteConfirmationModal">
+    <!-- <div style="display: none;" class="modal confirmation-modal" id="deleteConfirmationModal">
       <div class="modal-content">
         <div class="modal-body">
           <div class="confirmation-icon">
@@ -1299,7 +1485,51 @@
           </button>
         </div>
       </div>
+    </div> -->
+    <!-- Delete Confirmation Modal -->
+<div class="modal confirmation-modal" id="deleteConfirmationModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Delete Sport</h3>
+      <button class="modal-close">&times;</button>
     </div>
+    <div class="modal-body">
+      <div class="confirmation-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="confirmation-text">
+        <h4>Warning: This sport is in use!</h4>
+        <p class="warning-text">
+          This sport is currently selected by <span id="userCount">0</span> users.
+          Deleting it will affect their recommendations.
+        </p>
+        <p>To confirm deletion, please type "<span id="sportNameToDelete"></span>" below:</p>
+        <div class="form-group">
+          <input
+            type="text"
+            id="confirmDeleteInput"
+            class="form-control"
+            placeholder="Type the sport name"
+            autocomplete="off"
+          />
+          <p class="error-message" id="deleteError" style="display: none; color: var(--danger-color); margin-top: 5px;">
+            The entered name doesn't match.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" id="cancelDelete">Cancel</button>
+      <button
+        class="btn btn-danger"
+        id="confirmDelete"
+        disabled
+      >
+        <i class="fas fa-trash"></i> Delete Sport
+      </button>
+    </div>
+  </div>
+</div>
   </body>
 
   <script type="module">
@@ -2264,6 +2494,83 @@ function initSportsSelection() {
   if (document.querySelector('#iconsPreview .sports-grid')) {
     generateSportsGrid();
   }
+
+  // In your existing JavaScript, update these functions:
+
+// Confirm delete sport
+function confirmDeleteSport(id) {
+  const sport = sportsData.find((s) => s.id === parseInt(id));
+  if (sport) {
+    currentSportId = id;
+    
+    // Simulate checking how many users have this sport selected
+    const randomUserCount = Math.floor(Math.random() * 100) + 1;
+    document.getElementById('userCount').textContent = randomUserCount;
+    document.getElementById('sportNameToDelete').textContent = sport.name;
+    
+    // Reset the confirmation input
+    document.getElementById('confirmDeleteInput').value = '';
+    document.getElementById('confirmDelete').disabled = true;
+    document.getElementById('deleteError').style.display = 'none';
+    
+    openModal(deleteConfirmationModal);
+    
+    // Focus the input field
+    setTimeout(() => {
+      document.getElementById('confirmDeleteInput').focus();
+    }, 300);
+  }
+}
+
+// Add this event listener for the confirmation input
+document.getElementById('confirmDeleteInput')?.addEventListener('input', function() {
+  const sportName = document.getElementById('sportNameToDelete').textContent;
+  const deleteBtn = document.getElementById('confirmDelete');
+  const errorElement = document.getElementById('deleteError');
+  
+  if (this.value === sportName) {
+    deleteBtn.disabled = false;
+    errorElement.style.display = 'none';
+  } else {
+    deleteBtn.disabled = true;
+    if (this.value.length > 0) {
+      errorElement.style.display = 'block';
+    } else {
+      errorElement.style.display = 'none';
+    }
+  }
+});
+
+// Update the existing confirmDelete event listener
+confirmDelete?.addEventListener('click', () => {
+  if (currentSportId) {
+    const sportIndex = sportsData.findIndex(
+      (s) => parseInt(s.id) === parseInt(currentSportId)
+    );
+
+    if (sportIndex !== -1) {
+      // Show a loading state
+      confirmDelete.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+      
+      // Simulate an API call delay
+      setTimeout(() => {
+        sportsData.splice(sportIndex, 1);
+        
+        // Reset to first page if we deleted the last item on current page
+        const startIdx = (currentPage - 1) * itemsPerPage;
+        if (startIdx >= sportsData.length) {
+          currentPage = Math.max(1, currentPage - 1);
+        }
+        
+        filterSports();
+        closeModal(deleteConfirmationModal);
+        
+        // Show a success message (you could use a toast notification)
+        // alert('Sport deleted successfully!');
+      }, 1000);
+    }
+  }
+});
 
 
 

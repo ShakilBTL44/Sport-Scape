@@ -13,8 +13,190 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="global.css" />
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
+      :root {
+        --primary-color: #4361ee;
+        --accent-color: #4895ef;
+        --success-color: #4cc9f0;
+        --warning-color: #f8961e;
+        --danger-color: #f72585;
+        --info-color: #560bad;
+        --text-primary: #2d3748;
+        --text-secondary: #718096;
+        --bg-primary: #f7fafc;
+        --bg-secondary: #ffffff;
+        --sidebar-width: 280px;
+        --card-border-radius: 16px;
+        --glass-opacity: 0.7;
+        --glass-blur: 10px;
+        --transition-speed: 0.3s;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .dark-mode {
+        --primary-color: #3a86ff;
+        --accent-color: #4cc9f0;
+        --success-color: #4cc9f0;
+        --warning-color: #ff9e00;
+        --danger-color: #ff3860;
+        --info-color: #7209b7;
+        --text-primary: #f7fafc;
+        --text-secondary: #a0aec0;
+        --bg-primary: #1a202c;
+        --bg-secondary: #2d3748;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.25);
+        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+        transition: background-color var(--transition-speed) ease;
+      }
+
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        opacity: 0.3;
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: var(--sidebar-width);
+        background: linear-gradient(
+          135deg,
+          rgba(67, 97, 238, 0.9),
+          rgba(72, 149, 239, 0.9)
+        );
+        color: white;
+        padding: 20px 0;
+        position: fixed;
+        height: 100vh;
+        z-index: 100;
+        transition: all var(--transition-speed) ease;
+        box-shadow: var(--shadow-lg);
+        overflow-y: auto;
+      }
+
+      .sidebar-header {
+        padding: 0 20px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .sidebar-brand {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+      }
+
+      .sidebar-brand img {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        position: relative;
+      }
+
+      .sidebar-menu li a {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all var(--transition-speed) ease;
+        border-left: 3px solid transparent;
+      }
+
+      .sidebar-menu li a:hover,
+      .sidebar-menu li a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-left: 3px solid white;
+      }
+
+      .sidebar-menu li a i {
+        font-size: 1.1rem;
+        margin-right: 12px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .sidebar-menu li.active > a {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-footer {
+        padding: 20px;
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .sidebar-theme-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        padding: 8px 15px;
+        cursor: pointer;
+        transition: all var(--transition-speed) ease;
+      }
+
+      .sidebar-theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .sidebar-theme-toggle span {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .sidebar-theme-toggle i {
+        font-size: 1.1rem;
+      }
+
       /* Glassmorphism Effect */
       .glass {
         background: rgba(255, 255, 255, var(--glass-opacity));
@@ -66,10 +248,31 @@
         margin-left: var(--sidebar-width);
         transition: all var(--transition-speed) ease;
         width: calc(100vw - var(--sidebar-width));
+        perspective: 1500px;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        height: 80px;
+        background-color: var(--bg-secondary);
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        transition: all var(--transition-speed) ease;
       }
 
       .dark-mode .navbar {
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-left {
+        display: flex;
+        align-items: center;
       }
 
       .menu-toggle {
@@ -99,6 +302,36 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         transition: all 0.5s ease;
+        position: relative;
+        display: inline-block;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease;
+      }
+
+      .page-title:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+
+      .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
       }
 
       .search-bar {
@@ -113,7 +346,8 @@
         color: var(--text-primary);
         width: 250px;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow-sm);
+        font-size: 0.9rem;
       }
 
       .search-bar input:focus {
@@ -137,6 +371,28 @@
         color: var(--text-primary);
         cursor: pointer;
         transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .theme-toggle::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(72, 149, 239, 0.2),
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .theme-toggle:hover::before {
+        opacity: 1;
       }
 
       .theme-toggle:hover {
@@ -174,9 +430,23 @@
         justify-content: center;
         font-size: 0.6rem;
         font-weight: bold;
+        box-shadow: 0 0 0 2px var(--bg-secondary);
+        animation: pulse 2s infinite;
       }
 
-      /* .user-profile {
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(247, 37, 133, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(247, 37, 133, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(247, 37, 133, 0);
+        }
+      }
+
+      .user-profile {
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -191,12 +461,12 @@
         margin-right: 10px;
         border: 2px solid var(--accent-color);
         transition: all 0.3s ease;
-      } */
+      }
 
-      /* .user-profile:hover img {
+      .user-profile:hover img {
         transform: scale(1.1);
         box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.3);
-      } */
+      }
 
       .user-profile span {
         font-weight: 500;
@@ -215,18 +485,19 @@
         width: 200px;
         background-color: var(--bg-secondary);
         border-radius: var(--card-border-radius);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-lg);
         padding: 15px 0;
         z-index: 100;
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
+        transform: translateY(-10px);
       }
 
       .user-profile:hover .user-dropdown {
         opacity: 1;
         visibility: visible;
-        top: 50px;
+        transform: translateY(0);
       }
 
       .user-dropdown a {
@@ -264,113 +535,17 @@
       .card {
         background: linear-gradient(135deg, #b7c3fa, #6c8fcb);
         border-radius: var(--card-border-radius);
-        padding: 20px 25px 5px 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        transition: all var(--transition-speed) ease;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        border: none;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-      }
-
-      .dark-mode .card {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      }
-
-      .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 5px;
-        background: linear-gradient(
-          90deg,
-          var(--primary-color),
-          var(--accent-color)
-        );
-      }
-
-      .card-icon {
-        width: 45px;
-        height: 45px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        font-size: 1.8rem;
-        color: white;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .card:hover .card-icon {
-        transform: rotate(10deg) scale(1.1);
-      }
-
-      .card.users .card-icon {
-        background: linear-gradient(
-          135deg,
-          var(--primary-color),
-          var(--accent-color)
-        );
-      }
-
-      .card.squads .card-icon {
-        background: linear-gradient(135deg, var(--success-color), #3a86ff);
-      }
-
-      .card.sports .card-icon {
-        background: linear-gradient(135deg, var(--warning-color), #ff6d00);
-      }
-
-      .card.competitions .card-icon {
-        background: linear-gradient(135deg, var(--danger-color), #b5179e);
-      }
-
-      .card.events .card-icon {
-        background: linear-gradient(135deg, var(--info-color), #7209b7);
-      }
-
-      .card-value {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 5px;
-        color: var(--text-primary);
-        transition: all 0.3s ease;
-      }
-
-      .card:hover .card-value {
-        color: var(--primary-color);
-      }
-
-      .cards-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-        width: 100%;
-        max-width: 1400px;
-      }
-
-      /* .card {
-        background: white;
-        border-radius: var(--card-border-radius);
         padding: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-lg);
         transition: all var(--transition-speed) ease;
         cursor: pointer;
         position: relative;
         overflow: hidden;
         border: none;
-        z-index: 1;
-      } */
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        will-change: transform;
+      }
 
       .card::before {
         content: "";
@@ -390,8 +565,8 @@
       }
 
       .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+        box-shadow: var(--shadow-xl);
       }
 
       .card:hover::before {
@@ -433,7 +608,7 @@
         background: linear-gradient(90deg, #560bad, #7209b7);
       }
 
-      /* .card-icon {
+      .card-icon {
         width: 60px;
         height: 60px;
         border-radius: 15px;
@@ -443,84 +618,88 @@
         margin-bottom: 20px;
         font-size: 1.8rem;
         color: white;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-md);
         transition: all 0.3s ease;
-      } */
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-icon::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0)
+        );
+        transform: rotate(30deg);
+        transition: all 0.5s ease;
+      }
+
+      .card:hover .card-icon::before {
+        transform: translateX(100%) rotate(30deg);
+      }
 
       .card:hover .card-icon {
         transform: rotate(10deg) scale(1.1);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-lg);
       }
 
       .card.users .card-icon {
-        background: linear-gradient(135deg, #4361ee, #4895ef);
+        background: linear-gradient(135deg, #4361ee, #1a5145);
       }
 
       .card.squads .card-icon {
-        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+        background: linear-gradient(135deg, #4cc9f0, #1a5145);
       }
 
       .card.sports .card-icon {
-        background: linear-gradient(135deg, #f8961e, #ff6d00);
+        background: linear-gradient(135deg, #f8961e, #1a5145);
       }
 
       .card.competitions .card-icon {
-        background: linear-gradient(135deg, #f72585, #b5179e);
+        background: linear-gradient(135deg, #f72585, #1a5145);
       }
 
       .card.events .card-icon {
-        background: linear-gradient(135deg, #560bad, #7209b7);
+        background: linear-gradient(135deg, #560bad, #1a5145);
       }
 
       .card-value {
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 5px;
-        color: #2d3748;
+        color: var(--text-primary);
         transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
       }
 
-      .card:hover .card-value .card-title {
-        background: linear-gradient(90deg, #4361ee, #4895ef);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+      .card-value::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background: currentColor;
+        transition: width 0.3s ease;
       }
 
-      /* Individual Gradient Styles */
-      .card.users:hover :is(.card-value, .card-title) {
-        background: linear-gradient(90deg, #4361ee, #4895ef);
-        color: #4361ee;
-        -webkit-background-clip: text;
+      .card:hover .card-value::after {
+        width: 100%;
       }
 
-      .card.squads:hover :is(.card-value, .card-title) {
-        background: linear-gradient(90deg, #4cc9f0, #3a86ff);
-        color: #4cc9f0;
-        -webkit-background-clip: text;
-      }
-
-      .card.sports:hover :is(.card-value, .card-title) {
-        background: linear-gradient(90deg, #f8961e, #ff6d00);
-        color: #f8961e;
-        -webkit-background-clip: text;
-      }
-
-      .card.competitions:hover :is(.card-value, .card-title) {
-        background: linear-gradient(90deg, #f72585, #b5179e);
-        color: #f72585;
-        -webkit-background-clip: text;
-      }
-
-      .card.events:hover :is(.card-value, .card-title) {
-        background: linear-gradient(90deg, #560bad, #7209b7);
-        color: #560bad;
-        -webkit-background-clip: text;
-      }
       .card-title {
         font-size: 1.3rem;
-        color: #6c757d;
+        color: var(--text-secondary);
         font-weight: 500;
         margin-bottom: 15px;
+        transition: all 0.3s ease;
       }
 
       .card-progress {
@@ -562,58 +741,16 @@
         display: flex;
         justify-content: space-between;
         font-size: 0.8rem;
-        color: #6c757d;
+        color: var(--text-secondary);
         display: none;
       }
 
       .text-success {
-        color: #28a745;
+        color: var(--success-color);
       }
 
       .text-danger {
-        color: #dc3545;
-      }
-
-      @media (max-width: 768px) {
-        .cards-container {
-          grid-template-columns: 1fr;
-        }
-
-        body {
-          padding: 20px;
-        }
-      }
-
-      .users .card-progress-bar {
-        background: linear-gradient(
-          90deg,
-          var(--primary-color),
-          var(--accent-color)
-        );
-      }
-
-      .squads .card-progress-bar {
-        background: linear-gradient(90deg, var(--success-color), #3a86ff);
-      }
-
-      .sports .card-progress-bar {
-        background: linear-gradient(90deg, var(--warning-color), #ff6d00);
-      }
-
-      .competitions .card-progress-bar {
-        background: linear-gradient(90deg, var(--danger-color), #b5179e);
-      }
-
-      .events .card-progress-bar {
-        background: linear-gradient(90deg, var(--info-color), #7209b7);
-      }
-
-      .card-footer {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        display: none;
+        color: var(--danger-color);
       }
 
       /* Chart Container */
@@ -622,6 +759,7 @@
         grid-template-columns: 2fr 1fr;
         gap: 25px;
         margin-bottom: 30px;
+        display: none;
       }
 
       @media (max-width: 1200px) {
@@ -634,12 +772,34 @@
         background-color: var(--bg-secondary);
         border-radius: var(--card-border-radius);
         padding: 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow-md);
         transition: all var(--transition-speed) ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .chart-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0)
+        );
+        transform: rotate(30deg);
+        transition: all 0.5s ease;
+      }
+
+      .chart-card:hover::before {
+        transform: translateX(100%) rotate(30deg);
       }
 
       .dark-mode .chart-card {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-lg);
       }
 
       .chart-header {
@@ -653,6 +813,21 @@
         font-size: 1.2rem;
         font-weight: 600;
         color: var(--text-primary);
+        position: relative;
+      }
+
+      .chart-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
       }
 
       .chart-actions {
@@ -667,9 +842,16 @@
         cursor: pointer;
         font-size: 1rem;
         transition: all 0.3s ease;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
       }
 
       .chart-actions button:hover {
+        background-color: rgba(72, 149, 239, 0.1);
         color: var(--primary-color);
         transform: scale(1.1);
       }
@@ -685,12 +867,35 @@
         background-color: var(--bg-secondary);
         border-radius: var(--card-border-radius);
         padding: 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow-md);
         transition: all var(--transition-speed) ease;
+        position: relative;
+        overflow: hidden;
+        display: none;
+      }
+
+      .activity-container::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0)
+        );
+        transform: rotate(30deg);
+        transition: all 0.5s ease;
+      }
+
+      .activity-container:hover::before {
+        transform: translateX(100%) rotate(30deg);
       }
 
       .dark-mode .activity-container {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-lg);
       }
 
       .activity-header {
@@ -704,6 +909,21 @@
         font-size: 1.2rem;
         font-weight: 600;
         color: var(--text-primary);
+        position: relative;
+      }
+
+      .activity-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
       }
 
       .activity-list {
@@ -715,6 +935,11 @@
         align-items: flex-start;
         padding: 15px 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .activity-item:hover {
+        transform: translateX(5px);
       }
 
       .activity-item:last-child {
@@ -732,6 +957,27 @@
         font-size: 1rem;
         color: white;
         flex-shrink: 0;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .activity-icon.users {
+        background: linear-gradient(135deg, #4361ee, #4895ef);
+      }
+
+      .activity-icon.squads {
+        background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+      }
+
+      .activity-icon.sports {
+        background: linear-gradient(135deg, #f8961e, #ff6d00);
+      }
+
+      .activity-icon.competitions {
+        background: linear-gradient(135deg, #f72585, #b5179e);
+      }
+
+      .activity-icon.events {
+        background: linear-gradient(135deg, #560bad, #7209b7);
       }
 
       .activity-content {
@@ -755,13 +1001,35 @@
         background-color: var(--bg-secondary);
         border-radius: var(--card-border-radius);
         padding: 25px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--shadow-md);
         margin-bottom: 30px;
         animation: fadeIn 0.5s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          to bottom right,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0)
+        );
+        transform: rotate(30deg);
+        transition: all 0.5s ease;
+      }
+
+      .section:hover::before {
+        transform: translateX(100%) rotate(30deg);
       }
 
       .dark-mode .section {
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-lg);
       }
 
       .section.active {
@@ -773,18 +1041,11 @@
         text-decoration: none;
         color: inherit;
         cursor: pointer;
+        transition: transform 0.3s ease;
       }
 
-      /* If your cards container uses flexbox, you might need this too */
-      /* .cards-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px; 
-      } */
-
-      .cards-container .card-link {
-        flex: 1 1 250px; /* adjust min width as needed */
-        max-width: 350px; /* optional max width */
+      .card-link:hover {
+        transform: translateY(-5px);
       }
 
       @keyframes fadeIn {
@@ -806,6 +1067,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 70px;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
       }
 
       /* Responsive Styles */
@@ -861,17 +1137,58 @@
         }
       }
 
-      /* Accessibility Focus Styles */
-      a:focus,
-      button:focus,
-      .card:focus,
-      input:focus {
-        outline: 2px solid var(--accent-color);
-        outline-offset: 2px;
+      /* Animation Classes */
+      .float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          box-shadow: 0 0 5px rgba(67, 97, 238, 0.5);
+        }
+        to {
+          box-shadow: 0 0 20px rgba(67, 97, 238, 0.8);
+        }
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-color);
       }
     </style>
   </head>
   <body>
+    <div id="particles-js"></div>
     <div class="container">
       <!-- Sidebar -->
       <aside class="sidebar"></aside>
@@ -884,94 +1201,6 @@
         <!-- Dashboard Content -->
         <div class="dashboard-content">
           <!-- Dashboard Cards -->
-          <!-- <div class="cards-container">
-            <div class="card users" tabindex="0">
-              <div class="card-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="card-value">1,248</div>
-              <div class="card-title">Total Users</div>
-              <div class="card-progress">
-                <div class="card-progress-bar" style="width: 75%"></div>
-              </div>
-              <div class="card-footer">
-                <span
-                  ><i class="fas fa-arrow-up text-success"></i> 12% from last
-                  week</span
-                >
-                <span>View all</span>
-              </div>
-            </div>
-            <div class="card squads" tabindex="0">
-              <div class="card-icon">
-                <i class="fas fa-people-group"></i>
-              </div>
-              <div class="card-value">356</div>
-              <div class="card-title">Total Squads</div>
-              <div class="card-progress">
-                <div class="card-progress-bar" style="width: 60%"></div>
-              </div>
-              <div class="card-footer">
-                <span
-                  ><i class="fas fa-arrow-up text-success"></i> 8% from last
-                  week</span
-                >
-                <span>View all</span>
-              </div>
-            </div>
-            <div class="card sports" tabindex="0">
-              <div class="card-icon">
-                <i class="fas fa-baseball-bat-ball"></i>
-              </div>
-              <div class="card-value">24</div>
-              <div class="card-title">Total Sports</div>
-              <div class="card-progress">
-                <div class="card-progress-bar" style="width: 45%"></div>
-              </div>
-              <div class="card-footer">
-                <span
-                  ><i class="fas fa-arrow-down text-danger"></i> 2% from last
-                  week</span
-                >
-                <span>View all</span>
-              </div>
-            </div>
-            <div class="card competitions" tabindex="0">
-              <div class="card-icon">
-                <i class="fas fa-trophy"></i>
-              </div>
-              <div class="card-value">78</div>
-              <div class="card-title">Total Competitions</div>
-              <div class="card-progress">
-                <div class="card-progress-bar" style="width: 85%"></div>
-              </div>
-              <div class="card-footer">
-                <span
-                  ><i class="fas fa-arrow-up text-success"></i> 15% from last
-                  week</span
-                >
-                <span>View all</span>
-              </div>
-            </div>
-            <div class="card events" tabindex="0">
-              <div class="card-icon">
-                <i class="fas fa-calendar-alt"></i>
-              </div>
-              <div class="card-value">512</div>
-              <div class="card-title">Total Events</div>
-              <div class="card-progress">
-                <div class="card-progress-bar" style="width: 90%"></div>
-              </div>
-              <div class="card-footer">
-                <span
-                  ><i class="fas fa-arrow-up text-success"></i> 22% from last
-                  week</span
-                >
-                <span>View all</span>
-              </div>
-            </div>
-          </div> -->
-
           <div class="cards-container">
             <a href="userManagement.html" class="card-link">
               <div class="card users" tabindex="0">
@@ -979,7 +1208,7 @@
                   <i class="fas fa-users"></i>
                 </div>
                 <div class="card-value">1,248</div>
-                <div class="card-title">Registered Users</div>
+                <div class="card-title">Total Registered Users</div>
                 <div class="card-progress">
                   <div class="card-progress-bar" style="width: 75%"></div>
                 </div>
@@ -993,25 +1222,25 @@
               </div>
             </a>
 
-            <!-- <a href="squadManagement.html" class="card-link">
+            <a href="userManagement.html" class="card-link">
               <div class="card squads" tabindex="0">
                 <div class="card-icon">
-                  <i class="fas fa-people-group"></i>
+                  <i class="fas fa-user"></i>
                 </div>
-                <div class="card-value">356</div>
-                <div class="card-title">Total Squads</div>
+                <div class="card-value">900</div>
+                <div class="card-title">Total Active Users</div>
                 <div class="card-progress">
-                  <div class="card-progress-bar" style="width: 60%"></div>
+                  <div class="card-progress-bar" style="width: 75%"></div>
                 </div>
                 <div class="card-footer">
                   <span
-                    ><i class="fas fa-arrow-up text-success"></i> 8% from last
+                    ><i class="fas fa-arrow-up text-success"></i> 5% from last
                     week</span
                   >
                   <span>View all</span>
                 </div>
               </div>
-            </a> -->
+            </a>
 
             <a href="sports.html" class="card-link">
               <div class="card sports" tabindex="0">
@@ -1073,8 +1302,113 @@
               </div>
             </a>
           </div>
-          <!-- Sections (hidden by default) -->
 
+          <!-- Chart Container -->
+          <div class="chart-container">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 class="chart-title">User Growth</h3>
+                <div class="chart-actions">
+                  <button title="Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                  <button title="Download">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="userGrowthChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 class="chart-title">Activity Distribution</h3>
+                <div class="chart-actions">
+                  <button title="Refresh">
+                    <i class="fas fa-sync-alt"></i>
+                  </button>
+                  <button title="Download">
+                    <i class="fas fa-download"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="activityChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="activity-container">
+            <div class="activity-header">
+              <h3 class="activity-title">Recent Activity</h3>
+              <button class="btn btn-link">View All</button>
+            </div>
+            <ul class="activity-list">
+              <li class="activity-item">
+                <div class="activity-icon users">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="activity-content">
+                  <p class="activity-message">
+                    5 new users registered in the last hour
+                  </p>
+                  <p class="activity-time">10 minutes ago</p>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon events">
+                  <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="activity-content">
+                  <p class="activity-message">
+                    New event "Summer Tournament" created
+                  </p>
+                  <p class="activity-time">25 minutes ago</p>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon competitions">
+                  <i class="fas fa-trophy"></i>
+                </div>
+                <div class="activity-content">
+                  <p class="activity-message">
+                    Competition "Regional Finals" updated
+                  </p>
+                  <p class="activity-time">1 hour ago</p>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon squads">
+                  <i class="fas fa-people-group"></i>
+                </div>
+                <div class="activity-content">
+                  <p class="activity-message">
+                    New squad "Team Phoenix" has been formed
+                  </p>
+                  <p class="activity-time">2 hours ago</p>
+                </div>
+              </li>
+              <li class="activity-item">
+                <div class="activity-icon sports">
+                  <i class="fas fa-baseball"></i>
+                </div>
+                <div class="activity-content">
+                  <p class="activity-message">
+                    New sport "Ultimate Frisbee" added
+                  </p>
+                  <p class="activity-time">4 hours ago</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Sections (hidden by default) -->
           <div id="users-section" class="section">
             <h2 class="section-title">User Management</h2>
             <p>Manage all registered users in the system.</p>
@@ -1107,359 +1441,489 @@
         </div>
       </main>
     </div>
-  </body>
-  <script type="module">
-    import Sidebar from "./sidebar.js";
-    import Navbar from "./navbar.js";
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const sidebar = document.querySelector(".sidebar");
-      const navbar = document.querySelector(".navbar");
-      sidebar.innerHTML = Sidebar("Dashboard");
-      navbar.innerHTML = Navbar("Dashboard");
-      // Toggle sidebar on mobile
-      const menuToggle = document.querySelector(".menu-toggle");
-      menuToggle.addEventListener("click", toggleSidebar);
+    <script type="module">
+      import Sidebar from "./sidebar.js";
+      import Navbar from "./navbar.js";
 
-      menuToggle.addEventListener("click", function () {
-        sidebar.classList.toggle("active");
-      });
-
-      // Theme toggle functionality
-      const themeToggle = document.getElementById("theme-toggle");
-      const sidebarThemeToggle = document.getElementById(
-        "sidebar-theme-toggle"
-      );
-
-      function toggleTheme() {
-        document.body.classList.toggle("dark-mode");
-
-        // Update icon
-        const isDark = document.body.classList.contains("dark-mode");
-        themeToggle.innerHTML = isDark
-          ? '<i class="fas fa-sun"></i>'
-          : '<i class="fas fa-moon"></i>';
-        sidebarThemeToggle.innerHTML = isDark
-          ? '<i class="fas fa-sun"></i>'
-          : '<i class="fas fa-moon"></i>';
-
-        // Reinitialize charts with new theme
-        initCharts();
-      }
-
-      themeToggle.addEventListener("click", toggleTheme);
-      sidebarThemeToggle.addEventListener("click", toggleTheme);
-
-      // Submenu functionality
-      const hasSubmenu = document.querySelectorAll(".has-submenu");
-
-      hasSubmenu.forEach((item) => {
-        item.querySelector("a").addEventListener("click", function (e) {
-          e.preventDefault();
-          const submenu = this.parentElement.querySelector(".submenu");
-          this.parentElement.classList.toggle("active");
-          submenu.classList.toggle("active");
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize particles.js
+        particlesJS("particles-js", {
+          particles: {
+            number: {
+              value: 80,
+              density: {
+                enable: true,
+                value_area: 800,
+              },
+            },
+            color: {
+              value: "#4361ee",
+            },
+            shape: {
+              type: "circle",
+              stroke: {
+                width: 0,
+                color: "#000000",
+              },
+              polygon: {
+                nb_sides: 5,
+              },
+            },
+            opacity: {
+              value: 0.5,
+              random: false,
+              anim: {
+                enable: false,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false,
+              },
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: false,
+                speed: 40,
+                size_min: 0.1,
+                sync: false,
+              },
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              color: "#4361ee",
+              opacity: 0.4,
+              width: 1,
+            },
+            move: {
+              enable: true,
+              speed: 2,
+              direction: "none",
+              random: false,
+              straight: false,
+              out_mode: "out",
+              bounce: false,
+              attract: {
+                enable: false,
+                rotateX: 600,
+                rotateY: 1200,
+              },
+            },
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: {
+                enable: true,
+                mode: "grab",
+              },
+              onclick: {
+                enable: true,
+                mode: "push",
+              },
+              resize: true,
+            },
+            modes: {
+              grab: {
+                distance: 140,
+                line_linked: {
+                  opacity: 1,
+                },
+              },
+              bubble: {
+                distance: 400,
+                size: 40,
+                duration: 2,
+                opacity: 8,
+                speed: 3,
+              },
+              repulse: {
+                distance: 200,
+                duration: 0.4,
+              },
+              push: {
+                particles_nb: 4,
+              },
+              remove: {
+                particles_nb: 2,
+              },
+            },
+          },
+          retina_detect: true,
         });
-      });
 
-      // Navigation functionality
-      const navLinks = document.querySelectorAll(
-        ".sidebar-menu a:not(.has-submenu > a)"
-      );
+        const sidebar = document.querySelector(".sidebar");
+        const navbar = document.querySelector(".navbar");
+        sidebar.innerHTML = Sidebar("Dashboard");
+        navbar.innerHTML = Navbar("Dashboard");
 
-      const sections = document.querySelectorAll(".section");
-      const pageTitle = document.querySelector(".page-title");
+        // Toggle sidebar on mobile
+        const menuToggle = document.querySelector(".menu-toggle");
+        menuToggle.addEventListener("click", toggleSidebar);
 
-      // Function to navigate to a section
-      function navigateToSection(sectionId) {
-        // Update active nav link
-        navLinks.forEach((link) => {
-          link.classList.remove("active");
-          if (link.getAttribute("data-section") === sectionId) {
-            link.classList.add("active");
-          }
+        menuToggle.addEventListener("click", function () {
+          sidebar.classList.toggle("active");
         });
 
-        // Update active section
-        sections.forEach((section) => {
-          section.classList.remove("active");
-          if (section.id === `${sectionId}-section`) {
-            section.classList.add("active");
-          }
-        });
-
-        // Update page title
-        const activeLink = document.querySelector(
-          `.sidebar-menu a[data-section="${sectionId}"]`
+        // Theme toggle functionality
+        const themeToggle = document.getElementById("theme-toggle");
+        const sidebarThemeToggle = document.getElementById(
+          "sidebar-theme-toggle"
         );
-        if (activeLink) {
-          const title = activeLink.querySelector("span").textContent;
-          pageTitle.textContent = title;
+
+        function toggleTheme() {
+          document.body.classList.toggle("dark-mode");
+
+          // Update icon
+          const isDark = document.body.classList.contains("dark-mode");
+          themeToggle.innerHTML = isDark
+            ? '<i class="fas fa-sun"></i>'
+            : '<i class="fas fa-moon"></i>';
+          sidebarThemeToggle.innerHTML = isDark
+            ? '<i class="fas fa-sun"></i>'
+            : '<i class="fas fa-moon"></i>';
+
+          // Reinitialize charts with new theme
+          initCharts();
         }
 
-        // Close sidebar on mobile after navigation
-        if (window.innerWidth <= 1200) {
-          sidebar.classList.remove("active");
+        themeToggle.addEventListener("click", toggleTheme);
+        sidebarThemeToggle.addEventListener("click", toggleTheme);
+
+        // Submenu functionality
+        const hasSubmenu = document.querySelectorAll(".has-submenu");
+
+        hasSubmenu.forEach((item) => {
+          item.querySelector("a").addEventListener("click", function (e) {
+            e.preventDefault();
+            const submenu = this.parentElement.querySelector(".submenu");
+            this.parentElement.classList.toggle("active");
+            submenu.classList.toggle("active");
+          });
+        });
+
+        // Navigation functionality
+        const navLinks = document.querySelectorAll(
+          ".sidebar-menu a:not(.has-submenu > a)"
+        );
+
+        const sections = document.querySelectorAll(".section");
+        const pageTitle = document.querySelector(".page-title");
+
+        // Function to navigate to a section
+        function navigateToSection(sectionId) {
+          // Update active nav link
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("data-section") === sectionId) {
+              link.classList.add("active");
+            }
+          });
+
+          // Update active section
+          sections.forEach((section) => {
+            section.classList.remove("active");
+            if (section.id === `${sectionId}-section`) {
+              section.classList.add("active");
+            }
+          });
+
+          // Update page title
+          const activeLink = document.querySelector(
+            `.sidebar-menu a[data-section="${sectionId}"]`
+          );
+          if (activeLink) {
+            const title = activeLink.querySelector("span").textContent;
+            pageTitle.textContent = title;
+          }
+
+          // Close sidebar on mobile after navigation
+          if (window.innerWidth <= 1200) {
+            sidebar.classList.remove("active");
+          }
         }
-      }
 
-      // Add click event to sidebar links
-      navLinks.forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const sectionId = this.getAttribute("data-section");
-          navigateToSection(sectionId);
-        });
-      });
-
-      // Add click event to cards
-      cards.forEach((card) => {
-        card.addEventListener("click", function () {
-          const sectionId = this.getAttribute("data-section");
-          navigateToSection(sectionId);
-        });
-      });
-
-      // Keyboard navigation for cards
-      cards.forEach((card) => {
-        card.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") {
+        // Add click event to sidebar links
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
             e.preventDefault();
             const sectionId = this.getAttribute("data-section");
             navigateToSection(sectionId);
-          }
+          });
         });
-      });
 
-      // Simulate dynamic data loading for cards
-      function updateCardValues() {
-        // Animate numbers
-        animateValue(document.getElementById("total-users"), 0, 1248, 1500);
-        animateValue(document.getElementById("total-squads"), 0, 356, 1500);
-        animateValue(document.getElementById("total-sports"), 0, 24, 1500);
-        animateValue(
-          document.getElementById("total-competitions"),
-          0,
-          78,
-          1500
-        );
-        animateValue(document.getElementById("total-events"), 0, 512, 1500);
+        // Add click event to cards
+        cards.forEach((card) => {
+          card.addEventListener("click", function () {
+            const sectionId = this.getAttribute("data-section");
+            navigateToSection(sectionId);
+          });
+        });
 
-        // Animate progress bars
-        document.querySelector(".users .card-progress-bar").style.width = "75%";
-        document.querySelector(".squads .card-progress-bar").style.width =
-          "60%";
-        document.querySelector(".sports .card-progress-bar").style.width =
-          "45%";
-        document.querySelector(".competitions .card-progress-bar").style.width =
-          "85%";
-        document.querySelector(".events .card-progress-bar").style.width =
-          "90%";
-      }
+        // Keyboard navigation for cards
+        cards.forEach((card) => {
+          card.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              const sectionId = this.getAttribute("data-section");
+              navigateToSection(sectionId);
+            }
+          });
+        });
 
-      // Number animation function
-      function animateValue(element, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp;
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-          element.innerHTML = Math.floor(
-            progress * (end - start) + start
-          ).toLocaleString();
-          if (progress < 1) {
-            window.requestAnimationFrame(step);
-          }
-        };
-        window.requestAnimationFrame(step);
-      }
+        // Simulate dynamic data loading for cards
+        function updateCardValues() {
+          // Animate numbers
+          animateValue(document.getElementById("total-users"), 0, 1248, 1500);
+          animateValue(document.getElementById("total-squads"), 0, 356, 1500);
+          animateValue(document.getElementById("total-sports"), 0, 24, 1500);
+          animateValue(
+            document.getElementById("total-competitions"),
+            0,
+            78,
+            1500
+          );
+          animateValue(document.getElementById("total-events"), 0, 512, 1500);
 
-      // Initialize card values
-      updateCardValues();
-
-      // Simulate periodic updates (like from a live API)
-      setInterval(updateCardValues, 10000);
-
-      // Charts
-      let userGrowthChart, activityChart;
-
-      function initCharts() {
-        // User Growth Chart
-        const userGrowthCtx = document
-          .getElementById("userGrowthChart")
-          .getContext("2d");
-
-        if (userGrowthChart) {
-          userGrowthChart.destroy();
+          // Animate progress bars
+          document.querySelector(".users .card-progress-bar").style.width =
+            "75%";
+          document.querySelector(".squads .card-progress-bar").style.width =
+            "60%";
+          document.querySelector(".sports .card-progress-bar").style.width =
+            "45%";
+          document.querySelector(
+            ".competitions .card-progress-bar"
+          ).style.width = "85%";
+          document.querySelector(".events .card-progress-bar").style.width =
+            "90%";
         }
 
-        userGrowthChart = new Chart(userGrowthCtx, {
-          type: "line",
-          data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-            datasets: [
-              {
-                label: "New Users",
-                data: [120, 190, 170, 220, 300, 280, 400],
-                backgroundColor: "rgba(67, 97, 238, 0.2)",
-                borderColor: "rgba(67, 97, 238, 1)",
-                borderWidth: 2,
-                tension: 0.4,
-                fill: true,
-                pointBackgroundColor: "white",
-                pointBorderWidth: 2,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                display: false,
-              },
-              tooltip: {
-                backgroundColor: document.body.classList.contains("dark-mode")
-                  ? "#2d3748"
-                  : "white",
-                titleColor: document.body.classList.contains("dark-mode")
-                  ? "white"
-                  : "#2d3748",
-                bodyColor: document.body.classList.contains("dark-mode")
-                  ? "white"
-                  : "#2d3748",
-                borderColor: "rgba(0, 0, 0, 0.1)",
-                borderWidth: 1,
-                padding: 15,
-                displayColors: false,
-              },
+        // Number animation function
+        function animateValue(element, start, end, duration) {
+          let startTimestamp = null;
+          const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min(
+              (timestamp - startTimestamp) / duration,
+              1
+            );
+            element.innerHTML = Math.floor(
+              progress * (end - start) + start
+            ).toLocaleString();
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            }
+          };
+          window.requestAnimationFrame(step);
+        }
+
+        // Initialize card values
+        updateCardValues();
+
+        // Simulate periodic updates (like from a live API)
+        setInterval(updateCardValues, 10000);
+
+        // Charts
+        let userGrowthChart, activityChart;
+
+        function initCharts() {
+          // User Growth Chart
+          const userGrowthCtx = document
+            .getElementById("userGrowthChart")
+            .getContext("2d");
+
+          if (userGrowthChart) {
+            userGrowthChart.destroy();
+          }
+
+          userGrowthChart = new Chart(userGrowthCtx, {
+            type: "line",
+            data: {
+              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+              datasets: [
+                {
+                  label: "New Users",
+                  data: [120, 190, 170, 220, 300, 280, 400],
+                  backgroundColor: "rgba(67, 97, 238, 0.2)",
+                  borderColor: "rgba(67, 97, 238, 1)",
+                  borderWidth: 2,
+                  tension: 0.4,
+                  fill: true,
+                  pointBackgroundColor: "white",
+                  pointBorderWidth: 2,
+                  pointRadius: 5,
+                  pointHoverRadius: 7,
+                },
+              ],
             },
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: {
-                  color: document.body.classList.contains("dark-mode")
-                    ? "rgba(255, 255, 255, 0.1)"
-                    : "rgba(0, 0, 0, 0.05)",
-                },
-                ticks: {
-                  color: document.body.classList.contains("dark-mode")
-                    ? "rgba(255, 255, 255, 0.7)"
-                    : "rgba(0, 0, 0, 0.6)",
-                },
-              },
-              x: {
-                grid: {
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
                   display: false,
                 },
-                ticks: {
-                  color: document.body.classList.contains("dark-mode")
-                    ? "rgba(255, 255, 255, 0.7)"
-                    : "rgba(0, 0, 0, 0.6)",
-                },
-              },
-            },
-          },
-        });
-
-        // Activity Distribution Chart
-        const activityCtx = document
-          .getElementById("activityChart")
-          .getContext("2d");
-
-        if (activityChart) {
-          activityChart.destroy();
-        }
-
-        activityChart = new Chart(activityCtx, {
-          type: "doughnut",
-          data: {
-            labels: ["Users", "Squads", "Events", "Competitions"],
-            datasets: [
-              {
-                data: [35, 25, 20, 20],
-                backgroundColor: [
-                  "rgba(67, 97, 238, 0.8)",
-                  "rgba(76, 201, 240, 0.8)",
-                  "rgba(248, 150, 30, 0.8)",
-                  "rgba(247, 37, 133, 0.8)",
-                ],
-                borderColor: document.body.classList.contains("dark-mode")
-                  ? "rgba(26, 32, 44, 1)"
-                  : "rgba(255, 255, 255, 1)",
-                borderWidth: 2,
-                hoverOffset: 10,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: "70%",
-            plugins: {
-              legend: {
-                position: "right",
-                labels: {
-                  color: document.body.classList.contains("dark-mode")
+                tooltip: {
+                  backgroundColor: document.body.classList.contains("dark-mode")
+                    ? "#2d3748"
+                    : "white",
+                  titleColor: document.body.classList.contains("dark-mode")
                     ? "white"
                     : "#2d3748",
-                  padding: 20,
-                  font: {
-                    size: 12,
-                  },
-                  usePointStyle: true,
-                  pointStyle: "circle",
+                  bodyColor: document.body.classList.contains("dark-mode")
+                    ? "white"
+                    : "#2d3748",
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  padding: 15,
+                  displayColors: false,
                 },
               },
-              tooltip: {
-                backgroundColor: document.body.classList.contains("dark-mode")
-                  ? "#2d3748"
-                  : "white",
-                titleColor: document.body.classList.contains("dark-mode")
-                  ? "white"
-                  : "#2d3748",
-                bodyColor: document.body.classList.contains("dark-mode")
-                  ? "white"
-                  : "#2d3748",
-                borderColor: "rgba(0, 0, 0, 0.1)",
-                borderWidth: 1,
-                padding: 15,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: {
+                    color: document.body.classList.contains("dark-mode")
+                      ? "rgba(255, 255, 255, 0.1)"
+                      : "rgba(0, 0, 0, 0.05)",
+                  },
+                  ticks: {
+                    color: document.body.classList.contains("dark-mode")
+                      ? "rgba(255, 255, 255, 0.7)"
+                      : "rgba(0, 0, 0, 0.6)",
+                  },
+                },
+                x: {
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    color: document.body.classList.contains("dark-mode")
+                      ? "rgba(255, 255, 255, 0.7)"
+                      : "rgba(0, 0, 0, 0.6)",
+                  },
+                },
               },
             },
-          },
-        });
-      }
-      // Toggle sidebar on mobile
-      function toggleSidebar() {
-        sidebar.classList.toggle("active");
-      }
+          });
 
-      // Initialize charts
-      initCharts();
+          // Activity Distribution Chart
+          const activityCtx = document
+            .getElementById("activityChart")
+            .getContext("2d");
 
-      // Window resize event to handle charts
-      window.addEventListener("resize", function () {
+          if (activityChart) {
+            activityChart.destroy();
+          }
+
+          activityChart = new Chart(activityCtx, {
+            type: "doughnut",
+            data: {
+              labels: ["Users", "Squads", "Events", "Competitions"],
+              datasets: [
+                {
+                  data: [35, 25, 20, 20],
+                  backgroundColor: [
+                    "rgba(67, 97, 238, 0.8)",
+                    "rgba(76, 201, 240, 0.8)",
+                    "rgba(248, 150, 30, 0.8)",
+                    "rgba(247, 37, 133, 0.8)",
+                  ],
+                  borderColor: document.body.classList.contains("dark-mode")
+                    ? "rgba(26, 32, 44, 1)"
+                    : "rgba(255, 255, 255, 1)",
+                  borderWidth: 2,
+                  hoverOffset: 10,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: "70%",
+              plugins: {
+                legend: {
+                  position: "right",
+                  labels: {
+                    color: document.body.classList.contains("dark-mode")
+                      ? "white"
+                      : "#2d3748",
+                    padding: 20,
+                    font: {
+                      size: 12,
+                    },
+                    usePointStyle: true,
+                    pointStyle: "circle",
+                  },
+                },
+                tooltip: {
+                  backgroundColor: document.body.classList.contains("dark-mode")
+                    ? "#2d3748"
+                    : "white",
+                  titleColor: document.body.classList.contains("dark-mode")
+                    ? "white"
+                    : "#2d3748",
+                  bodyColor: document.body.classList.contains("dark-mode")
+                    ? "white"
+                    : "#2d3748",
+                  borderColor: "rgba(0, 0, 0, 0.1)",
+                  borderWidth: 1,
+                  padding: 15,
+                },
+              },
+            },
+          });
+        }
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+          sidebar.classList.toggle("active");
+        }
+
+        // Initialize charts
         initCharts();
-      });
 
-      const cards = document.querySelectorAll(".card");
-
-      cards.forEach((card) => {
-        card.addEventListener("mouseenter", function () {
-          this.style.transform = "translateY(-10px)";
-          this.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.15)";
-          this.querySelector(".card-icon").style.transform =
-            "rotate(10deg) scale(1.1)";
+        // Window resize event to handle charts
+        window.addEventListener("resize", function () {
+          initCharts();
         });
 
-        card.addEventListener("mouseleave", function () {
-          this.style.transform = "translateY(0)";
-          this.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.08)";
-          this.querySelector(".card-icon").style.transform =
-            "rotate(0) scale(1)";
+        const cards = document.querySelectorAll(".card");
+
+        cards.forEach((card) => {
+          card.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-10px) rotateX(5deg) rotateY(5deg)";
+            this.style.boxShadow = "0 15px 40px rgba(0, 0, 0, 0.15)";
+            this.querySelector(".card-icon").style.transform =
+              "rotate(10deg) scale(1.1)";
+          });
+
+          card.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0) rotateX(0) rotateY(0)";
+            this.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.08)";
+            this.querySelector(".card-icon").style.transform =
+              "rotate(0) scale(1)";
+          });
+        });
+
+        // Add parallax effect to cards
+        document.addEventListener("mousemove", function (e) {
+          const cards = document.querySelectorAll(".card");
+          cards.forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const angleX = (y - centerY) / 20;
+            const angleY = (centerX - x) / 20;
+
+            card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+          });
         });
       });
-    });
-  </script>
+    </script>
+  </body>
 </html>
