@@ -489,6 +489,238 @@
         color: var(--dark-color);
       }
 
+      .fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+
+      .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        font-size: 0.8rem;
+      }
+
+      .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
+      /* preview */
+      #previewEventBtn {
+        margin-left: 10px;
+      }
+      #iconPreviewEventBtn {
+        margin-left: 10px;
+      }
+      .cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 500px; /* Adjusted for 2 cards */
+  margin-bottom: 60px;
+}
+
+.sport-card {
+  /* font-family: "Inter"; */
+  width: calc(100% - 5px);
+  height: 220px;
+  border-radius: 12px;
+  overflow: visible;
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)),
+    var(--bg-image) center/cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.sport-card:hover {
+  transform: translateY(-5px);
+}
+
+.sport-card-content {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background-color: white;
+  padding: 12px;
+  border-radius: 12px;
+  width: calc(100% - 24px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sport-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #263238;
+  margin-bottom: 4px;
+}
+
+.sport-card-subtitle {
+  font-size: 13px;
+  color: #59637a;
+}
+
+/* Icons Div */
+ .sports-selector-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .selector-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .selector-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--light-gray);
+            margin-bottom: 16px;
+        }
+
+        .sports-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Special row with 4 items */
+        .sports-grid .row-4 {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .sports-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .sports-grid .row-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .sport-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--selection-blue), var(--primary-blue));
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            color: var(--white);
+            padding: 10px;
+        }
+
+        .sport-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        .sport-item.selected {
+            background: linear-gradient(135deg, var(--active-green), #3E8E41));
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        .sport-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .sport-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .icons-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+        }
+
+        .icons-btn-primary {
+            background-color: var(--active-green);
+            color: var(--white);
+        }
+
+        .icons-btn-primary:hover {
+            background-color: #3E8E41;
+            transform: translateY(-2px);
+        }
+
+        .icons-btn-secondary {
+            background-color: transparent;
+            color: var(--light-gray);
+            border: 1px solid var(--light-gray);
+        }
+
+        .icons-btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .cards-container {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    max-width: 220px;
+  }
+}
+
       /* Responsive */
       @media (max-width: 992px) {
         .sidebar {
@@ -544,50 +776,6 @@
           opacity: 1;
         }
       }
-
-      .fade-in {
-        animation: fadeIn 0.3s ease-in-out;
-      }
-
-      /* Tooltip */
-      .tooltip {
-        position: relative;
-        display: inline-block;
-      }
-
-      .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 120px;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s;
-        font-size: 0.8rem;
-      }
-
-      .tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #333 transparent transparent transparent;
-      }
-
-      .tooltip:hover .tooltiptext {
-        visibility: visible;
-        opacity: 1;
-      }
     </style>
   </head>
   <body>
@@ -607,6 +795,15 @@
             <button class="btn btn-primary poppins" id="addSportBtn">
               <i class="fas fa-plus"></i> Add Sport
             </button>
+
+            <button class="btn btn-primary" id="previewEventBtn">
+              <i class="fa fa-eye" aria-hidden="true"></i> List Preview
+            </button>
+
+            <button class="btn btn-primary" id="iconPreviewEventBtn">
+              <i class="fa fa-eye" aria-hidden="true"></i> Icons Preview
+            </button>
+
           </div>
 
           <!-- Filters Section -->
@@ -664,8 +861,190 @@
             </div>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
+  </div>
+  <div class="previewModal" id="listPreviewContainer">
+      <div class="showPreview"  id="listPreview">
+        <div class="mobile-view">
+            <header class="header">
+          <div class="header-content">
+            <div class="greeting">Hello John!</div>
+            <div class="header-icons">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/565/565422.png"
+                alt="Notifications"
+                class="icon"
+              />
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/126/126472.png"
+                alt="Settings"
+                class="icon"
+              />
+            </div>
+          </div>
+
+          <div class="search-filter-container">
+            <div class="search-bar">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/149/149852.png"
+                alt="Search"
+                class="search-icon"
+              />
+              <input type="text" placeholder="Search for events" />
+            </div>
+            <button class="filter-btn">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/566/566299.png"
+                alt="Filter"
+                class="filter-icon"
+              />
+            </button>
+          </div>
+
+          <!-- Top Navigation -->
+          <nav class="top-nav">
+            <a href="#" class="nav-item">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"
+                alt="Events"
+                class="nav-icon"
+              />
+              <span>Events</span>
+            </a>
+            <a href="#" class="nav-item">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/854/854878.png"
+                alt="Venues"
+                class="nav-icon"
+              />
+              <span>Venues</span>
+            </a>
+            <a href="#" class="nav-item">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/857/857455.png"
+                alt="Sports"
+                class="nav-icon"
+              />
+              <span>Sports</span>
+            </a>
+            <a href="#" class="nav-item">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/805/805401.png"
+                alt="Teams"
+                class="nav-icon"
+              />
+              <span>Teams</span>
+            </a>
+          </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="preview-main-content">
+          <h2 class="section-title">Upcoming Events</h2>
+
+          <!-- <div class="preview-events-container"></div> -->
+            <div class="cards-container" id="cardsContainer">
+<!-- Cards will be generated by JavaScript -->
+</div>
+        </main>
+
+        <!-- Footer Navigation -->
+        <nav class="footer-nav">
+          <a href="#" class="footer-item active">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+              alt="Discover"
+              class="footer-icon"
+            />
+            <span>Discover</span>
+          </a>
+          <a href="#" class="footer-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/891/891401.png"
+              alt="Tickets"
+              class="footer-icon"
+            />
+            <span>Tickets</span>
+          </a>
+          <a href="#" class="footer-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1534/1534935.png"
+              alt="Squads"
+              class="footer-icon"
+            />
+            <span>Squads</span>
+          </a>
+          <a href="#" class="footer-item">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+              alt="Account"
+              class="footer-icon"
+            />
+            <span>Account</span>
+          </a>
+        </nav>
+      </div>
+      </div>
     </div>
+  <div class="previewModal" id="iconsPreviewContainer">
+      <div class="showPreview" id="iconsPreview">
+        <div class="mobile-view">
+         <div class="sports-selector-container">
+        <header class="selector-header">
+            <h1>Pick your favourite sports</h1>
+            <p class="subtitle">What sport gets your heart racing? Choose your favourite from all the exciting options!</p>
+        </header>
+        
+        <div class="sports-grid">
+            <!-- First row with 3 items -->
+            <button class="sport-item" data-sport="golf">
+                <div class="sport-icon">⛳</div>
+                <div class="sport-label">Golf</div>
+            </button>
+            <button class="sport-item" data-sport="swimming">
+                <div class="sport-icon">🏊</div>
+                <div class="sport-label">Swimming</div>
+            </button>
+            <button class="sport-item" data-sport="cricket">
+                <div class="sport-icon">🏏</div>
+                <div class="sport-label">Cricket</div>
+            </button>
+            
+            <!-- Second row with 4 items -->
+            <div class="row-4">
+                <button class="sport-item" data-sport="baseball">
+                    <div class="sport-icon">⚾</div>
+                    <div class="sport-label">Baseball</div>
+                </button>
+                <button class="sport-item" data-sport="basketball">
+                    <div class="sport-icon">🏀</div>
+                    <div class="sport-label">Basketball</div>
+                </button>
+                <button class="sport-item" data-sport="football">
+                    <div class="sport-icon">⚽</div>
+                    <div class="sport-label">Football</div>
+                </button>
+                <button class="sport-item" data-sport="boxing">
+                    <div class="sport-icon">🥊</div>
+                    <div class="sport-label">Boxing</div>
+                </button>
+            </div>
+            
+            <!-- Additional sports can be added here following the same pattern -->
+        </div>
+        
+        <div class="action-buttons">
+            <button class="icon-btn icon-btn-secondary" id="clear-btn">Clear All</button>
+            <button class="icon-btn icon-btn-primary" id="continue-btn">Continue</button>
+        </div>
+    </div>
+
+      
+      </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Add Sport Modal -->
     <div class="modal" id="addSportModal">
@@ -1183,12 +1562,25 @@
       const menuToggle = document.querySelector(".menu-toggle");
       const paginationInfo = document.querySelector(".pagination-info");
       const paginationControls = document.querySelector(".pagination-controls");
+      const previewEventBtn = document.getElementById("previewEventBtn");
+      const iconPreviewEventBtn = document.getElementById("iconPreviewEventBtn");
+      const listPreview = document.getElementById("listPreview");
+      const iconsPreview = document.getElementById("iconsPreview");
+      const listPreviewContainer = document.getElementById("listPreviewContainer");
+      const iconsPreviewContainer = document.getElementById("iconsPreviewContainer");
+      const previewModal = document.querySelector(".previewModal");
+       const sportItems = document.querySelectorAll('.sport-item');
+            const clearButton = document.getElementById('clear-btn');
+            const continueButton = document.getElementById('continue-btn');
 
       // Pagination variables
       let currentPage = 1;
       const itemsPerPage = 10;
       let filteredSports = [...sportsData];
       let currentSportId = null;
+            
+            let selectedSports = [];
+            const MAX_SELECTIONS = 5;
 
       // Initialize the page
       function init() {
@@ -1265,8 +1657,33 @@
             confirmDeleteSport(btn.dataset.id)
           );
         });
+        previewEventBtn?.addEventListener("click", openPreviewEventModal);
+        iconPreviewEventBtn?.addEventListener("click", openPreviewEventIconModal);
+        listPreview?.addEventListener("click", closePreviewEventListModal);
+        iconsPreview?.addEventListener("click", closePreviewEventIconsModal);
       }
-
+  function openPreviewEventModal() {
+        // renderPreviewEvents();
+        document.querySelector(".content-wrapper").style.display = "none";
+        listPreviewContainer.style.display = "block";
+        listPreview.style.display = "block";
+      }
+  function openPreviewEventIconModal() {
+        // renderPreviewEvents();
+        document.querySelector(".content-wrapper").style.display = "none";
+        iconsPreviewContainer.style.display = "block";
+        iconsPreview.style.display = "block";
+      }
+      function closePreviewEventListModal() {
+       document.querySelector(".content-wrapper").style.display = "block";
+        listPreviewContainer.style.display = "none";
+        listPreview.style.display = "none";
+      }
+      function closePreviewEventIconsModal() {
+          document.querySelector(".content-wrapper").style.display = "block";
+        iconsPreviewContainer.style.display = "none";
+        iconsPreview.style.display = "none";
+      }
       // Filter sports based on search and category with pagination
       function filterSports() {
         const searchTerm = searchInput.value.toLowerCase();
@@ -1601,6 +2018,90 @@
           });
         });
       }
+       const sports_Data = [
+    { title: "Football", events: 12, image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Basketball", events: 8, image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Tennis", events: 5, image: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Swimming", events: 7, image: "https://images.unsplash.com/photo-1551029506-0807df4e2031?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Volleyball", events: 4, image: "https://images.unsplash.com/photo-1606979123989-8cc801d2c6ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Cricket", events: 9, image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Baseball", events: 6, image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Golf", events: 3, image: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Rugby", events: 5, image: "https://images.unsplash.com/photo-1589483216011-69c8ab68164f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" },
+    { title: "Hockey", events: 4, image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" }
+  ];
+
+  const container = document.getElementById('cardsContainer');
+
+  sports_Data.forEach(sport => {
+    const card = document.createElement('div');
+    card.className = 'sport-card';
+    card.style.setProperty('--bg-image', `url("${sport.image}")`);
+    
+    card.innerHTML = `
+      <div class="sport-card-content">
+        <h2 class="sport-card-title">${sport.title}</h2>
+        <p class="sport-card-subtitle">${sport.events} Events</p>
+      </div>
+    `;
+    
+    card.addEventListener('click', function(e) {
+   
+      console.log(`${sport.title} card clicked!`);
+      // Add navigation or additional functionality here
+    });
+    
+    container.appendChild(card);
+  });
+    // Toggle sport selection
+            function toggleSelection(sportItem) {
+                const sport = sportItem.dataset.sport;
+                const index = selectedSports.indexOf(sport);
+                
+                if (index === -1) {
+                    if (selectedSports.length < MAX_SELECTIONS) {
+                        selectedSports.push(sport);
+                        sportItem.classList.add('selected');
+                    } else {
+                        alert(`You can select up to ${MAX_SELECTIONS} sports.`);
+                        return;
+                    }
+                } else {
+                    selectedSports.splice(index, 1);
+                    sportItem.classList.remove('selected');
+                }
+                
+                updateContinueButton();
+            }
+
+            // Update continue button state
+            function updateContinueButton() {
+                continueButton.disabled = selectedSports.length === 0;
+            }
+
+            // Clear all selections
+            function clearSelections() {
+                selectedSports = [];
+                sportItems.forEach(item => item.classList.remove('selected'));
+                updateContinueButton();
+            }
+
+            // Handle continue action
+            function handleContinue() {
+                console.log('Selected sports:', selectedSports);
+                alert(`You selected: ${selectedSports.join(', ')}`);
+            }
+
+            // Event listeners
+            sportItems.forEach(item => {
+                item.addEventListener('click', (e) => {   e.stopPropagation();toggleSelection(item)});
+            });
+            
+            clearButton.addEventListener('click', clearSelections);
+            continueButton.addEventListener('click', handleContinue);
+
+            // Initial state
+            updateContinueButton();
 
       // Initialize the application
       init();
