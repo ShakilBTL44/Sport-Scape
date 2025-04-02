@@ -350,11 +350,19 @@ body {
 .hide {
   display: none;
 }
-#eventListImg {
+/* #eventListImg {
   height: 40px;
   width: 40px;
   border-radius: 10px;
   background-color: #f5f7fa;
+} */
+
+.warning-text {
+  color: var(--danger-color) !important;
+  font-weight: 500;
+  background-color: rgba(220, 53, 69, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
 }
 
 /* Responsiveness */

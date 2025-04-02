@@ -1500,10 +1500,12 @@ tbody tr:nth-child(even) {
       <div class="confirmation-text">
         <h4>Warning: This sport is in use!</h4>
         <p class="warning-text">
-          This sport is currently selected by <span id="userCount">0</span> users.
+          This sport is currently selected by 
+          <!-- <span id="userCount">0</span>  -->
+          users.
           Deleting it will affect their recommendations.
         </p>
-        <p>To confirm deletion, please type "<span id="sportNameToDelete"></span>" below:</p>
+        <p style="margin-bottom: 10px">To confirm deletion, please type "<span id="sportNameToDelete"  style="font-weight: 600"></span>" below:</p>
         <div class="form-group">
           <input
             type="text"
@@ -2232,13 +2234,13 @@ const sportsDataWithIcons = [
 
               // sportsDataWithIcons
 
-              sportsDataWithIcons.push(  { id: sportsData.length + 1, name: name, icon: logoUrl, category: "team",coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: logoUrl });
+              sportsDataWithIcons.unshift(  { id: sportsData.length + 1, name: name, icon: logoUrl, category: "team",coverImage: "./../assets/polygon.svg", coverImageSelected: "./../assets/polygon_green.svg", sportIcon: logoUrl });
               generateSportsGrid();
 
-              sports_Data.push(  { title: name, events: 4, image: imageUrl });
+              sports_Data.unshift(  { title: name, events: 4, image: imageUrl });
               showListPreview();
 
-            sportsData.push(newSport);
+            sportsData.unshift(newSport);
             currentPage = 1; // Reset to first page when adding new sport
             filterSports();
             closeModal(addSportModal);
@@ -2504,8 +2506,8 @@ function confirmDeleteSport(id) {
     currentSportId = id;
     
     // Simulate checking how many users have this sport selected
-    const randomUserCount = Math.floor(Math.random() * 100) + 1;
-    document.getElementById('userCount').textContent = randomUserCount;
+    // const randomUserCount = Math.floor(Math.random() * 100) + 1;
+    // document.getElementById('userCount').textContent = randomUserCount;
     document.getElementById('sportNameToDelete').textContent = sport.name;
     
     // Reset the confirmation input

@@ -1425,7 +1425,7 @@
         const randomId = Math.floor(Math.random() * 100);
 
         // Add new admin to data
-        adminData.push({
+        adminData.unshift({
           id: newId,
           name,
           email,

@@ -170,8 +170,8 @@
       }
 
       .competition-logo {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         border-radius: 0.6rem;
         object-fit: cover;
         background-color: var(--light-gray);
@@ -737,6 +737,56 @@
       .icons-btn-secondary:hover {
         background-color: rgba(255, 255, 255, 0.1);
       }
+      /* Add this to your existing CSS */
+      .competitions-table th,
+      .competitions-table td {
+        text-align: center !important;
+      }
+
+      .competitions-table .action-buttons {
+        justify-content: center;
+      }
+
+      .competitions-table .competition-logo {
+        margin: 0 auto;
+      }
+
+      /* Add these styles to your CSS */
+      .confirmation-modal .modal {
+        max-width: 500px;
+      }
+
+      .confirmation-icon {
+        text-align: center;
+        font-size: 3rem;
+        color: var(--danger-color);
+        margin-bottom: 20px;
+      }
+
+      .confirmation-text {
+        text-align: center;
+      }
+
+      .confirmation-text h4 {
+        color: var(--danger-color);
+        margin-bottom: 15px;
+      }
+
+      .warning-text {
+        color: var(--gray-color);
+        margin-bottom: 20px;
+      }
+
+      .error-message {
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        margin-top: 5px;
+      }
+      .btn-danger:disabled {
+        background-color: #dc3545;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
 
       /* Responsive Styles */
 
@@ -1033,7 +1083,7 @@
       </div>
     </div>
 
-    <!-- Confirmation Modal -->
+    <!-- Confirmation Modal
     <div class="modal-overlay confirmation-modal" id="confirmationModal">
       <div class="modal">
         <div class="modal-body">
@@ -1049,6 +1099,62 @@
           <button class="btn" id="cancelDeleteBtn">Cancel</button>
           <button class="btn btn-danger" id="confirmDeleteBtn">
             Yes, delete it!
+          </button>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay confirmation-modal" id="confirmationModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Delete Competition</h3>
+          <button class="modal-close" id="confirmationModalClose">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="confirmation-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="confirmation-text">
+            <h4>Warning: This competition is in use!</h4>
+            <p class="warning-text">
+              This competition is currently selected by users. Deleting it will
+              affect their experience.
+            </p>
+            <p style="margin-bottom: 10px">
+              To confirm deletion, please type "<span
+                id="competitionNameToDelete"  style="font-weight: 600"
+              ></span
+              >" below:
+            </p>
+            <div class="form-group">
+              <input
+                type="text"
+                id="confirmDeleteInput"
+                class="form-control"
+                placeholder="Type the competition name"
+                autocomplete="off"
+              />
+              <p
+                class="error-message"
+                id="deleteError"
+                style="
+                  display: none;
+                  color: var(--danger-color);
+                  margin-top: 5px;
+                "
+              >
+                The entered name doesn't match.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" id="cancelDeleteBtn">Cancel</button>
+          <button class="btn btn-danger" id="confirmDeleteBtn" disabled>
+            <i class="fas fa-trash"></i> Delete Competition
           </button>
         </div>
       </div>
@@ -1376,10 +1482,58 @@
       }
 
       // Delete competition
+      // function showDeleteModal(id) {
+      //   competitionToDelete = id;
+      //   confirmationModal.classList.add("active");
+      // }
+
       function showDeleteModal(id) {
-        competitionToDelete = id;
-        confirmationModal.classList.add("active");
+        const competition = competitions.find((c) => c.id === id);
+        if (competition) {
+          competitionToDelete = id;
+          document.getElementById("competitionNameToDelete").textContent =
+            competition.name;
+          document.getElementById("confirmDeleteInput").value = "";
+          document.getElementById("confirmDeleteBtn").disabled = true;
+          document.getElementById("deleteError").style.display = "none";
+          confirmationModal.classList.add("active");
+
+          // Focus the input field
+          setTimeout(() => {
+            document.getElementById("confirmDeleteInput").focus();
+          }, 100);
+        }
       }
+
+      // Add event listener for the confirmation input
+      document
+        .getElementById("confirmDeleteInput")
+        .addEventListener("input", function () {
+          const competition = competitions.find(
+            (c) => c.id === competitionToDelete
+          );
+          const confirmBtn = document.getElementById("confirmDeleteBtn");
+          const errorMsg = document.getElementById("deleteError");
+
+          if (competition && this.value === competition.name) {
+            confirmBtn.disabled = false;
+            errorMsg.style.display = "none";
+          } else {
+            confirmBtn.disabled = true;
+            if (this.value.length > 0) {
+              errorMsg.style.display = "block";
+            } else {
+              errorMsg.style.display = "none";
+            }
+          }
+        });
+
+      // Add event listener for the confirmation modal close button
+      document
+        .getElementById("confirmationModalClose")
+        .addEventListener("click", function () {
+          closeModal(confirmationModal);
+        });
 
       // Confirm delete
       function confirmDelete() {

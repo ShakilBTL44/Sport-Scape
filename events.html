@@ -104,7 +104,7 @@
 
       .form-control {
         width: 100%;
-        padding: 8px 12px;
+        padding: 0.7rem 1rem;
         border: 1px solid #ddd;
         border-radius: 4px;
         font-size: 14px;
@@ -118,8 +118,10 @@
 
       .filter-actions {
         display: flex;
-        align-items: flex-end;
-        gap: 10px;
+        /* align-items: flex-end; */
+        align-items: center;
+        margin-top: 15px;
+        /* gap: 10px; */
       }
 
       /* Table Styles */
@@ -166,8 +168,8 @@
       }
 
       .event-image {
-        width: 50px;
-        height: 50px;
+        /* width: 50px;
+        height: 50px; */
         border-radius: 10px;
         object-fit: cover;
       }
@@ -176,7 +178,7 @@
         height: 100%;
         background-color: transparent;
       }
-      #eventListImg>img{
+      #eventListImg > img {
         overflow: hidden;
         box-shadow: var(--image-shadow);
         height: 50px;
@@ -251,6 +253,11 @@
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 1000;
         overflow-y: auto;
+      }
+      .modal-overlay {
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
       }
 
       .modal-content {
@@ -378,10 +385,9 @@
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         gap: 20px;
-        align-items: start;
+        align-items: center;
         /* width: 95%; */
         margin: auto;
-        align-items: center;
       }
 
       .mapping-list {
@@ -1718,6 +1724,338 @@
         height: calc((420px - 20px - 20px - 30px));
         margin-bottom: 0;
       }
+
+      /* Delete Confirmation Modal Styles */
+      .warning-text {
+        line-height: 1.6;
+        margin: 15px 0;
+      }
+
+      .confirmation-icon {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .confirmation-icon i {
+        font-size: 48px;
+        color: var(--warning-color);
+      }
+
+      .confirmation-text {
+        text-align: center;
+      }
+
+      .confirmation-text h4 {
+        margin-bottom: 10px;
+        color: var(--dark-color);
+      }
+
+      .confirmation-text p {
+        margin-bottom: 15px;
+        color: #555;
+      }
+
+      #confirmDeleteInput {
+        text-align: left;
+      }
+
+      .error-message {
+        display: none;
+        color: var(--danger-color);
+        margin-top: 5px;
+        font-size: 13px;
+      }
+      .confirmation-modal .modal-content {
+        max-width: 500px;
+      }
+
+      .confirmation-icon {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .confirmation-icon i {
+        font-size: 3rem;
+        color: var(--warning-color);
+      }
+
+      .confirmation-text {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .confirmation-text h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+        color: var(--dark-color);
+      }
+
+      .confirmation-text p {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+        transition: all 0.2s ease;
+      }
+
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+
+      .btn-danger:disabled {
+        background-color: #dc3545;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      /* Modal Form Enhancements */
+      .modal-content {
+        max-width: 900px;
+      }
+
+      .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .form-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #4361ee;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 15px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.2s ease;
+      }
+
+      .form-control:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 8px;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: center;
+      }
+
+      .radio-option input {
+        margin-right: 8px;
+      }
+
+      textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .align-self-end {
+        align-self: flex-end;
+      }
+
+      /* Mapping Section Enhancements */
+      .mapping-container {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .mapping-list {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .mapping-list-header {
+        padding: 12px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+      }
+
+      .mapping-list-content {
+        height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #fff;
+      }
+
+      .mapping-controls {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px 0;
+      }
+
+      .mapping-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background-color: #4361ee;
+        color: white;
+        border: none;
+        transition: all 0.2s ease;
+      }
+
+      .mapping-btn:hover {
+        background-color: #3a0ca3;
+      }
+
+      .mapping-btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .mapping-item {
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        background-color: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .mapping-item:hover {
+        background-color: #e9ecef;
+      }
+
+      .mapping-item.selected {
+        background-color: rgba(67, 97, 238, 0.1);
+        border-color: #4361ee;
+      }
+
+      /* Modal Footer */
+      .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid #4361ee;
+        color: #4361ee;
+      }
+
+      .btn-outline:hover {
+        background-color: rgba(67, 97, 238, 0.1);
+      }
+
+      .btn-primary {
+        background-color: #4361ee;
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background-color: #3a0ca3;
+      }
+      /* Add to your existing CSS */
+      .required-indicator {
+        color: #e63946;
+        margin-left: 4px;
+      }
+
+      .error-message {
+        color: #e63946;
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+
+      /* Make the save button more prominent when enabled */
+      #saveEventBtn:not(:disabled) {
+        background-color: #4361ee;
+        box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3);
+      }
+
+      #saveEventBtn:not(:disabled):hover {
+        background-color: #3a0ca3;
+      }
+
+      .disableBtn {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .mapping-container {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+        }
+
+        .mapping-controls {
+          flex-direction: row;
+          justify-content: center;
+          padding: 10px 0;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -2035,190 +2373,353 @@
         </div>
         <div class="modal-body">
           <form id="eventForm">
-            <div class="form-row form-full-row">
-              <div class="form-group">
-                <label class="form-label">Search Sport</label>
-                <select class="form-control" id="fixtureSportFilter">
-                  <option value="">All Sports</option>
-                  <option value="football">Football</option>
-                  <option value="basketball">Basketball</option>
-                  <option value="tennis">Tennis</option>
-                  <option value="cricket">Cricket</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Start Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="fixtureStartDateFilter"
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">End Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="fixtureEndDateFilter"
-                  placeholder="DD/MM/YYYY"
-                />
-              </div>
-              <div class="form-group">
-                <button
-                  class="btn btn-primary"
-                  id="applyFixtureFiltersBtn"
-                  type="button"
-                >
-                  <i class="fas fa-filter"></i> Apply
-                </button>
+            <!-- Search and Date Filters Section -->
+            <div class="form-section">
+              <h4 class="section-title">Search Fixtures</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Sport</label>
+                  <select class="form-control" id="fixtureSportFilter">
+                    <option value="">All Sports</option>
+                    <option value="football">Football</option>
+                    <option value="basketball">Basketball</option>
+                    <option value="tennis">Tennis</option>
+                    <option value="cricket">Cricket</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Start Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="fixtureStartDateFilter"
+                    placeholder="DD/MM/YYYY"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">End Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="fixtureEndDateFilter"
+                    placeholder="DD/MM/YYYY"
+                  />
+                </div>
+                <div class="form-group align-self-end">
+                  <button
+                    class="btn btn-primary"
+                    id="applyFixtureFiltersBtn"
+                    type="button"
+                  >
+                    <i class="fas fa-filter"></i> Apply Filters
+                  </button>
+                </div>
               </div>
             </div>
-            <div class="form-row form-full-row">
-              <div class="form-group">
-                <label class="form-label" id="fixturesMappingTitle"
-                  >Fixtures Mapping</label
-                >
-                <div class="mapping-container">
-                  <div class="mapping-list">
-                    <div class="mapping-list-header">Searched Fixtures</div>
-                    <div
-                      class="mapping-list-content"
-                      id="unmappedFixturesList"
-                      style="height: 300px; overflow-y: auto"
-                    >
-                      <!-- Unmapped fixtures will be added here by JavaScript -->
-                    </div>
+
+            <!-- Fixtures Mapping Section -->
+            <div class="form-section">
+              <h4 class="section-title">
+                Fixtures Mapping <span class="required-indicator">*</span>
+              </h4>
+              <div class="mapping-container">
+                <div class="mapping-list">
+                  <div class="mapping-list-header">Searched Fixtures</div>
+                  <div class="mapping-list-content" id="unmappedFixturesList">
+                    <!-- Unmapped fixtures will be added here by JavaScript -->
                   </div>
-                  <div class="mapping-controls">
-                    <button
-                      type="button"
-                      class="mapping-btn"
-                      id="moveAllFixturesRightBtn"
-                      title="Move All"
-                    >
-                      <i class="fas fa-angle-double-right"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="mapping-btn"
-                      id="moveFixtureRightBtn"
-                      title="Move Selected"
-                    >
-                      <i class="fas fa-angle-right"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="mapping-btn"
-                      id="moveFixtureLeftBtn"
-                      title="Revert Selected"
-                    >
-                      <i class="fas fa-angle-left"></i>
-                    </button>
-                    <button
-                      type="button"
-                      class="mapping-btn"
-                      id="moveAllFixturesLeftBtn"
-                      title="Revert All"
-                    >
-                      <i class="fas fa-angle-double-left"></i>
-                    </button>
+                </div>
+
+                <div class="mapping-controls">
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveAllFixturesRightBtn"
+                    title="Move All"
+                  >
+                    <i class="fas fa-angle-double-right"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveFixtureRightBtn"
+                    title="Move Selected"
+                  >
+                    <i class="fas fa-angle-right"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveFixtureLeftBtn"
+                    title="Revert Selected"
+                  >
+                    <i class="fas fa-angle-left"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveAllFixturesLeftBtn"
+                    title="Revert All"
+                  >
+                    <i class="fas fa-angle-double-left"></i>
+                  </button>
+                </div>
+
+                <div class="mapping-list">
+                  <div class="mapping-list-header">
+                    Selected Fixtures For Event
                   </div>
-                  <div class="mapping-list">
-                    <div class="mapping-list-header">
-                      Selected Fixtures For Event
+                  <div class="mapping-list-content" id="mappedFixturesList">
+                    <!-- Mapped fixtures will be added here by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- <div class="global-fixture-controls">
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveFixtureUpBtn"
+                    title="Move Up"
+                    disabled
+                  >
+                    <i class="fas fa-arrow-up"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="mapping-btn"
+                    id="moveFixtureDownBtn"
+                    title="Move Down"
+                    disabled
+                  >
+                    <i class="fas fa-arrow-down"></i>
+                  </button>
+                </div> -->
+              </div>
+              <div
+                id="fixtureError"
+                class="error-message"
+                style="display: none"
+              >
+                Please select at least one fixture
+              </div>
+            </div>
+
+            <!-- Event Details Section -->
+            <div class="form-section">
+              <h4 class="section-title">Event Details</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label"
+                    >Event Name <span class="required-indicator">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="eventName"
+                    required
+                  />
+                  <div
+                    id="eventNameError"
+                    class="error-message"
+                    style="display: none"
+                  >
+                    Event name is required
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label"
+                    >Badge Name <span class="required-indicator">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="badgeName"
+                    required
+                  />
+                  <div
+                    id="badgeNameError"
+                    class="error-message"
+                    style="display: none"
+                  >
+                    Badge name is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label"
+                    >Start Date <span class="required-indicator">*</span></label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="startDate"
+                    required
+                  />
+                  <div
+                    id="startDateError"
+                    class="error-message"
+                    style="display: none"
+                  >
+                    Start date is required
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Multiple Venues?</label>
+                  <div class="radio-group">
+                    <div class="radio-option">
+                      <input
+                        type="radio"
+                        id="multipleVenuesYes"
+                        name="multipleVenues"
+                        value="yes"
+                      />
+                      <label for="multipleVenuesYes">Yes</label>
                     </div>
-                    <div
-                      class="mapping-list-content"
-                      id="mappedFixturesList"
-                      style="height: 300px; overflow-y: auto"
-                    >
-                      <!-- Mapped fixtures will be added here by JavaScript -->
+                    <div class="radio-option">
+                      <input
+                        type="radio"
+                        id="multipleVenuesNo"
+                        name="multipleVenues"
+                        value="no"
+                        checked
+                      />
+                      <label for="multipleVenuesNo">No</label>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-row">
+
               <div class="form-group">
-                <label class="form-label">Event Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="eventName"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Badge Name</label>
-                <input type="text" class="form-control" id="badgeName" />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Start Date</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="startDate"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">About Event</label>
+                <label class="form-label"
+                  >About Event <span class="required-indicator">*</span></label
+                >
                 <textarea
                   class="form-control"
                   id="aboutEvent"
-                  rows="10"
+                  rows="5"
+                  required
                 ></textarea>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Multiple Venues?</label>
-                <div class="radio-group">
-                  <div class="radio-option">
-                    <input
-                      type="radio"
-                      id="multipleVenuesYes"
-                      name="multipleVenues"
-                      value="yes"
-                    />
-                    <label for="multipleVenuesYes">Yes</label>
-                  </div>
-                  <div class="radio-option">
-                    <input
-                      type="radio"
-                      id="multipleVenuesNo"
-                      name="multipleVenues"
-                      value="no"
-                      checked
-                    />
-                    <label for="multipleVenuesNo">No</label>
-                  </div>
+                <div
+                  id="aboutEventError"
+                  class="error-message"
+                  style="display: none"
+                >
+                  About event is required
                 </div>
               </div>
-            </div>
-            <div class="form-row form-full-row">
+
               <div class="form-group">
-                <label class="form-label">Event Image</label>
+                <label class="form-label"
+                  >Event Image <span class="required-indicator">*</span></label
+                >
                 <input
                   type="file"
                   class="form-control"
                   id="eventImage"
                   accept="image/*"
+                  required
                 />
+                <div
+                  id="eventImageError"
+                  class="error-message"
+                  style="display: none"
+                >
+                  Event image is required
+                </div>
+                <div
+                  class="image-preview-container"
+                  id="imagePreview"
+                  style="display: none; margin-top: 10px"
+                >
+                  <img
+                    id="previewImage"
+                    src="#"
+                    alt="Preview"
+                    style="
+                      max-width: 200px;
+                      max-height: 200px;
+                      border-radius: 4px;
+                    "
+                  />
+                </div>
               </div>
             </div>
           </form>
         </div>
-        <!-- Add this inside the modal-body div, after the existing form rows but before the fixtures mapping section -->
-
-        <!-- Update the existing fixtures mapping section by adding the style attributes to the mapping-list-content divs -->
 
         <div class="modal-footer">
           <button class="btn btn-outline" id="cancelModalBtn">Cancel</button>
-          <button class="btn btn-primary" id="saveEventBtn">Save</button>
+          <button class="btn btn-primary" id="saveEventBtn" disabled>
+            Save Event
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal modal-overlay" id="deleteConfirmationModal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h3 class="modal-title">Delete Event</h3>
+          <button class="modal-close" id="closeDeleteModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="text-align: center; margin-bottom: 20px">
+            <i
+              class="fas fa-exclamation-triangle"
+              style="font-size: 48px; color: var(--warning-color)"
+            ></i>
+          </div>
+          <div style="text-align: center">
+            <h4 style="margin-bottom: 10px; color: var(--dark-color)">
+              Warning: This event is in use!
+            </h4>
+            <p class="warning-text" style="margin-bottom: 15px; color: #555">
+              This event is currently selected by
+              <!-- <span id="userCount" style="font-weight: 600">0</span>  -->
+              users. Deleting it will affect their recommendations.
+            </p>
+            <p style="margin-bottom: 10px">
+              To confirm deletion, please type "<span
+                id="eventNameToDelete"
+                style="font-weight: 600"
+              ></span
+              >" below:
+            </p>
+            <div class="form-group" style="margin-bottom: 5px">
+              <input
+                type="text"
+                id="confirmDeleteInput"
+                class="form-control"
+                placeholder="Type the event name"
+                autocomplete="off"
+              />
+              <p
+                class="error-message"
+                id="deleteError"
+                style="
+                  display: none;
+                  color: var(--danger-color);
+                  margin-top: 5px;
+                  font-size: 13px;
+                "
+              >
+                The entered name doesn't match.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: center">
+          <button class="btn btn-outline" id="cancelDeleteBtn">Cancel</button>
+          <button
+            class="btn btn-danger"
+            id="confirmDeleteBtn"
+            disabled
+            style="margin-left: 10px"
+          >
+            <i class="fas fa-trash"></i> Delete Event
+          </button>
         </div>
       </div>
     </div>
@@ -2232,6 +2733,8 @@
       const navbar = document.querySelector(".navbar");
       sidebar.innerHTML = Sidebar("Events");
       navbar.innerHTML = Navbar("Events");
+      // Add these variables at the top with other state variables
+      let eventToDelete = null;
 
       // Sample data for events
       const events = [
@@ -2777,9 +3280,15 @@
         // Mapped fixtures (in the order they're stored)
         mappedFixturesList.innerHTML = "";
 
-        currentEventMappedFixtures.forEach((fixtureId) => {
+        currentEventMappedFixtures.forEach((fixtureId, index) => {
           const fixture = allFixtures.find((f) => f.id === fixtureId);
           if (!fixture) return;
+
+          console.log(
+            "currentEventMappedFixtures",
+            currentEventMappedFixtures.length,
+            index
+          );
 
           const isSelected = selectedMappedFixtures.includes(fixture.id);
           const item = document.createElement("div");
@@ -2793,10 +3302,10 @@
                             <span>${
                               fixture.sport.charAt(0).toUpperCase() +
                               fixture.sport.slice(1)
-                            }</span> |
+                            }   </span>
                             <span>${new Date(
                               fixture.date
-                            ).toLocaleDateString()}</span> |
+                            ).toLocaleDateString()}  </span> 
                             <span class="badge ${
                               fixture.status === "completed"
                                 ? "badge-success"
@@ -2807,14 +3316,16 @@
                         </div>
                     </div>
                     <div class="mapped-item-controls">
-                        <button class="mapped-item-btn up-btn" title="Move up" data-id="${
-                          fixture.id
-                        }">
+                        <button class="mapped-item-btn ${
+                          index == 0 ? "disableBtn" : "up-btn"
+                        }" title="Move up" data-id="${fixture.id}">
                             <i class="fas fa-arrow-up"></i>
                         </button>
-                        <button class="mapped-item-btn down-btn" title="Move down" data-id="${
-                          fixture.id
-                        }">
+                        <button class="mapped-item-btn ${
+                          index == currentEventMappedFixtures.length - 1
+                            ? "disableBtn"
+                            : "down-btn"
+                        } "  title="Move down" data-id="${fixture.id}">
                             <i class="fas fa-arrow-down"></i>
                         </button>
                     </div>
@@ -2931,6 +3442,7 @@
       function init() {
         renderEventsTable(events);
         setupEventListeners();
+        validateForm();
 
         // Set default dates for filters
         // const today = new Date().toISOString().split("T")[0];
@@ -2972,25 +3484,37 @@
           if (event.status === "upcoming") badgeClass = "badge-warning";
 
           row.innerHTML = `
-                    <td>
-                        <div id="eventListImg"><img src="${event.image}" alt="${event.name}" class="event-image"></div>
-                    </td>
-                    <td>${event.name}</td>
-                    <td><span class="badge ${badgeClass}">${event.badge}</span></td>
-                    <td>${formattedDate}</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="action-btn view-event-btn  view tooltip" data-id="${event.id}">
-                                <i class="fas fa-eye"></i>
-                                   <span class="tooltiptext">View</span>
-                            </button>
-                            <button class="action-btn edit-event-btn  edit tooltip" data-id="${event.id}">
-                                <i class="fas fa-pen"></i>
-                            <span class="tooltiptext">Edit</span>
-                            </button>
-                        </div>
-                    </td>
-                `;
+    <td>
+        <div id="eventListImg"><img src="${event.image}" alt="${event.name}" class="event-image"></div>
+    </td>
+    <td>${event.name}</td>
+    <td><span class="badge ${badgeClass}">${event.badge}</span></td>
+    <td>${formattedDate}</td>
+    <td>
+        <div class="action-buttons">
+            <button class="action-btn view-event-btn view tooltip" data-id="${event.id}">
+                <i class="fas fa-eye"></i>
+                <span class="tooltiptext">Preview</span>
+            </button>
+            <button class="action-btn edit-event-btn edit tooltip" data-id="${event.id}">
+                <i class="fas fa-pen"></i>
+                <span class="tooltiptext">Edit</span>
+            </button>
+            <button class="action-btn delete-event-btn danger delete tooltip" data-id="${event.id}">
+                <i class="fas fa-trash"></i>
+                <span class="tooltiptext">Delete</span>
+            </button>
+        </div>
+    </td>
+`;
+
+          // Update the delete button event listener
+          document.querySelectorAll(".delete-event-btn").forEach((btn) => {
+            btn?.addEventListener("click", function () {
+              const eventId = parseInt(this.getAttribute("data-id"));
+              openDeleteConfirmation(eventId);
+            });
+          });
 
           eventsTableBody.appendChild(row);
         });
@@ -2999,7 +3523,8 @@
         document.querySelectorAll(".view-event-btn").forEach((btn) => {
           btn?.addEventListener("click", function () {
             const eventId = parseInt(this.getAttribute("data-id"));
-            showEventDetails(eventId);
+             loadEventDetails(eventId);
+            // showEventDetails(eventId);
           });
         });
 
@@ -3088,15 +3613,15 @@
       }
       function stopPropagationPreviewEventModal(e) {
         e.stopPropagation();
-        console.log("hello2");
       }
-      function checkFormValidity() {
-        const eventName = document.getElementById("eventName").value;
-        const startDate = document.getElementById("startDate").value;
-        const aboutEvent = document.getElementById("aboutEvent").value;
+      // function checkFormValidity() {
+      //   const eventName = document.getElementById("eventName").value;
+      //   const startDate = document.getElementById("startDate").value;
+      //   const aboutEvent = document.getElementById("aboutEvent").value;
 
-        saveEventBtn.disabled = !(eventName && startDate && aboutEvent);
-      }
+      //   saveEventBtn.disabled = !(eventName && startDate && aboutEvent && );
+      // }
+      
       function renderPreviewEvents() {
         const container = document.querySelector(".preview-events-container");
         container.innerHTML = ""; // Clear existing content
@@ -3424,6 +3949,7 @@
         selectedUnmappedFixtures = [];
         renderFixturesLists();
         updateFixtureButtonsState();
+        validateForm();
       }
 
       // Move all unmapped fixtures to mapped
@@ -3437,6 +3963,7 @@
         selectedUnmappedFixtures = [];
         renderFixturesLists();
         updateFixtureButtonsState();
+        validateForm();
       }
 
       // Revert selected mapped fixtures to unmapped
@@ -3453,6 +3980,7 @@
         selectedMappedFixtures = [];
         renderFixturesLists();
         updateFixtureButtonsState();
+        validateForm();
       }
 
       // Revert all mapped fixtures to unmapped
@@ -3461,6 +3989,7 @@
         selectedMappedFixtures = [];
         renderFixturesLists();
         updateFixtureButtonsState();
+        validateForm();
       }
 
       // Move mapped fixture up in order
@@ -3590,7 +4119,7 @@
         } else {
           // Add new event
           const newId = Math.max(...events.map((e) => e.id), 0) + 1;
-          events.push({
+          events.unshift({
             id: newId,
             name: eventName,
             badge: badgeName,
@@ -3605,13 +4134,16 @@
         }
         renderEventsTable(events);
         eventModal.style.display = "none";
-        console.log("events::>>", events);
 
         return true;
       }
 
       // Function to load event details and fixtures
       function loadEventDetails(eventId) {
+        document.querySelector(".content-wrapper").style.display = "none";
+        document.querySelector(".previewModal").style.display = "block";
+        document.querySelector(".showPreview").style.display = "none";
+        document.getElementById("showPreviewEventDetails").style.display = "block"
         // Find the event in your events array
         const event = events.find((e) => e.id === eventId);
         if (!event) return;
@@ -3911,17 +4443,33 @@
           revertAllFixturesToUnmapped
         );
         // Add event listeners to form fields
-        document
-          .getElementById("eventName")
-          .addEventListener("input", checkFormValidity);
-        document
-          .getElementById("startDate")
-          .addEventListener("input", checkFormValidity);
-        document
-          .getElementById("aboutEvent")
-          .addEventListener("input", checkFormValidity);
+        // document
+        //   .getElementById("eventName")
+        //   .addEventListener("input", checkFormValidity);
+        // document
+        //   .getElementById("startDate")
+        //   .addEventListener("input", checkFormValidity);
+        // document
+        //   .getElementById("aboutEvent")
+        //   .addEventListener("input", checkFormValidity);
         // Initialize the save button as disabled
         saveEventBtn.disabled = true;
+        // Add these event listeners to your setupEventListeners function
+        document
+          .getElementById("confirmDeleteBtn")
+          ?.addEventListener("click", deleteEvent);
+        document
+          .getElementById("cancelDeleteBtn")
+          ?.addEventListener("click", function () {
+            document.getElementById("deleteConfirmationModal").style.display =
+              "none";
+          });
+        document
+          .getElementById("closeDeleteModalBtn")
+          ?.addEventListener("click", function () {
+            document.getElementById("deleteConfirmationModal").style.display =
+              "none";
+          });
       }
 
       // Read more functionality
@@ -3979,6 +4527,163 @@
         moveAllFixturesLeftBtn.disabled =
           currentEventMappedFixtures.length === 0;
       }
+
+      // Add this function to open the confirmation modal
+      function openDeleteConfirmation(eventId) {
+        eventToDelete = events.find((e) => e.id === eventId);
+        if (!eventToDelete) return;
+
+        // In a real app, you would fetch the actual user count from your API
+        // const userCount = Math.floor(Math.random() * 100); // Simulated user count
+
+        document.getElementById("eventNameToDelete").textContent =
+          eventToDelete.name;
+        // document.getElementById("userCount").textContent = userCount;
+        document.getElementById("confirmDeleteInput").value = "";
+        document.getElementById("confirmDeleteBtn").disabled = true;
+        document.getElementById("deleteError").style.display = "none";
+        document.getElementById("deleteConfirmationModal").style.display =
+          "flex";
+
+        // Focus the input field
+        setTimeout(() => {
+          document.getElementById("confirmDeleteInput").focus();
+        }, 100);
+      }
+
+      // Add this function to handle the actual deletion
+      function deleteEvent() {
+        if (!eventToDelete) return;
+
+        // Find and remove the event
+        const index = events.findIndex((e) => e.id === eventToDelete.id);
+        if (index !== -1) {
+          events.splice(index, 1);
+          renderEventsTable(events);
+        }
+
+        // Close the modal
+        document.getElementById("deleteConfirmationModal").style.display =
+          "none";
+        eventToDelete = null;
+      }
+
+      // Add this event listener for the confirmation input
+      document
+        .getElementById("confirmDeleteInput")
+        ?.addEventListener("input", function () {
+          const inputValue = this.value.trim();
+          const eventName = eventToDelete?.name || "";
+          const deleteBtn = document.getElementById("confirmDeleteBtn");
+          const errorMsg = document.getElementById("deleteError");
+
+          if (inputValue === eventName) {
+            deleteBtn.disabled = false;
+            errorMsg.style.display = "none";
+          } else {
+            deleteBtn.disabled = true;
+            if (inputValue.length > 0) {
+              errorMsg.style.display = "block";
+            } else {
+              errorMsg.style.display = "none";
+            }
+          }
+        });
+
+      // Update your validateForm function
+      // Update your validateForm function
+      function validateForm() {
+        const eventName = document.getElementById("eventName").value.trim();
+        const badgeName = document.getElementById("badgeName").value.trim();
+        const startDate = document.getElementById("startDate").value;
+        const aboutEvent = document.getElementById("aboutEvent").value.trim();
+        const eventImage = document.getElementById("eventImage").files[0];
+        const hasFixtures = currentEventMappedFixtures.length > 0;
+
+        // Validate individual fields
+        const isEventNameValid = eventName !== "";
+        const isBadgeNameValid = badgeName !== "";
+        const isStartDateValid = startDate !== "";
+        const isAboutEventValid = aboutEvent !== "";
+        const isEventImageValid = eventImage !== undefined;
+        const isFixturesValid = hasFixtures;
+
+        // Show/hide error messages
+        document.getElementById("eventNameError").style.display =
+          isEventNameValid ? "none" : "block";
+        document.getElementById("badgeNameError").style.display =
+          isBadgeNameValid ? "none" : "block";
+        document.getElementById("startDateError").style.display =
+          isStartDateValid ? "none" : "block";
+        document.getElementById("aboutEventError").style.display =
+          isAboutEventValid ? "none" : "block";
+        document.getElementById("eventImageError").style.display =
+          isEventImageValid ? "none" : "block";
+        document.getElementById("fixtureError").style.display = isFixturesValid
+          ? "none"
+          : "block";
+
+        // Enable/disable save button
+        const isValid =
+          isEventNameValid &&
+          isBadgeNameValid &&
+          isStartDateValid &&
+          isAboutEventValid &&
+          isEventImageValid &&
+          isFixturesValid;
+        document.getElementById("saveEventBtn").disabled = !isValid;
+
+        return isValid;
+      }
+
+      // Add image preview functionality
+      document
+        .getElementById("eventImage")
+        ?.addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          const preview = document.getElementById("previewImage");
+          const previewContainer = document.getElementById("imagePreview");
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              preview.src = e.target.result;
+              previewContainer.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          } else {
+            previewContainer.style.display = "none";
+          }
+
+          validateForm();
+        });
+
+      // Add event listeners for form validation
+      document
+        .getElementById("eventName")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("badgeName")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("startDate")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("aboutEvent")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("eventImage")
+        ?.addEventListener("change", validateForm);
+      // Add event listeners for form validation
+      document
+        .getElementById("eventName")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("startDate")
+        ?.addEventListener("input", validateForm);
+      document
+        .getElementById("aboutEvent")
+        ?.addEventListener("input", validateForm);
 
       // Initialize the page
       init();
